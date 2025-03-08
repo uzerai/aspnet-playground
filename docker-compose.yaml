@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: csharp-playground-postgres
+    environment:
+      POSTGRES_USER: playground
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: playground
+    ports:
+      - "5432:5432"
+    volumes:
+      - csharp-playground-postgres-data:/var/lib/postgresql/data
+
+volumes:
+  csharp-playground-postgres-data:
