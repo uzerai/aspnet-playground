@@ -2,8 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Auth0.AspNetCore.Authentication;
 using NodaTime;
 using Npgsql;
-using Playground.DI.Repository;
-
+using Uzerai.Dotnet.Playground.DI.Data;
+using Uzerai.Dotnet.Playground.DI.Repository;
 
 // ############################################################
 // ##########  APP BUILDING  ##################################
