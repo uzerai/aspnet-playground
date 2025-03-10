@@ -1,15 +1,23 @@
+version: '3.9'
+
 services:
+
   postgres:
-    image: postgres:latest
+    image: postgres:17.4
     container_name: csharp-playground-postgres
     environment:
       POSTGRES_USER: playground
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: playground
       POSTGRES_DB: playground
     ports:
       - "5432:5432"
     volumes:
       - csharp-playground-postgres-data:/var/lib/postgresql/data
+      - ./Docker/init-scripts:/docker-entrypoint-initdb.d
+    # Add build context to install extensions
+    build:
+      context: ./Docker
+      dockerfile: Dockerfile.
 
 volumes:
   csharp-playground-postgres-data:
