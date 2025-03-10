@@ -9,8 +9,11 @@
 
   <ItemGroup>
     <!-- ASP.NET Core -->
+    <PackageReference Include="EFCore.NamingConventions" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
+    <PackageReference Include="Nodatime" Version="3.2.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime" Version="9.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.1" />
 
     <!-- EF Core -->

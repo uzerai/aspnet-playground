@@ -1,9 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Auth0.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using Microsoft.Extensions.Options;
+using NodaTime;
+using Npgsql;
+using Playground.DI.Repository;
 
 
 // ############################################################
@@ -30,7 +29,6 @@ builder.Services.AddControllers();
 // });
 
 //TODO: Remove this once we have an external implicit flow implementation.
-// 
 builder.Services.AddAuth0WebAppAuthentication(options =>
 {
     options.Domain = builder.Configuration["Auth0:Domain"]!;
@@ -41,11 +39,26 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
     options.Audience = builder.Configuration["Auth0:Audience"]!;
 });
 
+// Add NodaTime clock service so we can use it in the database context for timestamping BaseEntity objects.
+// This is the SystemClock for the running version of the server. 
+// Replace it in the test environment to be whatever you wish.
+builder.Services.AddSingleton<IClock>(SystemClock.Instance);
+
 // Add main application database context.
 // Will contain references to all entities in the application.
-builder.Services.AddDbContextPool<DatabaseContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DatabaseContextConnection"))
+builder.Services.AddDbContext<DatabaseContext>(options => {
+        options.UseNpgsql(builder.Configuration.GetConnectionString("DatabaseContextConnection"), npgsqlSourceBuilder => {
+            // Additional configuration for the Npgsql connection.
+
+            // Here used to enable NodaTime support.
+            npgsqlSourceBuilder.UseNodaTime();
+            npgsqlSourceBuilder.MigrationsHistoryTable("migrations");
+        })
+        .UseSnakeCaseNamingConvention();
+    }
 );
+
+builder.Services.AddScoped<UserRepository>();
 
 // ############################################################
 // ##########  APP INITIALIZATION  ############################
@@ -57,10 +70,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+} else {
+    app.UseHttpsRedirection();
 }
 
 // HTTPs redirection by default.
-app.UseHttpsRedirection();
 // App library & overarching middleware registration.
 app.UseRouting();
 app.UseAuthentication();
