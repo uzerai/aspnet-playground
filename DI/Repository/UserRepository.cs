@@ -1,8 +1,10 @@
 
 using NodaTime;
-using Playground.Model.Authentication;
 
-namespace Playground.DI.Repository;
+using Uzerai.Dotnet.Playground.DI.Data;
+using Uzerai.Dotnet.Playground.Model.Authentication;
+
+namespace Uzerai.Dotnet.Playground.DI.Repository;
 
 public class UserRepository : BaseRepository<User>
 {

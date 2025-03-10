@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Auth0.AspNetCore.Authentication;
 using System.Security.Claims;
-using Playground.DI.Repository;
-using Playground.Model.Authentication;
 using NodaTime;
+using Microsoft.EntityFrameworkCore;
 
-namespace Playground.Controllers.Authentication;
+using Uzerai.Dotnet.Playground.Model.Authentication;
+using Uzerai.Dotnet.Playground.DI.Repository;
+
+namespace Uzerai.Dotnet.Playground.Controllers.Authentication;
 
 [Route("auth")]
 public class AuthenticationController : Controller
@@ -43,14 +45,23 @@ public class AuthenticationController : Controller
         {
             return Unauthorized();
         }
-
-        var user = await _userRepository.CreateAsync(new User()
+        
+        var user = await _userRepository.BuildReadonlyQuery().FirstOrDefaultAsync(x => x.Auth0UserId == auth0UserId);
+        if (user != null)
         {
-            Auth0UserId = auth0UserId,
-            Email = auth0UserEmail,
-            Username = auth0UserEmail,
-            LastLogin = _clock.GetCurrentInstant()
-        });
+            user.LastLogin = _clock.GetCurrentInstant();
+            await _userRepository.UpdateAsync(user);
+        }
+        else
+        {
+            user = await _userRepository.CreateAsync(new User()
+            {
+                Auth0UserId = auth0UserId,
+                Email = auth0UserEmail,
+                Username = auth0UserEmail,
+                LastLogin = _clock.GetCurrentInstant()
+            });
+        }
 
         return Ok();
     }

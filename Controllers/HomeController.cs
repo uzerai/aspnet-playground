@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Playground.Controllers;
+namespace Uzerai.Dotnet.Playground.Controllers;
 
 [Route("/")]
 [Authorize]

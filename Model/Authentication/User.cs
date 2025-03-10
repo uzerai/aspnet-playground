@@ -1,9 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 using NodaTime;
 
-namespace Playground.Model.Authentication;
+namespace Uzerai.Dotnet.Playground.Model.Authentication;
 
+[Index(nameof(Auth0UserId), IsUnique = true)]
+[Index(nameof(Email))]
 public class User : BaseEntity
 {
     [Required]

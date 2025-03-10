@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using NodaTime;
 
-namespace Playground.Model;
+namespace Uzerai.Dotnet.Playground.Model;
 
 public abstract class BaseEntity
 {

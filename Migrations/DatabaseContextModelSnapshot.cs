@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using Uzerai.Dotnet.Playground.DI.Data;
 
 #nullable disable
 
@@ -62,6 +63,13 @@ namespace Uzerai.Dotnet.Playground.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_users");
+
+                    b.HasIndex("Auth0UserId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_users_auth0_user_id");
+
+                    b.HasIndex("Email")
+                        .HasDatabaseName("ix_users_email");
 
                     b.ToTable("users", (string)null);
                 });

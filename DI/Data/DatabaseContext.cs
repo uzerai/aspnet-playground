@@ -1,7 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
-using Playground.Model;
-using Playground.Model.Authentication;
+
+using Uzerai.Dotnet.Playground.Model;
+using Uzerai.Dotnet.Playground.Model.Authentication;
+
+namespace Uzerai.Dotnet.Playground.DI.Data;
 
 public class DatabaseContext : DbContext
 {

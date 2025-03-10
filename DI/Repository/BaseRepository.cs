@@ -1,9 +1,11 @@
 
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
-using Playground.Model;
 
-namespace Playground.DI.Repository;
+using Uzerai.Dotnet.Playground.Model;
+using Uzerai.Dotnet.Playground.DI.Data;
+
+namespace Uzerai.Dotnet.Playground.DI.Repository;
 
 public partial class BaseRepository<T> : IEntityRepository<T> where T : BaseEntity
 {
@@ -16,9 +18,18 @@ public partial class BaseRepository<T> : IEntityRepository<T> where T : BaseEnti
         _clock = clock;
     }
 
-    public IQueryable<T> BuildQuery()
+    public IQueryable<T> BuildTrackedQuery()
     {
-        return _context.Set<T>().AsQueryable();
+        return _context.Set<T>()
+            .AsTracking()
+            .AsQueryable();
+    }
+
+    public IQueryable<T> BuildReadonlyQuery()
+    {
+        return _context.Set<T>()
+            .AsNoTracking()
+            .AsQueryable();
     }
 
     public async Task<T> CreateAsync(T entity)
@@ -31,7 +42,9 @@ public partial class BaseRepository<T> : IEntityRepository<T> where T : BaseEnti
 
     public async Task<bool> DeleteAsync(Guid id)
     {
-        var entity = await _context.Set<T>().FindAsync(id);
+        var entity = await _context.Set<T>()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id);
 
         if (entity == null)
         {
@@ -46,17 +59,23 @@ public partial class BaseRepository<T> : IEntityRepository<T> where T : BaseEnti
 
     public async Task<IEnumerable<T>> GetAllAsync()
     {
-        return await _context.Set<T>().ToListAsync();
+        return await _context.Set<T>()
+            .AsNoTracking()
+            .ToListAsync();
     }
 
     public async Task<T?> GetByIdAsync(Guid id)
     {
-        return await _context.Set<T>().FindAsync(id);
+        return await _context.Set<T>()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<T?> GetByIdTrackingAsync(Guid id)
     {
-        return await _context.Set<T>().AsTracking().FirstOrDefaultAsync(x => x.Id == id);
+        return await _context.Set<T>()
+            .AsTracking()
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<bool> SaveAsync()

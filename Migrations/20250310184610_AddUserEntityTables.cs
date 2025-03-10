@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using NodaTime;
 
 #nullable disable
@@ -16,7 +15,7 @@ namespace Uzerai.Dotnet.Playground.Migrations
                 name: "users",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "uuid_generate_v7()"),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     auth0_user_id = table.Column<string>(type: "text", nullable: false),
                     email = table.Column<string>(type: "text", nullable: false),
                     username = table.Column<string>(type: "text", nullable: false),
@@ -29,6 +28,17 @@ namespace Uzerai.Dotnet.Playground.Migrations
                 {
                     table.PrimaryKey("pk_users", x => x.id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_users_auth0_user_id",
+                table: "users",
+                column: "auth0_user_id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_users_email",
+                table: "users",
+                column: "email");
         }
 
         /// <inheritdoc />
