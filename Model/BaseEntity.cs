@@ -6,7 +6,7 @@ namespace Playground.Model;
 public abstract class BaseEntity
 {
     [Key]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [Required]
     public Instant CreatedAt { get; set; }

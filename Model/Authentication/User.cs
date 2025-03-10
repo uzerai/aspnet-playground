@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using NodaTime;
 
 namespace Playground.Model.Authentication;
@@ -6,6 +7,7 @@ namespace Playground.Model.Authentication;
 public class User : BaseEntity
 {
     [Required]
+    [Column("auth0_user_id")]
     public required string Auth0UserId { get; set; }
 
     [Required]

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Uzerai.Dotnet.Playground.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20250310100606_AddUserAndEntityModel")]
-    partial class AddUserAndEntityModel
+    [Migration("20250310182109_AddUserEntityTables")]
+    partial class AddUserEntityTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,17 +27,15 @@ namespace Uzerai.Dotnet.Playground.Migrations
 
             modelBuilder.Entity("Playground.Model.Authentication.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Auth0UserId")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("auth0user_id");
+                        .HasColumnName("auth0_user_id");
 
                     b.Property<Instant>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
@@ -52,7 +50,7 @@ namespace Uzerai.Dotnet.Playground.Migrations
                         .HasColumnType("text")
                         .HasColumnName("email");
 
-                    b.Property<DateTime>("LastLogin")
+                    b.Property<Instant>("LastLogin")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("last_login");
 
