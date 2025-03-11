@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using System.Text.Json;
 using Auth0.AspNetCore.Authentication.BackchannelLogout;
+using Microsoft.EntityFrameworkCore;
 using NodaTime;
 using Uzerai.Dotnet.Playground.DI;
 using Uzerai.Dotnet.Playground.DI.Data.QueryExtensions;
@@ -30,24 +31,25 @@ public class LocalUserContextMiddleware
     if (context.User.Identity == null || !context.User.Identity.IsAuthenticated)
     {
         await _next(context);
+        // You should technically never see this message.
+        _logger.LogError("HttpContext User Identity is null. This should never happen. Skipping local user context middleware.");
         return;
     }
 
     var cancellationToken = context.RequestAborted;
-
     // If the JWT token is authorized for access, we need to check for a local user.
     var userAuth0NameIdentifier = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
     // and if there's no identifier, something is wrong with the token (even beyond all format validation)
     if (string.IsNullOrEmpty(userAuth0NameIdentifier))
     {
-        await context.WriteErrorAsync(403, "User 'sub' claim is required", "Could not check for user locally");
+        _logger.LogError("HttpContext.User.Identity contains no NameIdentifier claim. This should never happen. Skipping local user context middleware.");
         return;
     }
 
     // If there is a user identifier, we can check for a local user.
-    var localIdentity = userRepository.BuildReadonlyQuery()
+    var localIdentity = await userRepository.BuildReadonlyQuery()
         .WhereAuth0UserId(userAuth0NameIdentifier)
-        .FirstOrDefault();
+        .FirstOrDefaultAsync(cancellationToken);
 
     // If there is no local user, we need to create one, since the user is authorized for 
     // access and therefore should be allowed to use the application.
@@ -56,6 +58,7 @@ public class LocalUserContextMiddleware
         var auth0UserEmail = context.User.FindFirst(ClaimTypes.Email)!.Value;
         var auth0UserUsername = context.User.FindFirst(ClaimTypes.Name)?.Value;
         
+        _logger.LogInformation("First time login for user {UserAuth0NameIdentifier}. Creating local user.", userAuth0NameIdentifier);
         localIdentity = await userRepository.CreateAsync(new User()
             {
                 Auth0UserId = userAuth0NameIdentifier,

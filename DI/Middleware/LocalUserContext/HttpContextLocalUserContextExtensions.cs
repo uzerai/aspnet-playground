@@ -7,7 +7,7 @@ namespace Uzerai.Dotnet.Playground.DI;
 /// to the `LocalUserContext` middleware.
 /// 
 /// We wished to keep the auth0 HttpContext.User.Identity separate from the local user context; so that
-/// the auth0 identity is not polluted with local user data (and vice versa).
+/// the auth0 identity is not polluted with local user data (and vice versa)./
 /// 
 /// These extension methods are used to get and set the local user (as User class instance) in the http context.
 /// </summary>
@@ -25,6 +25,14 @@ public static class HttpContextLocalUserContextExtensions
         return (User) context.Items["LocalUserIdentity"]!;
     }
 
+    /// <summary>
+    /// Setter for local user in the HttpContext.
+    /// 
+    /// It is strongly recommended that this not be used anywhere other than the LocalUserContextMiddleware.
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="user"></param>
     public static void SetLocalUser(this HttpContext context, User user)
     {
         context.Items["LocalUserIdentity"] = user;
