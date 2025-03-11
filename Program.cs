@@ -2,10 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using NodaTime;
 using Npgsql;
 using Uzerai.Dotnet.Playground.DI.Data;
-using Uzerai.Dotnet.Playground.DI.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
+using NodaTime.Serialization.SystemTextJson;
+using Uzerai.Dotnet.Playground.API.DI.Middleware;
+using Uzerai.Dotnet.Playground.DI.Repository;
 
 // ############################################################
 // ##########  APP BUILDING  ##################################
@@ -19,7 +21,9 @@ builder.Logging.AddConsole();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options => {
+    options.JsonSerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
+});
 
 // This technically isn't active currently.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -88,7 +92,15 @@ if (app.Environment.IsDevelopment())
 // HTTPs redirection by default.
 // App library & overarching middleware registration.
 app.UseRouting();
+
+// Authentication middleware.
 app.UseAuthentication();
+
+// Authorize local user middleware, this is what provides the link from an externally authorized user
+// to the authenticated identity of the user in our system.
+app.UseMiddleware<LocalUserContextMiddleware>();
+
+// Authorization middleware.
 app.UseAuthorization();
 app.MapControllers();
 
