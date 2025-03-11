@@ -10,6 +10,13 @@ using Uzerai.Dotnet.Playground.Model.Authentication;
 
 namespace Uzerai.Dotnet.Playground.API.DI.Middleware;
 
+/// <summary>
+/// Middleware for setting the Database retrieved user identity in the HttpContext.
+/// 
+/// This is the middleware that provides the link from an externally authorized user
+/// to the authenticated identity of the user in our system, in addition to not
+/// interfering with the identity provided by the login-provider.
+/// </summary>
 public class LocalUserContextMiddleware 
 {
   private readonly RequestDelegate _next;
@@ -26,13 +33,12 @@ public class LocalUserContextMiddleware
   public async Task InvokeAsync(
       HttpContext context, UserRepository userRepository, IClock clock)
   {
-    // If the JWT token is not authorized for access, we never authenticate the user in the context,
-    // and as such there's no need to check for a local user.
+    // This happens when an anonymous users requests a resource that is not protected.
+    // We can safely skip the rest of the middleware, as we shouldn't need to do anything regarding _current_ user.
+    // If the endpoint is protected, the request should be rejected earlier in the chain than here.
     if (context.User.Identity == null || !context.User.Identity.IsAuthenticated)
     {
         await _next(context);
-        // You should technically never see this message.
-        _logger.LogError("HttpContext User Identity is null. This should never happen. Skipping local user context middleware.");
         return;
     }
 

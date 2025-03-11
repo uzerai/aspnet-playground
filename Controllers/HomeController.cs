@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Uzerai.Dotnet.Playground.Controllers;
 
-[Route("/")]
 [Authorize]
+[Route("/")]
+[ApiController]
 public class HomeController : ControllerBase
 {
     [HttpGet]

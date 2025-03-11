@@ -7,6 +7,7 @@ namespace Uzerai.Dotnet.Playground.Controllers;
 
 [Authorize]
 [Route("users")]
+[ApiController]
 public class UsersController : ControllerBase
 {
     private readonly UserRepository _userRepository;
@@ -15,7 +16,7 @@ public class UsersController : ControllerBase
     {
         _userRepository = userRepository;
     }
-    
+
     [HttpGet("me")]
     public IActionResult Get()
     {

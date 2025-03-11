@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
-
+using Uzerai.Dotnet.Playground.Model.Organization;
 namespace Uzerai.Dotnet.Playground.Model.Authentication;
 
 [Index(nameof(Auth0UserId), IsUnique = true)]
@@ -21,4 +21,7 @@ public class User : BaseEntity
 
     [Required]
     public Instant LastLogin { get; set; }
+
+    // OrganizationUser relationships
+    public virtual IEnumerable<OrganizationUser> OrganizationUsers { get; set; } = [];
 }

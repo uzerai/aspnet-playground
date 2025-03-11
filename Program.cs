@@ -7,7 +7,9 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using NodaTime.Serialization.SystemTextJson;
 using Uzerai.Dotnet.Playground.API.DI.Middleware;
-using Uzerai.Dotnet.Playground.DI.Repository;
+using Uzerai.Dotnet.Playground.DI.Repository.ConfigurationExtension;
+using System.Text.Json;
+using Uzerai.Dotnet.Playground.DI.Middleware.ConfigurationExtension;
 
 // ############################################################
 // ##########  APP BUILDING  ##################################
@@ -18,14 +20,21 @@ builder.Logging.AddConsole();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// builder.Services.AddEndpointsApiExplorer();
+// builder.Services.AddSwaggerGen();
 
+/// Json setup specifically for the support of NodaTime serialization.
+/// Also sets the property naming policy to snake_case, because it's the nicer json format.
 builder.Services.AddControllers().AddJsonOptions(options => {
+    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
     options.JsonSerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
 });
 
-// This technically isn't active currently.
+/// Authentication extraction through JWT Bearer tokens.
+/// Intended to be used with the corresponding Auth0 tenant; but 
+/// technically be used with any Oauth2.0 compliant identity provider.
+/// 
+/// Just change the config names.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => {
         options.Authority = $"https://{builder.Configuration["Auth0:Domain"]}";
@@ -62,7 +71,13 @@ builder.Services.AddDbContext<DatabaseContext>(options => {
     }
 );
 
-builder.Services.AddScoped<UserRepository>();
+/// Repository setup and registration done here;
+/// 
+/// If you are adding a new repository:
+/// Please add it to the extension method in
+///     Uzerai.Dotnet.Playground.DI.Repository.ConfigurationExtension.RepositoryServiceConfigurationExtensions
+/// instead of adding them here.
+builder.Services.AddRepositoryServices();
 
 // ############################################################
 // ##########  APP INITIALIZATION  ############################
@@ -72,8 +87,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    // app.UseSwagger();
+    // app.UseSwaggerUI();
 } else {
     app.UseHttpsRedirection();
 }
@@ -85,9 +100,9 @@ app.UseRouting();
 // Authentication middleware.
 app.UseAuthentication();
 
-// Authorize local user middleware, this is what provides the link from an externally authorized user
-// to the authenticated identity of the user in our system.
-app.UseMiddleware<LocalUserContextMiddleware>();
+// Registers project-specific middleware.
+// Explore the DI/Middleware folder for more information.
+app.UseProjectMiddleware();
 
 // Authorization middleware.
 app.UseAuthorization();
