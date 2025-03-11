@@ -4,6 +4,9 @@ using NodaTime;
 using Npgsql;
 using Uzerai.Dotnet.Playground.DI.Data;
 using Uzerai.Dotnet.Playground.DI.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
 
 // ############################################################
 // ##########  APP BUILDING  ##################################
@@ -20,24 +23,33 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
 // This technically isn't active currently.
-// builder.Services.AddAuthentication(options => {
-//     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-// }).AddJwtBearer(options => {
-//     options.Authority = builder.Configuration["Auth0:Authority"];
-//     options.Audience = builder.Configuration["Auth0:Audience"];
-// });
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options => {
+        options.Authority = $"https://{builder.Configuration["Auth0:Domain"]}";
+        options.Audience = builder.Configuration["Auth0:Audience"];
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            
+            NameClaimType = ClaimTypes.NameIdentifier,
+            ValidIssuer = builder.Configuration["Auth0:Issuer"],
+            ValidAudience = builder.Configuration["Auth0:Audience"],
+        };
+    });
 
 //TODO: Remove this once we have an external implicit flow implementation.
-builder.Services.AddAuth0WebAppAuthentication(options =>
-{
-    options.Domain = builder.Configuration["Auth0:Domain"]!;
-    options.ClientId = builder.Configuration["Auth0:ClientId"]!;
-    options.ClientSecret = builder.Configuration["Auth0:ClientSecret"]!;
-}).WithAccessToken(options =>
-{
-    options.Audience = builder.Configuration["Auth0:Audience"]!;
-});
+// builder.Services.AddAuth0WebAppAuthentication(options =>
+// {
+//     options.Domain = builder.Configuration["Auth0:Domain"]!;
+//     options.ClientId = builder.Configuration["Auth0:ClientId"]!;
+//     options.ClientSecret = builder.Configuration["Auth0:ClientSecret"]!;
+// }).WithAccessToken(options =>
+// {
+//     options.Audience = builder.Configuration["Auth0:Audience"]!;
+// });
 
 // Add NodaTime clock service so we can use it in the database context for timestamping BaseEntity objects.
 // This is the SystemClock for the running version of the server. 
