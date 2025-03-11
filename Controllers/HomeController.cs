@@ -5,7 +5,7 @@ namespace Uzerai.Dotnet.Playground.Controllers;
 
 [Route("/")]
 [Authorize]
-public class HomeController : Controller
+public class HomeController : ControllerBase
 {
     [HttpGet]
     public IActionResult Index()
