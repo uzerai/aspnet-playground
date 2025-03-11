@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 using Uzerai.Dotnet.Playground.Model.Authentication;
 using Uzerai.Dotnet.Playground.DI.Repository;
+using Uzerai.Dotnet.Playground.DI.Data.QueryExtensions;
+using System.ComponentModel;
 
 namespace Uzerai.Dotnet.Playground.Controllers.Authentication;
 
@@ -29,28 +31,31 @@ public class AuthenticationController : Controller
     /// their related entities.
     /// </summary>
     /// <returns>HTTP 200 OK on success, HTTP 401 Unauthorized on failure.</returns>
-    [HttpGet("callback")]
+    [HttpGet("registration")]
     [Authorize]
-    public async Task<IActionResult> Callback()
+    public async Task<IActionResult> Registration()
     {
         var auth0UserId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
         var auth0UserEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
         var auth0UserUsername = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
-        
-        Console.WriteLine($"Auth0 User ID: {auth0UserId}");
-        Console.WriteLine($"Auth0 User Email: {auth0UserEmail}");
-        Console.WriteLine($"Auth0 User Username: {auth0UserUsername}");
+
+        Console.WriteLine($"auth0UserId: {auth0UserId}");
+        Console.WriteLine($"auth0UserEmail: {auth0UserEmail}");
+        Console.WriteLine($"auth0UserUsername: {auth0UserUsername}");
 
         if (auth0UserId == null || auth0UserEmail == null)
         {
             return Unauthorized();
         }
         
-        var user = await _userRepository.BuildReadonlyQuery().FirstOrDefaultAsync(x => x.Auth0UserId == auth0UserId);
+        var user = await _userRepository.BuildReadonlyQuery()
+            .WhereAuth0UserId(auth0UserId)
+            .FirstOrDefaultAsync();
+
         if (user != null)
         {
             user.LastLogin = _clock.GetCurrentInstant();
-            await _userRepository.UpdateAsync(user);
+            user = await _userRepository.UpdateAsync(user);
         }
         else
         {
@@ -58,48 +63,11 @@ public class AuthenticationController : Controller
             {
                 Auth0UserId = auth0UserId,
                 Email = auth0UserEmail,
-                Username = auth0UserEmail,
+                Username = auth0UserUsername ?? auth0UserEmail, // fallback to email as username if none in claims
                 LastLogin = _clock.GetCurrentInstant()
             });
         }
 
-        return Ok();
-    }
-
-    [HttpGet("login")]
-    public async Task Login()
-    {
-        var authenticationProperties = new LoginAuthenticationPropertiesBuilder()
-            .WithScope("openid profile email offline_access")
-            // Indicate here where Auth0 should redirect the user after a login.
-            // Note that the resulting absolute Uri must be added to the
-            // **Allowed Callback URLs** settings for the app.
-            .WithRedirectUri("https://localhost:5016/auth/callback")
-            .Build();
-
-        await HttpContext.ChallengeAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
-
-
-    }
-
-    [HttpGet("logout")]
-    [Authorize]
-    public IActionResult Logout()
-    {
-        return Ok();
-    }
-
-    [HttpGet("profile")]
-    [Authorize]
-    public IActionResult Profile()
-    {
-        return Json(new
-        {
-            User.Identity,
-            IsMaintainer = User.IsInRole("Maintainer"),
-            Email = User.FindFirst(ClaimTypes.Email)?.Value,
-            Claims = User.Claims.Select(c => new { c.Type, c.Value, c.ValueType, c.Properties }),
-            Permissions = User.FindFirst("permissions")?.Value
-        });
+        return Json(user);
     }
 }

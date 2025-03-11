@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Auth0.AspNetCore.Authentication;
 using NodaTime;
 using Npgsql;
 using Uzerai.Dotnet.Playground.DI.Data;
