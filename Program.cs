@@ -43,17 +43,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-//TODO: Remove this once we have an external implicit flow implementation.
-// builder.Services.AddAuth0WebAppAuthentication(options =>
-// {
-//     options.Domain = builder.Configuration["Auth0:Domain"]!;
-//     options.ClientId = builder.Configuration["Auth0:ClientId"]!;
-//     options.ClientSecret = builder.Configuration["Auth0:ClientSecret"]!;
-// }).WithAccessToken(options =>
-// {
-//     options.Audience = builder.Configuration["Auth0:Audience"]!;
-// });
-
 // Add NodaTime clock service so we can use it in the database context for timestamping BaseEntity objects.
 // This is the SystemClock for the running version of the server. 
 // Replace it in the test environment to be whatever you wish.
