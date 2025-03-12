@@ -32,6 +32,7 @@ public class DatabaseContext : DbContext
         modelBuilder.ConfigureOrganizationModel();
         modelBuilder.ConfigureOrganizationUserModel();
         modelBuilder.ConfigureOrganizationPermissionModel();
+        modelBuilder.ConfigureOrganizationTeamModel();
     }
 
     /// <summary>
