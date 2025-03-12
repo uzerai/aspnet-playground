@@ -10,5 +10,7 @@ public enum Permission {
   OrganizationsRead,
   OrganizationsWrite,
   PermissionsRead,
-  PermissionsWrite
+  PermissionsWrite,
+  TeamsRead,
+  TeamsWrite,
 }

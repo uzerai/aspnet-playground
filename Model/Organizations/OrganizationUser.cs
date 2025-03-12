@@ -7,6 +7,7 @@ using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
 
 namespace Uzerai.Dotnet.Playground.Model.Organizations;
 
+[PrimaryKey(nameof(OrganizationId), nameof(UserId))]
 public class OrganizationUser
 {
     [Required]

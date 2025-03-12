@@ -10,6 +10,7 @@ using Uzerai.Dotnet.Playground.API.DI.Middleware;
 using Uzerai.Dotnet.Playground.DI.Repository.ConfigurationExtension;
 using System.Text.Json;
 using Uzerai.Dotnet.Playground.DI.Middleware.ConfigurationExtension;
+using Uzerai.Dotnet.Playground.DI.Authorization.ConfigurationExtension;
 
 // ############################################################
 // ##########  APP BUILDING  ##################################
@@ -20,8 +21,8 @@ builder.Logging.AddConsole();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-// builder.Services.AddEndpointsApiExplorer();
-// builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 /// Json setup specifically for the support of NodaTime serialization.
 /// Also sets the property naming policy to snake_case, because it's the nicer json format.
@@ -78,6 +79,7 @@ builder.Services.AddDbContext<DatabaseContext>(options => {
 ///     Uzerai.Dotnet.Playground.DI.Repository.ConfigurationExtension.RepositoryServiceConfigurationExtensions
 /// instead of adding them here.
 builder.Services.AddRepositoryServices();
+builder.Services.AddPermissionsAuthorizationHandling();
 
 // ############################################################
 // ##########  APP INITIALIZATION  ############################
@@ -87,8 +89,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    // app.UseSwagger();
-    // app.UseSwaggerUI();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 } else {
     app.UseHttpsRedirection();
 }

@@ -1,9 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 using Uzerai.Dotnet.Playground.Model.Authentication;
 
 namespace Uzerai.Dotnet.Playground.Model.Organizations;
 
+[PrimaryKey(nameof(OrganizationId), nameof(OrganizationTeamId), nameof(UserId))]
 public class OrganizationTeamUser
 {
     [Required]

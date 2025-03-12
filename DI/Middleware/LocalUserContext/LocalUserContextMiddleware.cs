@@ -55,6 +55,8 @@ public class LocalUserContextMiddleware
     // If there is a user identifier, we can check for a local user.
     var localIdentity = await userRepository.BuildReadonlyQuery()
         .WhereAuth0UserId(userAuth0NameIdentifier)
+        .Include(u => u.OrganizationUsers)
+        .ThenInclude(ou => ou.Permissions)
         .FirstOrDefaultAsync(cancellationToken);
 
     // If there is no local user, we need to create one, since the user is authorized for 

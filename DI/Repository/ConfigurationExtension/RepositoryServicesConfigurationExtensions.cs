@@ -12,6 +12,7 @@ public static class RepositoryServicesConfigurationExtensions
         services.AddScoped<UserRepository>();
         services.AddScoped<OrganizationRepository>();
         services.AddScoped<OrganizationUserRepository>();
+        services.AddScoped<OrganizationTeamRepository>();
 
         return services;
     }
