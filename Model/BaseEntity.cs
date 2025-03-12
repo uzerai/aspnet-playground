@@ -13,6 +13,6 @@ public abstract class BaseEntity
 
     [Required]
     public Instant UpdatedAt { get; set; }
-    
+
     public Instant? DeletedAt { get; set; }
 }

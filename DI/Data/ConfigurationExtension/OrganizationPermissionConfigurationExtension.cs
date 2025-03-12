@@ -13,7 +13,7 @@ public static class OrganizationPermissionConfigurationExtension
             .HasOne(e => e.OrganizationUser)
             .WithMany(e => e.Permissions)
             .HasForeignKey(e => new { e.OrganizationId, e.UserId });
-            
+
         return modelBuilder;
     }
 }

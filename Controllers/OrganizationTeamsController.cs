@@ -20,10 +20,10 @@ public class OrganizationTeamsController : ControllerBase
     {
         _organizationTeamRepository = organizationTeamRepository;
     }
-    
+
     [HttpGet]
     [OrganizationPermissionRequired(Permission.TeamsRead)]
-    public async Task<IActionResult> GetAll([FromRoute][Required]Guid organizationId)
+    public async Task<IActionResult> GetAll([FromRoute][Required] Guid organizationId)
     {
         var teams = await _organizationTeamRepository.GetAllForOrganizationAsync(organizationId);
         return Ok(teams);
@@ -32,7 +32,7 @@ public class OrganizationTeamsController : ControllerBase
     [HttpPost]
     [OrganizationPermissionRequired(Permission.TeamsWrite)]
     public async Task<IActionResult> Create(
-      [FromRoute][Required] Guid organizationId, 
+      [FromRoute][Required] Guid organizationId,
       [FromBody][Required] CreateOrganizationTeamRequestData requestData)
     {
         var team = new OrganizationTeam

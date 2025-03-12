@@ -15,7 +15,7 @@ public static class UserConfigurationExtension
         modelBuilder.Entity<User>()
             .HasMany(e => e.OrganizationUsers)
             .WithOne(e => e.User);
-            
+
         return modelBuilder;
-    } 
+    }
 }

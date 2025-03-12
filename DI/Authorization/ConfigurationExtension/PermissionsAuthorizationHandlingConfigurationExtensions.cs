@@ -7,9 +7,9 @@ public static class PermissionsAuthorizationHandlingConfigurationExtensions
 {
     public static IServiceCollection AddPermissionsAuthorizationHandling(this IServiceCollection services)
     {
-      services.AddTransient<IAuthorizationHandler, OrganizationPermissionsAuthorizationHandler>();
+        services.AddTransient<IAuthorizationHandler, OrganizationPermissionsAuthorizationHandler>();
 
-      return services;
+        return services;
     }
-    
+
 }

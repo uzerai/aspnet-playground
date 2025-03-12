@@ -12,7 +12,7 @@ public static class MiddlewareConfigurationExtensions
     public static IApplicationBuilder UseProjectMiddleware(this IApplicationBuilder app)
     {
         app.UseMiddleware<LocalUserContextMiddleware>();
-        
+
         return app;
     }
 }

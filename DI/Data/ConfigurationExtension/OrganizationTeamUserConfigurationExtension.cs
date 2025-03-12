@@ -5,7 +5,7 @@ namespace Uzerai.Dotnet.Playground.DI.Data.ConfigurationExtension;
 
 public static class OrganizationTeamUserConfigurationExtension
 {
-    public static ModelBuilder ConfigureOrganizationTeamUserModel(this ModelBuilder modelBuilder) 
+    public static ModelBuilder ConfigureOrganizationTeamUserModel(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<OrganizationTeamUser>()
             .HasOne(e => e.OrganizationTeam)

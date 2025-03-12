@@ -22,7 +22,7 @@ public static class HttpContextLocalUserContextExtensions
     /// <returns></returns>
     public static User GetLocalUser(this HttpContext context)
     {
-        return (User) context.Items["LocalUserIdentity"]!;
+        return (User)context.Items["LocalUserIdentity"]!;
     }
 
     /// <summary>

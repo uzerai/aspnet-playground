@@ -20,7 +20,7 @@ public static class OrganizationTeamConfigurationExtension
             .HasMany(e => e.Users)
             .WithMany()
             .UsingEntity<OrganizationTeamUser>();
-        
+
         return modelBuilder;
     }
 }

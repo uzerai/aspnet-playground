@@ -26,7 +26,8 @@ builder.Services.AddSwaggerGen();
 
 /// Json setup specifically for the support of NodaTime serialization.
 /// Also sets the property naming policy to snake_case, because it's the nicer json format.
-builder.Services.AddControllers().AddJsonOptions(options => {
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
     options.JsonSerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
 });
@@ -37,7 +38,8 @@ builder.Services.AddControllers().AddJsonOptions(options => {
 /// 
 /// Just change the config names.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options => {
+    .AddJwtBearer(options =>
+    {
         options.Authority = $"https://{builder.Configuration["Auth0:Domain"]}";
         options.Audience = builder.Configuration["Auth0:Audience"];
 
@@ -46,7 +48,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
-            
+
             NameClaimType = ClaimTypes.NameIdentifier,
             ValidIssuer = builder.Configuration["Auth0:Issuer"],
             ValidAudience = builder.Configuration["Auth0:Audience"],
@@ -60,16 +62,18 @@ builder.Services.AddSingleton<IClock>(SystemClock.Instance);
 
 // Add main application database context.
 // Will contain references to all entities in the application.
-builder.Services.AddDbContext<DatabaseContext>(options => {
-        options.UseNpgsql(builder.Configuration.GetConnectionString("DatabaseContextConnection"), npgsqlSourceBuilder => {
-            // Additional configuration for the Npgsql connection.
+builder.Services.AddDbContext<DatabaseContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DatabaseContextConnection"), npgsqlSourceBuilder =>
+    {
+        // Additional configuration for the Npgsql connection.
 
-            // Here used to enable NodaTime support.
-            npgsqlSourceBuilder.UseNodaTime();
-            npgsqlSourceBuilder.MigrationsHistoryTable("migrations");
-        })
-        .UseSnakeCaseNamingConvention();
-    }
+        // Here used to enable NodaTime support.
+        npgsqlSourceBuilder.UseNodaTime();
+        npgsqlSourceBuilder.MigrationsHistoryTable("migrations");
+    })
+    .UseSnakeCaseNamingConvention();
+}
 );
 
 /// Repository setup and registration done here;
@@ -91,7 +95,9 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-} else {
+}
+else
+{
     app.UseHttpsRedirection();
 }
 

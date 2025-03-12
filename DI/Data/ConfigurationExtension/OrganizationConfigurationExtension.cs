@@ -17,7 +17,7 @@ public static class OrganizationConfigurationExtension
         modelBuilder.Entity<Organization>()
             .HasMany(e => e.Teams)
             .WithOne(e => e.Organization);
-        
+
         return modelBuilder;
     }
 }

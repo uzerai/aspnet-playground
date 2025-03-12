@@ -24,7 +24,7 @@ public class OrganizationPermissionsAuthorizationHandler : AuthorizationHandler<
             context.Fail();
             return Task.CompletedTask;
         }
-
+        // Can happen when the route is not an organization route.
         var organizationIdFromRoute = httpContext.GetRouteValue("organizationId") as string;
         if (organizationIdFromRoute == null)
         {
@@ -32,8 +32,20 @@ public class OrganizationPermissionsAuthorizationHandler : AuthorizationHandler<
             context.Fail();
             return Task.CompletedTask;
         }
-        var organizationIdToAuthorizeAgainst = Guid.Parse(organizationIdFromRoute);
-        
+
+        // Obvious brute force check since who isn't going to cram random strings into the route.
+        Guid? organizationIdToAuthorizeAgainst = Guid.TryParse(organizationIdFromRoute, out var organizationId) ? organizationId : null;
+        if (organizationIdToAuthorizeAgainst == null)
+        {
+            _logger.LogError("Organization ID from route is not a valid GUID; aborting authorization check.");
+            context.Fail();
+            return Task.CompletedTask;
+        }
+
+        // This is the local user context that the LocalUserContextMiddleware sets.
+        // It should always be there since all of this code is post-authentication.
+        // 
+        // This is fluff to make the compiler happy.
         var localUser = httpContext.GetLocalUser();
         if (localUser == null)
         {
@@ -46,7 +58,7 @@ public class OrganizationPermissionsAuthorizationHandler : AuthorizationHandler<
             .Where(ou => ou.OrganizationId == organizationIdToAuthorizeAgainst)
             .SelectMany(ou => ou.Permissions)
             .ToList();
-        
+
         if (organizationPermissions == null)
         {
             _logger.LogError("User has no permissions for organization {OrganizationId}; aborting authorization check.", organizationIdToAuthorizeAgainst);
@@ -54,13 +66,15 @@ public class OrganizationPermissionsAuthorizationHandler : AuthorizationHandler<
             return Task.CompletedTask;
         }
 
-        if(!organizationPermissions.Any(orgPerm => orgPerm.Permission == requirement.Permission))
+        if (!organizationPermissions.Any(orgPerm => orgPerm.Permission == requirement.Permission))
         {
             context.Fail();
-        } else {
+        }
+        else
+        {
             context.Succeed(requirement);
         }
-        
+
         return Task.CompletedTask;
     }
 }
