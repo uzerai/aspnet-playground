@@ -5,15 +5,13 @@ using Microsoft.EntityFrameworkCore;
 using Uzerai.Dotnet.Playground.Model.Authentication;
 using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
 
-namespace Uzerai.Dotnet.Playground.Model.Organization;
+namespace Uzerai.Dotnet.Playground.Model.Organizations;
 
-[PrimaryKey(nameof(OrganizationId), nameof(UserId))]
 public class OrganizationUser
 {
     [Required]
     [ForeignKey("Organization")]
     public required Guid OrganizationId { get; set; }
-
     [Required]
     [ForeignKey("User")]
     public required Guid UserId { get; set; }

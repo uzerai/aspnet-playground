@@ -2,7 +2,8 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
-using Uzerai.Dotnet.Playground.Model.Organization;
+using Uzerai.Dotnet.Playground.Model.Organizations;
+
 namespace Uzerai.Dotnet.Playground.Model.Authentication;
 
 [Index(nameof(Auth0UserId), IsUnique = true)]
@@ -24,4 +25,6 @@ public class User : BaseEntity
 
     // OrganizationUser relationships
     public virtual IEnumerable<OrganizationUser> OrganizationUsers { get; set; } = [];
+
+    public virtual IEnumerable<Organization> Organizations { get; set; } = [];
 }

@@ -7,13 +7,13 @@ using NodaTime;
 namespace Uzerai.Dotnet.Playground.Migrations
 {
     /// <inheritdoc />
-    public partial class InitializeDatabase : Migration
+    public partial class InitialDatabase_ForceManualConfiguration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "organization",
+                name: "organizations",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -24,7 +24,7 @@ namespace Uzerai.Dotnet.Playground.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_organization", x => x.id);
+                    table.PrimaryKey("pk_organizations", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -36,7 +36,6 @@ namespace Uzerai.Dotnet.Playground.Migrations
                     email = table.Column<string>(type: "text", nullable: false),
                     username = table.Column<string>(type: "text", nullable: false),
                     last_login = table.Column<Instant>(type: "timestamp with time zone", nullable: false),
-                    organization_id = table.Column<Guid>(type: "uuid", nullable: true),
                     created_at = table.Column<Instant>(type: "timestamp with time zone", nullable: false),
                     updated_at = table.Column<Instant>(type: "timestamp with time zone", nullable: false),
                     deleted_at = table.Column<Instant>(type: "timestamp with time zone", nullable: true)
@@ -44,15 +43,10 @@ namespace Uzerai.Dotnet.Playground.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_users", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_users_organization_organization_id",
-                        column: x => x.organization_id,
-                        principalTable: "organization",
-                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "organization_user",
+                name: "organization_users",
                 columns: table => new
                 {
                     organization_id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -60,15 +54,15 @@ namespace Uzerai.Dotnet.Playground.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_organization_user", x => new { x.organization_id, x.user_id });
+                    table.PrimaryKey("pk_organization_users", x => new { x.organization_id, x.user_id });
                     table.ForeignKey(
-                        name: "fk_organization_user_organization_organization_id",
+                        name: "fk_organization_users_organizations_organization_id",
                         column: x => x.organization_id,
-                        principalTable: "organization",
+                        principalTable: "organizations",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_organization_user_users_user_id",
+                        name: "fk_organization_users_users_user_id",
                         column: x => x.user_id,
                         principalTable: "users",
                         principalColumn: "id",
@@ -76,33 +70,27 @@ namespace Uzerai.Dotnet.Playground.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "organization_permission",
+                name: "organization_permissions",
                 columns: table => new
                 {
                     permission = table.Column<int>(type: "integer", nullable: false),
-                    organization_user_id = table.Column<string>(type: "text", nullable: false),
-                    organization_user_organization_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    organization_user_user_id = table.Column<Guid>(type: "uuid", nullable: false)
+                    organization_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_organization_permission", x => new { x.organization_user_id, x.permission });
+                    table.PrimaryKey("pk_organization_permissions", x => new { x.organization_id, x.user_id, x.permission });
                     table.ForeignKey(
-                        name: "fk_organization_permission_organization_user_organization_user",
-                        columns: x => new { x.organization_user_organization_id, x.organization_user_user_id },
-                        principalTable: "organization_user",
+                        name: "fk_organization_permissions_organization_users_organization_id",
+                        columns: x => new { x.organization_id, x.user_id },
+                        principalTable: "organization_users",
                         principalColumns: new[] { "organization_id", "user_id" },
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "ix_organization_permission_organization_user_organization_id_o",
-                table: "organization_permission",
-                columns: new[] { "organization_user_organization_id", "organization_user_user_id" });
-
-            migrationBuilder.CreateIndex(
-                name: "ix_organization_user_user_id",
-                table: "organization_user",
+                name: "ix_organization_users_user_id",
+                table: "organization_users",
                 column: "user_id");
 
             migrationBuilder.CreateIndex(
@@ -115,27 +103,22 @@ namespace Uzerai.Dotnet.Playground.Migrations
                 name: "ix_users_email",
                 table: "users",
                 column: "email");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_users_organization_id",
-                table: "users",
-                column: "organization_id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "organization_permission");
+                name: "organization_permissions");
 
             migrationBuilder.DropTable(
-                name: "organization_user");
+                name: "organization_users");
+
+            migrationBuilder.DropTable(
+                name: "organizations");
 
             migrationBuilder.DropTable(
                 name: "users");
-
-            migrationBuilder.DropTable(
-                name: "organization");
         }
     }
 }

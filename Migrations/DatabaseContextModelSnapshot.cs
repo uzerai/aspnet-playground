@@ -52,10 +52,6 @@ namespace Uzerai.Dotnet.Playground.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("last_login");
 
-                    b.Property<Guid?>("OrganizationId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("organization_id");
-
                     b.Property<Instant>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at");
@@ -75,40 +71,30 @@ namespace Uzerai.Dotnet.Playground.Migrations
                     b.HasIndex("Email")
                         .HasDatabaseName("ix_users_email");
 
-                    b.HasIndex("OrganizationId")
-                        .HasDatabaseName("ix_users_organization_id");
-
                     b.ToTable("users", (string)null);
                 });
 
             modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Authorization.Permissions.OrganizationPermission", b =>
                 {
-                    b.Property<string>("OrganizationUserId")
-                        .HasColumnType("text")
-                        .HasColumnName("organization_user_id");
+                    b.Property<Guid>("OrganizationId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("organization_id");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
                     b.Property<int>("Permission")
                         .HasColumnType("integer")
                         .HasColumnName("permission");
 
-                    b.Property<Guid>("OrganizationUserOrganizationId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("organization_user_organization_id");
+                    b.HasKey("OrganizationId", "UserId", "Permission")
+                        .HasName("pk_organization_permissions");
 
-                    b.Property<Guid>("OrganizationUserUserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("organization_user_user_id");
-
-                    b.HasKey("OrganizationUserId", "Permission")
-                        .HasName("pk_organization_permission");
-
-                    b.HasIndex("OrganizationUserOrganizationId", "OrganizationUserUserId")
-                        .HasDatabaseName("ix_organization_permission_organization_user_organization_id_o");
-
-                    b.ToTable("organization_permission", (string)null);
+                    b.ToTable("organization_permissions", (string)null);
                 });
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organization.Organization", b =>
+            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organizations.Organization", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -133,12 +119,12 @@ namespace Uzerai.Dotnet.Playground.Migrations
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id")
-                        .HasName("pk_organization");
+                        .HasName("pk_organizations");
 
-                    b.ToTable("organization", (string)null);
+                    b.ToTable("organizations", (string)null);
                 });
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organization.OrganizationUser", b =>
+            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organizations.OrganizationUser", b =>
                 {
                     b.Property<Guid>("OrganizationId")
                         .HasColumnType("uuid")
@@ -149,49 +135,41 @@ namespace Uzerai.Dotnet.Playground.Migrations
                         .HasColumnName("user_id");
 
                     b.HasKey("OrganizationId", "UserId")
-                        .HasName("pk_organization_user");
+                        .HasName("pk_organization_users");
 
                     b.HasIndex("UserId")
-                        .HasDatabaseName("ix_organization_user_user_id");
+                        .HasDatabaseName("ix_organization_users_user_id");
 
-                    b.ToTable("organization_user", (string)null);
-                });
-
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Authentication.User", b =>
-                {
-                    b.HasOne("Uzerai.Dotnet.Playground.Model.Organization.Organization", null)
-                        .WithMany("Users")
-                        .HasForeignKey("OrganizationId")
-                        .HasConstraintName("fk_users_organization_organization_id");
+                    b.ToTable("organization_users", (string)null);
                 });
 
             modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Authorization.Permissions.OrganizationPermission", b =>
                 {
-                    b.HasOne("Uzerai.Dotnet.Playground.Model.Organization.OrganizationUser", "OrganizationUser")
+                    b.HasOne("Uzerai.Dotnet.Playground.Model.Organizations.OrganizationUser", "OrganizationUser")
                         .WithMany("Permissions")
-                        .HasForeignKey("OrganizationUserOrganizationId", "OrganizationUserUserId")
+                        .HasForeignKey("OrganizationId", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_organization_permission_organization_user_organization_user");
+                        .HasConstraintName("fk_organization_permissions_organization_users_organization_id");
 
                     b.Navigation("OrganizationUser");
                 });
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organization.OrganizationUser", b =>
+            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organizations.OrganizationUser", b =>
                 {
-                    b.HasOne("Uzerai.Dotnet.Playground.Model.Organization.Organization", "Organization")
-                        .WithMany()
+                    b.HasOne("Uzerai.Dotnet.Playground.Model.Organizations.Organization", "Organization")
+                        .WithMany("OrganizationUsers")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_organization_user_organization_organization_id");
+                        .HasConstraintName("fk_organization_users_organizations_organization_id");
 
                     b.HasOne("Uzerai.Dotnet.Playground.Model.Authentication.User", "User")
                         .WithMany("OrganizationUsers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_organization_user_users_user_id");
+                        .HasConstraintName("fk_organization_users_users_user_id");
 
                     b.Navigation("Organization");
 
@@ -203,12 +181,12 @@ namespace Uzerai.Dotnet.Playground.Migrations
                     b.Navigation("OrganizationUsers");
                 });
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organization.Organization", b =>
+            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organizations.Organization", b =>
                 {
-                    b.Navigation("Users");
+                    b.Navigation("OrganizationUsers");
                 });
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organization.OrganizationUser", b =>
+            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organizations.OrganizationUser", b =>
                 {
                     b.Navigation("Permissions");
                 });

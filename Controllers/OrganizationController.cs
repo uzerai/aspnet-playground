@@ -2,8 +2,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NodaTime;
 using Uzerai.Dotnet.Playground.Controllers.CreateModel;
+using Uzerai.Dotnet.Playground.DI;
 using Uzerai.Dotnet.Playground.DI.Repository;
-using Uzerai.Dotnet.Playground.Model.Organization;
+using Uzerai.Dotnet.Playground.Model.Organizations;
 
 namespace Uzerai.Dotnet.Playground.Controllers;
 
@@ -36,11 +37,15 @@ public class OrganizationController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateOrganizationRequestData createOrganizationRequest)
     {
-        var organization = new Organization
+        var newOrganization = new Organization
         {
-            Name = createOrganizationRequest.Name
+            Name = createOrganizationRequest.Name,
         };
 
-        return Ok(await _organizationRepository.CreateAsync(organization));
+        newOrganization.Users.Append(HttpContext.GetLocalUser());
+        
+        var createdOrganization = await _organizationRepository.CreateAsync(newOrganization);
+
+        return Ok(createdOrganization);
     }
 }

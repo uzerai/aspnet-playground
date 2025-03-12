@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
-
+using Uzerai.Dotnet.Playground.DI.Data.ConfigurationExtension;
 using Uzerai.Dotnet.Playground.Model;
 using Uzerai.Dotnet.Playground.Model.Authentication;
+using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
+using Uzerai.Dotnet.Playground.Model.Organizations;
 
 namespace Uzerai.Dotnet.Playground.DI.Data;
 
@@ -16,7 +18,21 @@ public class DatabaseContext : DbContext
         _clock = clock;
     }
 
+    // ############################################################
+    // ##########  ENTITY SETS   ##################################
+    // ############################################################
     public DbSet<User> Users { get; set; }
+    public DbSet<Organization> Organizations { get; set; }
+    public DbSet<OrganizationUser> OrganizationUsers { get; set; }
+    public DbSet<OrganizationPermission> OrganizationPermissions { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ConfigureUserModel();
+        modelBuilder.ConfigureOrganizationModel();
+        modelBuilder.ConfigureOrganizationUserModel();
+        modelBuilder.ConfigureOrganizationPermissionModel();
+    }
 
     /// <summary>
     /// This override of SaveChangesAsync() is used to set the CreatedAt and UpdatedAt properties
