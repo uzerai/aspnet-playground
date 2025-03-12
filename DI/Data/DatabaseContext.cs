@@ -25,6 +25,8 @@ public class DatabaseContext : DbContext
     public DbSet<Organization> Organizations { get; set; }
     public DbSet<OrganizationUser> OrganizationUsers { get; set; }
     public DbSet<OrganizationPermission> OrganizationPermissions { get; set; }
+    public DbSet<OrganizationTeam> OrganizationTeams { get; set; }
+    public DbSet<OrganizationTeamUser> OrganizationTeamUsers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -33,6 +35,7 @@ public class DatabaseContext : DbContext
         modelBuilder.ConfigureOrganizationUserModel();
         modelBuilder.ConfigureOrganizationPermissionModel();
         modelBuilder.ConfigureOrganizationTeamModel();
+        modelBuilder.ConfigureOrganizationTeamUserModel();
     }
 
     /// <summary>

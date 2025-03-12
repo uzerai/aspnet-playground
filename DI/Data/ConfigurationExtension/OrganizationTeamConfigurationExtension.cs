@@ -11,10 +11,16 @@ public static class OrganizationTeamConfigurationExtension
             .HasOne(e => e.Organization)
             .WithMany(e => e.Teams)
             .HasForeignKey(e => e.OrganizationId);
-        // modelBuilder.Entity<OrganizationTeam>()
-        //     .HasMany(e => e.OrganizationTeamUsers)
-        //     .WithOne(e => e.OrganizationTeam);
 
+        modelBuilder.Entity<OrganizationTeam>()
+            .HasMany(e => e.OrganizationTeamUsers)
+            .WithOne(e => e.OrganizationTeam);
+
+        modelBuilder.Entity<OrganizationTeam>()
+            .HasMany(e => e.Users)
+            .WithMany()
+            .UsingEntity<OrganizationTeamUser>();
+        
         return modelBuilder;
     }
 }
