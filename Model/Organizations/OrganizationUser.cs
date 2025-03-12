@@ -19,5 +19,5 @@ public class OrganizationUser
     public virtual Organization Organization { get; set; } = null!;
     [JsonIgnore]
     public virtual User User { get; set; } = null!;
-    public virtual IEnumerable<OrganizationPermission> Permissions { get; set; } = [];
+    public virtual ICollection<OrganizationPermission> Permissions { get; set; } = [];
 }

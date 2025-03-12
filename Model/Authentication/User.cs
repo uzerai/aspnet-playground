@@ -24,7 +24,7 @@ public class User : BaseEntity
     public Instant LastLogin { get; set; }
 
     // OrganizationUser relationships
-    public virtual IEnumerable<OrganizationUser> OrganizationUsers { get; set; } = [];
+    public virtual ICollection<OrganizationUser> OrganizationUsers { get; set; } = [];
 
-    public virtual IEnumerable<Organization> Organizations { get; set; } = [];
+    public virtual ICollection<Organization> Organizations { get; set; } = [];
 }

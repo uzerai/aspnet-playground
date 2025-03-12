@@ -1,10 +1,7 @@
-using Uzerai.Dotnet.Playground.Model;
-
 namespace Uzerai.Dotnet.Playground.DI.Repository;
 
-public interface IEntityRepository<T> where T : BaseEntity
+public interface IRepository<T>
 {
-
     /// <summary>
     /// Build a queryable collection of entities.
     /// 
@@ -20,22 +17,6 @@ public interface IEntityRepository<T> where T : BaseEntity
     /// </summary>
     /// <returns>A queryable collection of entities.</returns>
     IQueryable<T> BuildReadonlyQuery();
-
-    /// <summary>
-    /// Get an entity by its ID without tracking changes.
-    /// </summary>
-    /// <param name="id">The unique identifier of the entity.</param>
-    /// <returns>The entity if found; otherwise, null.</returns>
-    Task<T?> GetByIdAsync(Guid id);
-
-    /// <summary>
-    /// Get an entity by its ID with change tracking enabled.
-    /// 
-    /// Aims to be the only entrypoint to getting a 
-    /// </summary>
-    /// <param name="id">The unique identifier of the entity.</param>
-    /// <returns>The entity if found; otherwise, null.</returns>
-    Task<T?> GetByIdTrackingAsync(Guid id);
 
     /// <summary>
     /// Get all entities of type T.
@@ -60,9 +41,9 @@ public interface IEntityRepository<T> where T : BaseEntity
     /// <summary>
     /// Soft delete an entity by setting its DeletedAt property.
     /// </summary>
-    /// <param name="id">The unique identifier of the entity to delete.</param>
+    /// <param name="entity">The entity to delete.</param>
     /// <returns>True if the entity was found and deleted; otherwise, false.</returns>
-    Task<bool> DeleteAsync(Guid id);
+    Task<bool> DeleteAsync(T entity);
 
     /// <summary>
     /// Save changes made to the database context.

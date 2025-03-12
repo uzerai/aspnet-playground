@@ -1,90 +1,59 @@
-
 using Microsoft.EntityFrameworkCore;
-using NodaTime;
-
-using Uzerai.Dotnet.Playground.Model;
 using Uzerai.Dotnet.Playground.DI.Data;
 
 namespace Uzerai.Dotnet.Playground.DI.Repository;
 
-public partial class BaseRepository<T> : IEntityRepository<T> where T : BaseEntity
+public partial class BaseRepository<T> : IRepository<T> where T : class
 {
-    private readonly DatabaseContext _context;
-    private readonly IClock _clock;
+    protected readonly DatabaseContext _context;
 
-    public BaseRepository(DatabaseContext context, IClock clock)
+    public BaseRepository(DatabaseContext context)
     {
         _context = context;
-        _clock = clock;
     }
 
-    public IQueryable<T> BuildTrackedQuery()
-    {
-        return _context.Set<T>()
-            .AsTracking()
-            .AsQueryable();
-    }
-
-    public IQueryable<T> BuildReadonlyQuery()
+    public virtual IQueryable<T> BuildReadonlyQuery()
     {
         return _context.Set<T>()
             .AsNoTracking()
             .AsQueryable();
     }
 
-    public async Task<T> CreateAsync(T entity)
+    public virtual IQueryable<T> BuildTrackedQuery()
     {
-        await _context.Set<T>()
-            .AddAsync(entity);
+        return _context.Set<T>()
+            .AsTracking()
+            .AsQueryable();
+    }
+
+    public virtual async Task<T> CreateAsync(T entity)
+    {
+        _context.Set<T>().Add(entity);
         await _context.SaveChangesAsync();
 
         return entity;
     }
 
-    public async Task<bool> DeleteAsync(Guid id)
+    public virtual async Task<bool> DeleteAsync(T entity)
     {
-        var entity = await _context.Set<T>()
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == id);
-
-        if (entity == null)
-        {
-            return false;
-        }
-
-        entity.DeletedAt = _clock.GetCurrentInstant();
+        _context.Set<T>().Remove(entity);
         await _context.SaveChangesAsync();
 
         return true;
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync()
+    public virtual async Task<IEnumerable<T>> GetAllAsync()
     {
-        return await _context.Set<T>()
-            .AsNoTracking()
+        return await BuildReadonlyQuery()
             .ToListAsync();
     }
 
-    public async Task<T?> GetByIdAsync(Guid id)
-    {
-        return await _context.Set<T>()
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == id);
-    }
-
-    public async Task<T?> GetByIdTrackingAsync(Guid id)
-    {
-        return await _context.Set<T>()
-            .AsTracking()
-            .FirstOrDefaultAsync(x => x.Id == id);
-    }
-
-    public async Task<bool> SaveAsync()
+    public virtual async Task<bool> SaveAsync()
     {
         return await _context.SaveChangesAsync() > 0;
     }
 
-    public async Task<T> UpdateAsync(T entity)
+    public virtual async Task<T> UpdateAsync(T entity)
     {
         _context.Set<T>().Update(entity);
         await _context.SaveChangesAsync();

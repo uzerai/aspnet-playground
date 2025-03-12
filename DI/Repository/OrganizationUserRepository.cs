@@ -4,10 +4,10 @@ using Uzerai.Dotnet.Playground.Model.Organizations;
 
 namespace Uzerai.Dotnet.Playground.DI.Repository;
 
-public class OrganizationRepository : EntityRepository<Organization>
+public class OrganizationUserRepository : BaseRepository<OrganizationUser>
 {
-    public OrganizationRepository(DatabaseContext context, IClock clock)
-        : base(context, clock)
+    public OrganizationUserRepository(DatabaseContext context)
+        : base(context)
     {
     }
 }

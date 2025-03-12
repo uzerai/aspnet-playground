@@ -8,7 +8,7 @@ public class Organization : BaseEntity
     [Required]
     public required string Name { get; set; }
     [JsonIgnore]
-    public virtual IEnumerable<User> Users { get; set; } = [];
+    public virtual ICollection<User> Users { get; set; } = [];
     [JsonIgnore]
-    public virtual IEnumerable<OrganizationUser> OrganizationUsers { get; set; } = [];
+    public virtual ICollection<OrganizationUser> OrganizationUsers { get; set; } = [];
 }
