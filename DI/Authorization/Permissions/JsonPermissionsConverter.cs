@@ -44,8 +44,11 @@ public class JsonPermissionsConverter : JsonConverter<Permission>
         string permissionName = permission.ToString();
 
         // Use regex to find the resource and action parts
-        string pattern = @"([A-Z][a-z]+){2,}";
+        string pattern = @"([A-Z][a-z]+)([A-Z][a-z]+)";
         Match match = Regex.Match(permissionName, pattern);
+
+        Console.WriteLine(match.Groups[1].Value);
+        Console.WriteLine(match.Groups[2].Value);
 
         if (!match.Success)
             throw new JsonException($"Cannot convert permission to string: {permissionName}");

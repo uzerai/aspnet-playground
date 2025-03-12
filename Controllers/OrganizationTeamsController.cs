@@ -30,6 +30,7 @@ public class OrganizationTeamsController : ControllerBase
     }
 
     [HttpPost]
+    [OrganizationPermissionRequired(Permission.TeamsWrite)]
     public async Task<IActionResult> Create(
       [FromRoute][Required] Guid organizationId, 
       [FromBody][Required] CreateOrganizationTeamRequestData requestData)

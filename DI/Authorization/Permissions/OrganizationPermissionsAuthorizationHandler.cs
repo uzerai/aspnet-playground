@@ -42,17 +42,16 @@ public class OrganizationPermissionsAuthorizationHandler : AuthorizationHandler<
             return Task.CompletedTask;
         }
 
-        var organizationPermissions = localUser.OrganizationUsers.Where(ou => ou.OrganizationId == organizationIdToAuthorizeAgainst).FirstOrDefault()?.Permissions;
+        var organizationPermissions = localUser.OrganizationUsers
+            .Where(ou => ou.OrganizationId == organizationIdToAuthorizeAgainst)
+            .SelectMany(ou => ou.Permissions)
+            .ToList();
+        
         if (organizationPermissions == null)
         {
             _logger.LogError("User has no permissions for organization {OrganizationId}; aborting authorization check.", organizationIdToAuthorizeAgainst);
             context.Fail();
             return Task.CompletedTask;
-        }
-
-        foreach (var permission in organizationPermissions)
-        {
-            _logger.LogDebug("User has permission {Permission} for organization {OrganizationId}", permission.Permission, organizationIdToAuthorizeAgainst);
         }
 
         if(!organizationPermissions.Any(orgPerm => orgPerm.Permission == requirement.Permission))
