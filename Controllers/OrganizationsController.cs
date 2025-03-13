@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NodaTime;
 using Uzerai.Dotnet.Playground.Controllers.CreateModel;
 using Uzerai.Dotnet.Playground.DI;
 using Uzerai.Dotnet.Playground.DI.Repository;
@@ -49,25 +48,11 @@ public class OrganizationsController : ControllerBase
         {
             OrganizationId = createdOrganization.Id,
             UserId = HttpContext.GetLocalUser().Id,
-            Permissions = new List<OrganizationPermission>
-            {
-                new OrganizationPermission
+            Permissions = Enum.GetValues<Permission>()
+                .Select(permission => new OrganizationPermission
                 {
-                    Permission = Permission.UsersRead
-                },
-                new OrganizationPermission
-                {
-                    Permission = Permission.UsersWrite
-                },
-                new OrganizationPermission
-                {
-                    Permission = Permission.OrganizationsRead
-                },
-                new OrganizationPermission
-                {
-                    Permission = Permission.OrganizationsWrite
-                }
-            },
+                    Permission = permission
+                }).ToList()
         };
 
         await _organizationUserRepository.CreateAsync(organizationUser);
