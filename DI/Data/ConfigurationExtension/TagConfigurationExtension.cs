@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Uzerai.Dotnet.Playground.Model;
+using Uzerai.Dotnet.Playground.Model.Tags;
 
 namespace Uzerai.Dotnet.Playground.DI.Data.ConfigurationExtension;
 
@@ -9,7 +9,7 @@ public static class TagConfigurationExtension
         
         modelBuilder.Entity<Tag>()
             .HasOne(e => e.Organization)
-            .WithMany()
+            .WithMany(e => e.Tags)
             .HasForeignKey(e => e.OrganizationId);
 
         modelBuilder.Entity<Tag>()

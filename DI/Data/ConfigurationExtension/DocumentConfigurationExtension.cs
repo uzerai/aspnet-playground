@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Uzerai.Dotnet.Playground.Model;
+using Uzerai.Dotnet.Playground.Model.Tags;
 
 namespace Uzerai.Dotnet.Playground.DI.Data.ConfigurationExtension;
 
@@ -16,11 +17,11 @@ public static class DocumentConfigurationExtension
             .HasOne(e => e.Author)
             .WithMany()
             .HasForeignKey(e => e.AuthorId);
-
+            
         modelBuilder.Entity<Document>()
             .HasMany(e => e.Tags)
             .WithMany(e => e.TaggedEntities as ICollection<Document>);
-
+            
         return modelBuilder;
     }
 }

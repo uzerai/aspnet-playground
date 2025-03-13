@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
-using Uzerai.Dotnet.Playground.DI.Authorization.ConfigurationExtension;
 using Uzerai.Dotnet.Playground.Model.Authentication;
 using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
 
@@ -14,6 +13,7 @@ public class OrganizationTeamUser
     [ForeignKey("Organization")]
     public Guid OrganizationId { get; set; }
     [Required]
+    [ForeignKey("User")]
     public Guid UserId { get; set; }
     [Required]
     [ForeignKey("OrganizationTeam")]

@@ -1,5 +1,7 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
+using Uzerai.Dotnet.Playground.Model.Authentication;
 using Uzerai.Dotnet.Playground.Model.Organizations;
 
 namespace Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
@@ -9,9 +11,16 @@ public class OrganizationPermission
 {
     public Permission Permission { get; set; }
     [JsonIgnore]
+    [ForeignKey("Organization")]
     public Guid OrganizationId { get; set; }
     [JsonIgnore]
+    [ForeignKey("User")]
     public Guid UserId { get; set; }
+    
     [JsonIgnore]
     public virtual OrganizationUser OrganizationUser { get; set; } = null!;
+    [JsonIgnore]
+    public virtual Organization Organization { get; set; } = null!;
+    [JsonIgnore]
+    public virtual User User { get; set; } = null!;
 }

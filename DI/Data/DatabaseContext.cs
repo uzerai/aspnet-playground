@@ -5,6 +5,7 @@ using Uzerai.Dotnet.Playground.Model;
 using Uzerai.Dotnet.Playground.Model.Authentication;
 using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
 using Uzerai.Dotnet.Playground.Model.Organizations;
+using Uzerai.Dotnet.Playground.Model.Tags;
 
 namespace Uzerai.Dotnet.Playground.DI.Data;
 
@@ -32,6 +33,11 @@ public class DatabaseContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // For inherited abstract models.
+        modelBuilder.ConfigureBaseEntityAbstractModel();
+        modelBuilder.ConfigureTaggable();
+
+        // Regular model configurations.
         modelBuilder.ConfigureUserModel();
         modelBuilder.ConfigureOrganizationModel();
         modelBuilder.ConfigureOrganizationUserModel();

@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 using NodaTime;
 
 namespace Uzerai.Dotnet.Playground.Model;
 
-public abstract class BaseEntity
+[PrimaryKey(nameof(Id))]
+public abstract partial class BaseEntity
 {
-    [Key]
     public Guid Id { get; set; }
 
     [Required]
