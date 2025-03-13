@@ -1,10 +1,10 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NodaTime;
 using Uzerai.Dotnet.Playground.Controllers.CreateModel;
 using Uzerai.Dotnet.Playground.DI;
 using Uzerai.Dotnet.Playground.DI.Repository;
-using Uzerai.Dotnet.Playground.Model.Authentication;
 using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
 using Uzerai.Dotnet.Playground.Model.Organizations;
 
@@ -17,13 +17,11 @@ public class OrganizationsController : ControllerBase
 {
     private readonly OrganizationRepository _organizationRepository;
     private readonly OrganizationUserRepository _organizationUserRepository;
-    private readonly IClock _clock;
 
-    public OrganizationsController(OrganizationRepository organizationRepository, OrganizationUserRepository organizationUserRepository, IClock clock)
+    public OrganizationsController(OrganizationRepository organizationRepository, OrganizationUserRepository organizationUserRepository)
     {
         _organizationRepository = organizationRepository;
         _organizationUserRepository = organizationUserRepository;
-        _clock = clock;
     }
 
     [HttpGet]
@@ -33,7 +31,7 @@ public class OrganizationsController : ControllerBase
     }
 
     [HttpGet("{organizationId}/")]
-    public async Task<IActionResult> Get(Guid organizationId)
+    public async Task<IActionResult> Get([FromRoute][Required] Guid organizationId)
     {
         return Ok(await _organizationRepository.GetByIdAsync(organizationId));
     }
