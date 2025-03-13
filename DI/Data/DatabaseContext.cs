@@ -27,6 +27,8 @@ public class DatabaseContext : DbContext
     public DbSet<OrganizationPermission> OrganizationPermissions { get; set; }
     public DbSet<OrganizationTeam> OrganizationTeams { get; set; }
     public DbSet<OrganizationTeamUser> OrganizationTeamUsers { get; set; }
+    public DbSet<Document> Documents { get; set; }
+    public DbSet<Tag> Tags { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -36,6 +38,8 @@ public class DatabaseContext : DbContext
         modelBuilder.ConfigureOrganizationPermissionModel();
         modelBuilder.ConfigureOrganizationTeamModel();
         modelBuilder.ConfigureOrganizationTeamUserModel();
+        modelBuilder.ConfigureDocumentModel();
+        modelBuilder.ConfigureTagModel();
     }
 
     /// <summary>

@@ -13,4 +13,6 @@ public class Organization : BaseEntity
     public virtual ICollection<OrganizationUser> OrganizationUsers { get; set; } = [];
     [JsonIgnore]
     public virtual ICollection<OrganizationTeam> Teams { get; set; } = [];
+    [JsonIgnore]
+    public virtual ICollection<Tag> Tags { get; set; } = [];
 }
