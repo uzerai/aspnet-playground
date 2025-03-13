@@ -12,33 +12,6 @@ namespace Uzerai.Dotnet.Playground.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropPrimaryKey(
-                name: "pk_users",
-                table: "users");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "pk_organizations",
-                table: "organizations");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "pk_organization_teams",
-                table: "organization_teams");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_users",
-                table: "users",
-                column: "id");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_organizations",
-                table: "organizations",
-                column: "id");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_organization_teams",
-                table: "organization_teams",
-                column: "id");
-
             migrationBuilder.CreateTable(
                 name: "documents",
                 columns: table => new
@@ -54,7 +27,7 @@ namespace Uzerai.Dotnet.Playground.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_documents", x => x.id);
+                    table.PrimaryKey("pk_documents", x => x.id);
                     table.ForeignKey(
                         name: "fk_documents_organizations_organization_id",
                         column: x => x.organization_id,
@@ -85,7 +58,7 @@ namespace Uzerai.Dotnet.Playground.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tags", x => x.id);
+                    table.PrimaryKey("pk_tags", x => x.id);
                     table.ForeignKey(
                         name: "fk_tags_organizations_organization_id",
                         column: x => x.organization_id,
@@ -185,36 +158,9 @@ namespace Uzerai.Dotnet.Playground.Migrations
             migrationBuilder.DropTable(
                 name: "tags");
 
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_users",
-                table: "users");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_organizations",
-                table: "organizations");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_organization_teams",
-                table: "organization_teams");
-
             migrationBuilder.DropIndex(
                 name: "ix_organization_permissions_user_id",
                 table: "organization_permissions");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "pk_users",
-                table: "users",
-                column: "id");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "pk_organizations",
-                table: "organizations",
-                column: "id");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "pk_organization_teams",
-                table: "organization_teams",
-                column: "id");
         }
     }
 }

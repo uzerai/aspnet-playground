@@ -15,7 +15,7 @@ using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
 namespace Uzerai.Dotnet.Playground.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20250313151111_AddTagsAndTaggableDocumentModels")]
+    [Migration("20250313153834_AddTagsAndTaggableDocumentModels")]
     partial class AddTagsAndTaggableDocumentModels
     {
         /// <inheritdoc />
