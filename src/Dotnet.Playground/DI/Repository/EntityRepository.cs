@@ -4,10 +4,11 @@ using NodaTime;
 
 using Uzerai.Dotnet.Playground.Model;
 using Uzerai.Dotnet.Playground.DI.Data;
+using Uzerai.Dotnet.Playground.DI.Repository.Interface;
 
 namespace Uzerai.Dotnet.Playground.DI.Repository;
 
-public partial class EntityRepository<T> : BaseRepository<T> where T : BaseEntity
+public partial class EntityRepository<T> : BaseRepository<T>, IEntityRepository<T> where T : BaseEntity
 {
     private readonly IClock _clock;
 

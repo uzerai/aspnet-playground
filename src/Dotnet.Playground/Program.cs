@@ -81,7 +81,7 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 /// Please add it to the extension method in
 ///     Uzerai.Dotnet.Playground.DI.Repository.ConfigurationExtension.RepositoryServiceConfigurationExtensions
 /// instead of adding them here.
-builder.Services.AddRepositoryServices();
+builder.Services.AddRepositories();
 builder.Services.AddPermissionsAuthorizationHandling();
 
 // ############################################################
