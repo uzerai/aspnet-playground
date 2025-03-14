@@ -34,7 +34,8 @@
 
     <!-- Expose internals to the test project -->
   <ItemGroup>
-    <InternalsVisibleTo Include="../../test/Dotnet.Playground.csproj" />
+    <InternalsVisibleTo Include="../../test/Dotnet.Playground.Tests/Dotnet.Playground.Tests.csproj" />
+    <InternalsVisibleTo Include="../../test/Dotnet.Playground.IntegrationTests/Dotnet.Playground.IntegrationTests.csproj" />
   </ItemGroup>
 
 </Project>

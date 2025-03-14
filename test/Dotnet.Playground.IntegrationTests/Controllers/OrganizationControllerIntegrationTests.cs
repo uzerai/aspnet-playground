@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Uzerai.Dotnet.Playground.Controllers.CreateModel;
 using Xunit;
 
-namespace Dotnet.Playground.Tests.IntegrationTests.Controllers;
+namespace Dotnet.Playground.IntegrationTests.Controllers;
 
 public class OrganizationsControllerIntegrationTests : IClassFixture<TestWebApplicationFactory>
 {

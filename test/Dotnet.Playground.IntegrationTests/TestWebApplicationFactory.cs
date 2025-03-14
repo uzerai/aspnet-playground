@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 using NodaTime;
 using Uzerai.Dotnet.Playground.DI.Data;
 
-namespace Dotnet.Playground.Tests.IntegrationTests;
+namespace Dotnet.Playground.IntegrationTests;
 
 public class TestWebApplicationFactory : WebApplicationFactory<Program>
 {
