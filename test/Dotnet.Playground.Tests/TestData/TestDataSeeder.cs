@@ -1,8 +1,4 @@
-using System;
-using System.Threading.Tasks;
 using Uzerai.Dotnet.Playground.DI.Data;
-using Uzerai.Dotnet.Playground.Model.Authentication;
-using Uzerai.Dotnet.Playground.Model.Organizations;
 
 namespace Dotnet.Playground.Tests.TestData
 {

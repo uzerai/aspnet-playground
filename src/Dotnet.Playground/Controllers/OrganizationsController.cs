@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Uzerai.Dotnet.Playground.Controllers.CreateModel;
 using Uzerai.Dotnet.Playground.DI;
 using Uzerai.Dotnet.Playground.DI.Repository;
+using Uzerai.Dotnet.Playground.DI.Repository.Interface;
 using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
 using Uzerai.Dotnet.Playground.Model.Organizations;
 
@@ -14,10 +15,10 @@ namespace Uzerai.Dotnet.Playground.Controllers;
 [ApiController]
 public class OrganizationsController : ControllerBase
 {
-    private readonly OrganizationRepository _organizationRepository;
-    private readonly OrganizationUserRepository _organizationUserRepository;
+    private readonly IOrganizationRepository _organizationRepository;
+    private readonly IOrganizationUserRepository _organizationUserRepository;
 
-    public OrganizationsController(OrganizationRepository organizationRepository, OrganizationUserRepository organizationUserRepository)
+    public OrganizationsController(IOrganizationRepository organizationRepository, IOrganizationUserRepository organizationUserRepository)
     {
         _organizationRepository = organizationRepository;
         _organizationUserRepository = organizationUserRepository;

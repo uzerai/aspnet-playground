@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using NodaTime.Serialization.SystemTextJson;
-using Uzerai.Dotnet.Playground.API.DI.Middleware;
 using Uzerai.Dotnet.Playground.DI.Repository.ConfigurationExtension;
 using System.Text.Json;
 using Uzerai.Dotnet.Playground.DI.Middleware.ConfigurationExtension;
@@ -117,3 +116,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// Expose program for test project
+public partial class Program {}

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Uzerai.Dotnet.Playground.Controllers.CreateModel;
 using Xunit;
 
-namespace Dotnet.Playground.Test.IntegrationTests.Controllers;
+namespace Dotnet.Playground.Tests.IntegrationTests.Controllers;
 
 public class OrganizationsControllerIntegrationTests : IClassFixture<TestWebApplicationFactory>
 {
@@ -38,10 +38,7 @@ public class OrganizationsControllerIntegrationTests : IClassFixture<TestWebAppl
     public async Task Create_WithValidData_ReturnsCreatedOrganization()
     {
         // Arrange
-        var createRequest = new CreateOrganizationRequestData
-        {
-            Name = "Integration Test Org"
-        };
+        var createRequest = new CreateOrganizationRequestData("Integration Test Org");
         
         var content = new StringContent(
             JsonSerializer.Serialize(createRequest),

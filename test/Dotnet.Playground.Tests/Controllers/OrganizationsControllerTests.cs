@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Uzerai.Dotnet.Playground.Controllers;
-using Uzerai.Dotnet.Playground.DI.Repository;
+using Uzerai.Dotnet.Playground.Controllers.CreateModel;
+using Uzerai.Dotnet.Playground.DI.Repository.Interface;
 using Uzerai.Dotnet.Playground.Model.Authentication;
 using Uzerai.Dotnet.Playground.Model.Organizations;
 using Xunit;
@@ -15,16 +12,16 @@ namespace Dotnet.Playground.Tests.Controllers;
 
 public class OrganizationsControllerTests
 {
-    private readonly Mock<OrganizationRepository> _mockOrganizationRepository;
-    private readonly Mock<OrganizationUserRepository> _mockOrganizationUserRepository;
+    private readonly Mock<IOrganizationRepository> _mockOrganizationRepository;
+    private readonly Mock<IOrganizationUserRepository> _mockOrganizationUserRepository;
     private readonly OrganizationsController _controller;
     private readonly Guid _userId = Guid.NewGuid();
 
     public OrganizationsControllerTests()
     {
         // Setup mocks
-        _mockOrganizationRepository = new Mock<OrganizationRepository>();
-        _mockOrganizationUserRepository = new Mock<OrganizationUserRepository>();
+        _mockOrganizationRepository = new Mock<IOrganizationRepository>();
+        _mockOrganizationUserRepository = new Mock<IOrganizationUserRepository>();
         
         // Create controller with mocked dependencies
         _controller = new OrganizationsController(
@@ -32,7 +29,7 @@ public class OrganizationsControllerTests
             _mockOrganizationUserRepository.Object);
         
         // Setup HttpContext with mock user
-        var user = new User { Id = _userId };
+        var user = new User { Id = _userId, Auth0UserId = "auth0|1234567890", Email = "test@example.com", Username = "test-username" };
         var httpContext = new DefaultHttpContext();
         httpContext.Items["LocalUserIdentity"] = user;
         _controller.ControllerContext = new ControllerContext
@@ -86,10 +83,7 @@ public class OrganizationsControllerTests
     public async Task Create_ValidOrganization_ReturnsCreatedOrganization()
     {
         // Arrange
-        var createRequest = new Controllers.CreateModel.CreateOrganizationRequestData
-        {
-            Name = "New Organization"
-        };
+        var createRequest = new CreateOrganizationRequestData("New Organization");
         
         var newOrganization = new Organization
         {
@@ -103,7 +97,10 @@ public class OrganizationsControllerTests
         
         _mockOrganizationUserRepository.Setup(repo => 
             repo.CreateAsync(It.IsAny<OrganizationUser>()))
-            .ReturnsAsync(new OrganizationUser());
+            .ReturnsAsync(new OrganizationUser(){
+                OrganizationId = newOrganization.Id,
+                UserId = _userId
+            });
 
         // Act
         var result = await _controller.Create(createRequest);

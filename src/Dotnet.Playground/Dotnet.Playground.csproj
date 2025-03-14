@@ -28,6 +28,13 @@
 
     <!-- Auth0 -->
     <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.4.1" />
+
+
+  </ItemGroup>
+
+    <!-- Expose internals to the test project -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="../../test/Dotnet.Playground.csproj" />
   </ItemGroup>
 
 </Project>

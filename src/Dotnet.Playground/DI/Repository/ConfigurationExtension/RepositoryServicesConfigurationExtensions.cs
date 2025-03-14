@@ -1,3 +1,5 @@
+using Uzerai.Dotnet.Playground.DI.Repository.Interface;
+
 namespace Uzerai.Dotnet.Playground.DI.Repository.ConfigurationExtension;
 
 public static class RepositoryServicesConfigurationExtensions

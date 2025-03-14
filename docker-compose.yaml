@@ -13,11 +13,11 @@ services:
       - "5432:5432"
     volumes:
       - csharp-playground-postgres-data:/var/lib/postgresql/data
-      - ./Docker/init-scripts:/docker-entrypoint-initdb.d
+      - ./container/local-db/init-scripts:/docker-entrypoint-initdb.d
     # Add build context to install extensions
     build:
-      context: ./Docker
-      dockerfile: Dockerfile.
+      context: ./container/local-db
+      dockerfile: Dockerfile.postgres
 
 volumes:
   csharp-playground-postgres-data:
