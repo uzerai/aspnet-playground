@@ -1,6 +1,6 @@
-using Uzerai.Dotnet.Playground.Model;
+using Dotnet.Playground.Model;
 
-namespace Uzerai.Dotnet.Playground.DI.Repository.Interface;
+namespace Dotnet.Playground.DI.Repository.Interface;
 
 public interface IEntityRepository<T> : IRepository<T> where T : BaseEntity
 {

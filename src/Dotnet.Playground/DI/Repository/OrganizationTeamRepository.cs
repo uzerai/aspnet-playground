@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
-using Uzerai.Dotnet.Playground.DI.Data;
-using Uzerai.Dotnet.Playground.DI.Repository.Interface;
-using Uzerai.Dotnet.Playground.Model.Organizations;
+using Dotnet.Playground.DI.Data;
+using Dotnet.Playground.DI.Repository.Interface;
+using Dotnet.Playground.Model.Organizations;
 
-namespace Uzerai.Dotnet.Playground.DI.Repository;
+namespace Dotnet.Playground.DI.Repository;
 
 public class OrganizationTeamRepository : EntityRepository<OrganizationTeam>, IOrganizationTeamRepository
 {

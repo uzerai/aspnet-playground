@@ -1,14 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using Uzerai.Dotnet.Playground.DI;
-using Uzerai.Dotnet.Playground.DI.Authorization.Permissions;
-using Uzerai.Dotnet.Playground.DI.Repository;
-using Uzerai.Dotnet.Playground.DI.Repository.Interface;
-using Uzerai.Dotnet.Playground.DTO.RequestData;
-using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
-using Uzerai.Dotnet.Playground.Model.Tags;
+using Dotnet.Playground.DI;
+using Dotnet.Playground.DI.Authorization.Permissions;
+using Dotnet.Playground.DI.Repository;
+using Dotnet.Playground.DI.Repository.Interface;
+using Dotnet.Playground.DTO.RequestData;
+using Dotnet.Playground.Model.Authorization.Permissions;
+using Dotnet.Playground.Model.Tags;
 
-namespace Uzerai.Dotnet.Playground.Controllers;
+namespace Dotnet.Playground.Controllers;
 
 [Route("organizations/{organizationId}/tags")]
 [ApiController]

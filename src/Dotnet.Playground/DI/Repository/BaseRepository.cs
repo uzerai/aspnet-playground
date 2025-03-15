@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Uzerai.Dotnet.Playground.DI.Data;
-using Uzerai.Dotnet.Playground.DI.Repository.Interface;
+using Dotnet.Playground.DI.Data;
+using Dotnet.Playground.DI.Repository.Interface;
 
-namespace Uzerai.Dotnet.Playground.DI.Repository;
+namespace Dotnet.Playground.DI.Repository;
 
 public partial class BaseRepository<T> : IRepository<T> where T : class
 {

@@ -1,6 +1,6 @@
-using Uzerai.Dotnet.Playground.Model.Authentication;
+using Dotnet.Playground.Model.Authentication;
 
-namespace Uzerai.Dotnet.Playground.DI.Data.QueryExtensions;
+namespace Dotnet.Playground.DI.Data.QueryExtensions;
 
 public static class UserQueryExtensions
 {

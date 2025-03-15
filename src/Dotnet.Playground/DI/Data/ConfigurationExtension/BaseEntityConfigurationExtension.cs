@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Uzerai.Dotnet.Playground.Model;
+using Dotnet.Playground.Model;
 
-namespace Uzerai.Dotnet.Playground.DI.Data.ConfigurationExtension;
+namespace Dotnet.Playground.DI.Data.ConfigurationExtension;
 
 public static class BaseEntityConfigurationExtension
 {

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Uzerai.Dotnet.Playground.Model.Tags;
+using Dotnet.Playground.Model.Tags;
 
-namespace Uzerai.Dotnet.Playground.DI.Data.ConfigurationExtension;
+namespace Dotnet.Playground.DI.Data.ConfigurationExtension;
 
 public static class TagConfigurationExtension
 {

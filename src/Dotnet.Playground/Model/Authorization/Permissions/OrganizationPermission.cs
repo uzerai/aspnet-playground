@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
-using Uzerai.Dotnet.Playground.Model.Authentication;
-using Uzerai.Dotnet.Playground.Model.Organizations;
+using Dotnet.Playground.Model.Authentication;
+using Dotnet.Playground.Model.Organizations;
 
-namespace Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
+namespace Dotnet.Playground.Model.Authorization.Permissions;
 
 [PrimaryKey(nameof(OrganizationId), nameof(UserId), nameof(Permission))]
 public class OrganizationPermission

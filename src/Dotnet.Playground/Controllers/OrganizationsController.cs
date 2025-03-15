@@ -1,14 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Uzerai.Dotnet.Playground.Controllers.CreateModel;
-using Uzerai.Dotnet.Playground.DI;
-using Uzerai.Dotnet.Playground.DI.Authorization.Permissions;
-using Uzerai.Dotnet.Playground.DI.Repository.Interface;
-using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
-using Uzerai.Dotnet.Playground.Model.Organizations;
+using Dotnet.Playground.Controllers.CreateModel;
+using Dotnet.Playground.DI;
+using Dotnet.Playground.DI.Authorization.Permissions;
+using Dotnet.Playground.DI.Repository.Interface;
+using Dotnet.Playground.Model.Authorization.Permissions;
+using Dotnet.Playground.Model.Organizations;
 
-namespace Uzerai.Dotnet.Playground.Controllers;
+namespace Dotnet.Playground.Controllers;
 
 [Authorize]
 [Route("organizations")]

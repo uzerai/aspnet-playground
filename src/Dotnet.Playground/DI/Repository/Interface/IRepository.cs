@@ -1,4 +1,4 @@
-namespace Uzerai.Dotnet.Playground.DI.Repository.Interface;
+namespace Dotnet.Playground.DI.Repository.Interface;
 
 public interface IRepository<T>
 {

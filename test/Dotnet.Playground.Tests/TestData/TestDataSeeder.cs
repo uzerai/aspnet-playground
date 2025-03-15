@@ -1,4 +1,4 @@
-using Uzerai.Dotnet.Playground.DI.Data;
+using Dotnet.Playground.DI.Data;
 
 namespace Dotnet.Playground.Tests.TestData
 {

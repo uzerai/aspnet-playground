@@ -1,9 +1,9 @@
 using NodaTime;
-using Uzerai.Dotnet.Playground.DI.Data;
-using Uzerai.Dotnet.Playground.DI.Repository.Interface;
-using Uzerai.Dotnet.Playground.Model.Tags;
+using Dotnet.Playground.DI.Data;
+using Dotnet.Playground.DI.Repository.Interface;
+using Dotnet.Playground.Model.Tags;
 
-namespace Uzerai.Dotnet.Playground.DI.Repository;
+namespace Dotnet.Playground.DI.Repository;
 
 public class TagRepository : EntityRepository<Tag>, ITagRepository
 {

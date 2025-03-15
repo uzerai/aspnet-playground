@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using Uzerai.Dotnet.Playground.Model.Authentication;
-using Uzerai.Dotnet.Playground.Model.Tags;
+using Dotnet.Playground.Model.Authentication;
+using Dotnet.Playground.Model.Tags;
 
-namespace Uzerai.Dotnet.Playground.Model.Organizations;
+namespace Dotnet.Playground.Model.Organizations;
 public class Organization : BaseEntity
 {
     [Required]

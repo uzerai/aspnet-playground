@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 
-namespace Uzerai.Dotnet.Playground.DI.Authorization.Permissions;
+namespace Dotnet.Playground.DI.Authorization.Permissions;
 
 public class OrganizationPermissionsAuthorizationHandler : AuthorizationHandler<OrganizationPermissionRequiredAttribute>
 {

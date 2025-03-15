@@ -1,15 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
 using Npgsql;
-using Uzerai.Dotnet.Playground.DI.Data;
+using Dotnet.Playground.DI.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using NodaTime.Serialization.SystemTextJson;
-using Uzerai.Dotnet.Playground.DI.Repository.ConfigurationExtension;
+using Dotnet.Playground.DI.Repository.ConfigurationExtension;
 using System.Text.Json;
-using Uzerai.Dotnet.Playground.DI.Middleware.ConfigurationExtension;
-using Uzerai.Dotnet.Playground.DI.Authorization.ConfigurationExtension;
+using Dotnet.Playground.DI.Middleware.ConfigurationExtension;
+using Dotnet.Playground.DI.Authorization.ConfigurationExtension;
 
 // ############################################################
 // ##########  APP BUILDING  ##################################
@@ -79,7 +79,7 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 /// 
 /// If you are adding a new repository:
 /// Please add it to the extension method in
-///     Uzerai.Dotnet.Playground.DI.Repository.ConfigurationExtension.RepositoryServiceConfigurationExtensions
+///     Dotnet.Playground.DI.Repository.ConfigurationExtension.RepositoryServiceConfigurationExtensions
 /// instead of adding them here.
 builder.Services.AddRepositories();
 builder.Services.AddPermissionsAuthorizationHandling();

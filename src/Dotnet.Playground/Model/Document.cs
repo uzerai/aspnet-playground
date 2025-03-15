@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using Uzerai.Dotnet.Playground.Model.Authentication;
-using Uzerai.Dotnet.Playground.Model.Organizations;
-using Uzerai.Dotnet.Playground.Model.Tags;
+using Dotnet.Playground.Model.Authentication;
+using Dotnet.Playground.Model.Organizations;
+using Dotnet.Playground.Model.Tags;
 
-namespace Uzerai.Dotnet.Playground.Model;
+namespace Dotnet.Playground.Model;
 
 [Table("documents")]
 public partial class Document : Taggable

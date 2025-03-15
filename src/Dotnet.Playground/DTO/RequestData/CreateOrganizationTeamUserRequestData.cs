@@ -1,6 +1,6 @@
-using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
+using Dotnet.Playground.Model.Authorization.Permissions;
 
-namespace Uzerai.Dotnet.Playground.DTO.RequestData;
+namespace Dotnet.Playground.DTO.RequestData;
 
 public class CreateOrganizationTeamUserRequestData
 {

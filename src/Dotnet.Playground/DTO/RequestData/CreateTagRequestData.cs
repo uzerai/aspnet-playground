@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Uzerai.Dotnet.Playground.DTO.RequestData;
+namespace Dotnet.Playground.DTO.RequestData;
 
 public class CreateTagRequestData
 {

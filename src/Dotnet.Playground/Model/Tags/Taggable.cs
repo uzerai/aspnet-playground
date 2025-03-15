@@ -1,4 +1,4 @@
-namespace Uzerai.Dotnet.Playground.Model.Tags;
+namespace Dotnet.Playground.Model.Tags;
 
 public abstract partial class Taggable : BaseEntity
 {

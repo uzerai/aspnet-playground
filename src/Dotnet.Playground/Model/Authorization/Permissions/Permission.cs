@@ -1,7 +1,7 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
+namespace Dotnet.Playground.Model.Authorization.Permissions;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum Permission

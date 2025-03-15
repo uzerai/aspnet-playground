@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Uzerai.Dotnet.Playground.Migrations
+namespace Dotnet.Playground.Migrations
 {
     /// <inheritdoc />
     public partial class AddOrganizationTeamUsers : Migration

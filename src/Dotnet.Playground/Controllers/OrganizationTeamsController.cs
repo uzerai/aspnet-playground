@@ -2,13 +2,13 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Uzerai.Dotnet.Playground.DI.Authorization.Permissions;
-using Uzerai.Dotnet.Playground.DI.Repository.Interface;
-using Uzerai.Dotnet.Playground.DTO.RequestData;
-using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
-using Uzerai.Dotnet.Playground.Model.Organizations;
+using Dotnet.Playground.DI.Authorization.Permissions;
+using Dotnet.Playground.DI.Repository.Interface;
+using Dotnet.Playground.DTO.RequestData;
+using Dotnet.Playground.Model.Authorization.Permissions;
+using Dotnet.Playground.Model.Organizations;
 
-namespace Uzerai.Dotnet.Playground.Controllers;
+namespace Dotnet.Playground.Controllers;
 
 [Authorize]
 [Route("organizations/{organizationId}/teams")]

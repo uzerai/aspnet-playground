@@ -3,13 +3,13 @@ using System.Text.Json;
 using Auth0.AspNetCore.Authentication.BackchannelLogout;
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
-using Uzerai.Dotnet.Playground.DI;
-using Uzerai.Dotnet.Playground.DI.Data.QueryExtensions;
-using Uzerai.Dotnet.Playground.DI.Repository;
-using Uzerai.Dotnet.Playground.DI.Repository.Interface;
-using Uzerai.Dotnet.Playground.Model.Authentication;
+using Dotnet.Playground.DI;
+using Dotnet.Playground.DI.Data.QueryExtensions;
+using Dotnet.Playground.DI.Repository;
+using Dotnet.Playground.DI.Repository.Interface;
+using Dotnet.Playground.Model.Authentication;
 
-namespace Uzerai.Dotnet.Playground.API.DI.Middleware;
+namespace Dotnet.Playground.API.DI.Middleware;
 
 /// <summary>
 /// Middleware for setting the Database retrieved user identity in the HttpContext.

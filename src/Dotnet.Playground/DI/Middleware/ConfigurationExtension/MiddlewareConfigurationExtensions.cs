@@ -1,6 +1,6 @@
-using Uzerai.Dotnet.Playground.API.DI.Middleware;
+using Dotnet.Playground.API.DI.Middleware;
 
-namespace Uzerai.Dotnet.Playground.DI.Middleware.ConfigurationExtension;
+namespace Dotnet.Playground.DI.Middleware.ConfigurationExtension;
 
 public static class MiddlewareConfigurationExtensions
 {

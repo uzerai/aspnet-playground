@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
-using Uzerai.Dotnet.Playground.DI.Authorization.Permissions;
+using Dotnet.Playground.DI.Authorization.Permissions;
 
-namespace Uzerai.Dotnet.Playground.DI.Authorization.ConfigurationExtension;
+namespace Dotnet.Playground.DI.Authorization.ConfigurationExtension;
 
 public static class PermissionsAuthorizationHandlingConfigurationExtensions
 {

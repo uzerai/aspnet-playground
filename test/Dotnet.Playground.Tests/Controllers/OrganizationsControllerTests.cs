@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Uzerai.Dotnet.Playground.Controllers;
-using Uzerai.Dotnet.Playground.Controllers.CreateModel;
-using Uzerai.Dotnet.Playground.DI.Repository.Interface;
-using Uzerai.Dotnet.Playground.Model.Authentication;
-using Uzerai.Dotnet.Playground.Model.Organizations;
+using Dotnet.Playground.Controllers;
+using Dotnet.Playground.Controllers.CreateModel;
+using Dotnet.Playground.DI.Repository.Interface;
+using Dotnet.Playground.Model.Authentication;
+using Dotnet.Playground.Model.Organizations;
 
 namespace Dotnet.Playground.Tests.Controllers;
 

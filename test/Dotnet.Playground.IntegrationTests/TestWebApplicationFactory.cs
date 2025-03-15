@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NodaTime;
-using Uzerai.Dotnet.Playground.DI.Data;
-using Uzerai.Dotnet.Playground.DI.Repository.ConfigurationExtension;
+using Dotnet.Playground.DI.Data;
+using Dotnet.Playground.DI.Repository.ConfigurationExtension;
 
 namespace Dotnet.Playground.IntegrationTests;
 

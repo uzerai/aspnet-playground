@@ -1,6 +1,6 @@
-using Uzerai.Dotnet.Playground.Model.Authentication;
+using Dotnet.Playground.Model.Authentication;
 
-namespace Uzerai.Dotnet.Playground.DI;
+namespace Dotnet.Playground.DI;
 
 /// <summary>
 /// This class contains extension methods for the HttpContext class, specifically related

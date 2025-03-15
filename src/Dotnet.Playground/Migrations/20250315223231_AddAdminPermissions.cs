@@ -4,17 +4,17 @@ using Dotnet.Playground.Model.Authorization.Permissions;
 
 #nullable disable
 
-namespace Dotnet.Playground.Migrations
+namespace Dotnet.PlaygroundMigrations
 {
     /// <inheritdoc />
-    public partial class AddTeamUserPermissionsColumn : Migration
+    public partial class AddAdminPermissions : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<ICollection<Permission>>(
-                name: "permissions",
-                table: "organization_team_users",
+                name: "admin_permissions",
+                table: "users",
                 type: "jsonb",
                 nullable: false);
         }
@@ -23,8 +23,8 @@ namespace Dotnet.Playground.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "permissions",
-                table: "organization_team_users");
+                name: "admin_permissions",
+                table: "users");
         }
     }
 }

@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Uzerai.Dotnet.Playground.DI;
-using Uzerai.Dotnet.Playground.DI.Repository.Interface;
-using Uzerai.Dotnet.Playground.Model.Authentication;
+using Dotnet.Playground.DI;
+using Dotnet.Playground.DI.Repository.Interface;
+using Dotnet.Playground.Model.Authentication;
 
-namespace Uzerai.Dotnet.Playground.Controllers;
+namespace Dotnet.Playground.Controllers;
 
 [Authorize]
 [Route("users")]

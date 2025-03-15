@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
-using Uzerai.Dotnet.Playground.Model.Authentication;
-using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
+using Dotnet.Playground.Model.Authentication;
+using Dotnet.Playground.Model.Authorization.Permissions;
 
-namespace Uzerai.Dotnet.Playground.Model.Organizations;
+namespace Dotnet.Playground.Model.Organizations;
 
 [PrimaryKey(nameof(OrganizationId), nameof(OrganizationTeamId), nameof(UserId))]
 public class OrganizationTeamUser

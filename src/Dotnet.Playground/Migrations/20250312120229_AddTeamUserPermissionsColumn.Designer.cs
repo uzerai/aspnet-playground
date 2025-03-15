@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Uzerai.Dotnet.Playground.DI.Data;
-using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
+using Dotnet.Playground.DI.Data;
+using Dotnet.Playground.Model.Authorization.Permissions;
 
 #nullable disable
 
-namespace Uzerai.Dotnet.Playground.Migrations
+namespace Dotnet.Playground.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     [Migration("20250312120229_AddTeamUserPermissionsColumn")]
@@ -28,7 +28,7 @@ namespace Uzerai.Dotnet.Playground.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Authentication.User", b =>
+            modelBuilder.Entity("Dotnet.Playground.Model.Authentication.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -79,7 +79,7 @@ namespace Uzerai.Dotnet.Playground.Migrations
                     b.ToTable("users", (string)null);
                 });
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Authorization.Permissions.OrganizationPermission", b =>
+            modelBuilder.Entity("Dotnet.Playground.Model.Authorization.Permissions.OrganizationPermission", b =>
                 {
                     b.Property<Guid>("OrganizationId")
                         .HasColumnType("uuid")
@@ -99,7 +99,7 @@ namespace Uzerai.Dotnet.Playground.Migrations
                     b.ToTable("organization_permissions", (string)null);
                 });
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organizations.Organization", b =>
+            modelBuilder.Entity("Dotnet.Playground.Model.Organizations.Organization", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -129,7 +129,7 @@ namespace Uzerai.Dotnet.Playground.Migrations
                     b.ToTable("organizations", (string)null);
                 });
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organizations.OrganizationTeam", b =>
+            modelBuilder.Entity("Dotnet.Playground.Model.Organizations.OrganizationTeam", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -166,7 +166,7 @@ namespace Uzerai.Dotnet.Playground.Migrations
                     b.ToTable("organization_teams", (string)null);
                 });
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organizations.OrganizationTeamUser", b =>
+            modelBuilder.Entity("Dotnet.Playground.Model.Organizations.OrganizationTeamUser", b =>
                 {
                     b.Property<Guid>("OrganizationId")
                         .HasColumnType("uuid")
@@ -200,7 +200,7 @@ namespace Uzerai.Dotnet.Playground.Migrations
                     b.ToTable("organization_team_users", (string)null);
                 });
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organizations.OrganizationUser", b =>
+            modelBuilder.Entity("Dotnet.Playground.Model.Organizations.OrganizationUser", b =>
                 {
                     b.Property<Guid>("OrganizationId")
                         .HasColumnType("uuid")
@@ -219,9 +219,9 @@ namespace Uzerai.Dotnet.Playground.Migrations
                     b.ToTable("organization_users", (string)null);
                 });
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Authorization.Permissions.OrganizationPermission", b =>
+            modelBuilder.Entity("Dotnet.Playground.Model.Authorization.Permissions.OrganizationPermission", b =>
                 {
-                    b.HasOne("Uzerai.Dotnet.Playground.Model.Organizations.OrganizationUser", "OrganizationUser")
+                    b.HasOne("Dotnet.Playground.Model.Organizations.OrganizationUser", "OrganizationUser")
                         .WithMany("Permissions")
                         .HasForeignKey("OrganizationId", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -231,9 +231,9 @@ namespace Uzerai.Dotnet.Playground.Migrations
                     b.Navigation("OrganizationUser");
                 });
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organizations.OrganizationTeam", b =>
+            modelBuilder.Entity("Dotnet.Playground.Model.Organizations.OrganizationTeam", b =>
                 {
-                    b.HasOne("Uzerai.Dotnet.Playground.Model.Organizations.Organization", "Organization")
+                    b.HasOne("Dotnet.Playground.Model.Organizations.Organization", "Organization")
                         .WithMany("Teams")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -243,30 +243,30 @@ namespace Uzerai.Dotnet.Playground.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organizations.OrganizationTeamUser", b =>
+            modelBuilder.Entity("Dotnet.Playground.Model.Organizations.OrganizationTeamUser", b =>
                 {
-                    b.HasOne("Uzerai.Dotnet.Playground.Model.Organizations.Organization", "Organization")
+                    b.HasOne("Dotnet.Playground.Model.Organizations.Organization", "Organization")
                         .WithMany()
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_organization_team_users_organizations_organization_id");
 
-                    b.HasOne("Uzerai.Dotnet.Playground.Model.Organizations.OrganizationTeam", "OrganizationTeam")
+                    b.HasOne("Dotnet.Playground.Model.Organizations.OrganizationTeam", "OrganizationTeam")
                         .WithMany("OrganizationTeamUsers")
                         .HasForeignKey("OrganizationTeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_organization_team_users_organization_teams_organization_tea");
 
-                    b.HasOne("Uzerai.Dotnet.Playground.Model.Authentication.User", "User")
+                    b.HasOne("Dotnet.Playground.Model.Authentication.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_organization_team_users_users_user_id");
 
-                    b.HasOne("Uzerai.Dotnet.Playground.Model.Organizations.OrganizationUser", "OrganizationUser")
+                    b.HasOne("Dotnet.Playground.Model.Organizations.OrganizationUser", "OrganizationUser")
                         .WithMany("OrganizationTeamUsers")
                         .HasForeignKey("OrganizationId", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -282,16 +282,16 @@ namespace Uzerai.Dotnet.Playground.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organizations.OrganizationUser", b =>
+            modelBuilder.Entity("Dotnet.Playground.Model.Organizations.OrganizationUser", b =>
                 {
-                    b.HasOne("Uzerai.Dotnet.Playground.Model.Organizations.Organization", "Organization")
+                    b.HasOne("Dotnet.Playground.Model.Organizations.Organization", "Organization")
                         .WithMany("OrganizationUsers")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_organization_users_organizations_organization_id");
 
-                    b.HasOne("Uzerai.Dotnet.Playground.Model.Authentication.User", "User")
+                    b.HasOne("Dotnet.Playground.Model.Authentication.User", "User")
                         .WithMany("OrganizationUsers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -303,24 +303,24 @@ namespace Uzerai.Dotnet.Playground.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Authentication.User", b =>
+            modelBuilder.Entity("Dotnet.Playground.Model.Authentication.User", b =>
                 {
                     b.Navigation("OrganizationUsers");
                 });
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organizations.Organization", b =>
+            modelBuilder.Entity("Dotnet.Playground.Model.Organizations.Organization", b =>
                 {
                     b.Navigation("OrganizationUsers");
 
                     b.Navigation("Teams");
                 });
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organizations.OrganizationTeam", b =>
+            modelBuilder.Entity("Dotnet.Playground.Model.Organizations.OrganizationTeam", b =>
                 {
                     b.Navigation("OrganizationTeamUsers");
                 });
 
-            modelBuilder.Entity("Uzerai.Dotnet.Playground.Model.Organizations.OrganizationUser", b =>
+            modelBuilder.Entity("Dotnet.Playground.Model.Organizations.OrganizationUser", b =>
                 {
                     b.Navigation("OrganizationTeamUsers");
 

@@ -4,7 +4,7 @@ using NodaTime;
 
 #nullable disable
 
-namespace Uzerai.Dotnet.Playground.Migrations
+namespace Dotnet.Playground.Migrations
 {
     /// <inheritdoc />
     public partial class InitialDatabase_ForceManualConfiguration : Migration

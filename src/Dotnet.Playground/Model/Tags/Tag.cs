@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Uzerai.Dotnet.Playground.Model.Authentication;
-using Uzerai.Dotnet.Playground.Model.Organizations;
+using Dotnet.Playground.Model.Authentication;
+using Dotnet.Playground.Model.Organizations;
 
-namespace Uzerai.Dotnet.Playground.Model.Tags;
+namespace Dotnet.Playground.Model.Tags;
 
 public class Tag : BaseEntity
 {

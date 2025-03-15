@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Uzerai.Dotnet.Playground.Model.Organizations;
+using Dotnet.Playground.Model.Organizations;
 
-namespace Uzerai.Dotnet.Playground.DI.Data.ConfigurationExtension;
+namespace Dotnet.Playground.DI.Data.ConfigurationExtension;
 
 public static class OrganizationTeamUserConfigurationExtension
 {

@@ -2,8 +2,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
-using Uzerai.Dotnet.Playground.Controllers.CreateModel;
-using Uzerai.Dotnet.Playground.Model.Organizations;
+using Dotnet.Playground.Controllers.CreateModel;
+using Dotnet.Playground.Model.Organizations;
 
 namespace Dotnet.Playground.IntegrationTests.Controllers;
 

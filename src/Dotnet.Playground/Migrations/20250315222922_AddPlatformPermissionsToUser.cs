@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
+using Dotnet.Playground.Model.Authorization.Permissions;
 
 #nullable disable
 
-namespace Uzerai.Dotnet.Playground.Migrations
+namespace Dotnet.Playground.Migrations
 {
     /// <inheritdoc />
     public partial class AddPlatformPermissionsToUser : Migration

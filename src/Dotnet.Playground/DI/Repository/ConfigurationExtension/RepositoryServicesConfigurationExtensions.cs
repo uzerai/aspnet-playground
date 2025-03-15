@@ -1,10 +1,9 @@
 using Dotnet.Playground.DI.Repository.Interface;
-using Uzerai.Dotnet.Playground.DI.Repository.Interface;
-using Uzerai.Dotnet.Playground.Model.Authentication;
-using Uzerai.Dotnet.Playground.Model.Organizations;
-using Uzerai.Dotnet.Playground.Model.Tags;
+using Dotnet.Playground.Model.Authentication;
+using Dotnet.Playground.Model.Organizations;
+using Dotnet.Playground.Model.Tags;
 
-namespace Uzerai.Dotnet.Playground.DI.Repository.ConfigurationExtension;
+namespace Dotnet.Playground.DI.Repository.ConfigurationExtension;
 
 public static class RepositoryServicesConfigurationExtensions
 {

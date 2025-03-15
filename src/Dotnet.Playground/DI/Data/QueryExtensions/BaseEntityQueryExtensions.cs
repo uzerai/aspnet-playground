@@ -1,7 +1,7 @@
 using NodaTime;
-using Uzerai.Dotnet.Playground.Model;
+using Dotnet.Playground.Model;
 
-namespace Uzerai.Dotnet.Playground.DI.Data.QueryExtensions;
+namespace Dotnet.Playground.DI.Data.QueryExtensions;
 
 public static class BaseEntityQueryExtensions
 {

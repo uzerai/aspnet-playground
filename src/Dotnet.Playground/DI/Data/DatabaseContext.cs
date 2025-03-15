@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
-using Uzerai.Dotnet.Playground.DI.Data.ConfigurationExtension;
-using Uzerai.Dotnet.Playground.Model;
-using Uzerai.Dotnet.Playground.Model.Authentication;
-using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
-using Uzerai.Dotnet.Playground.Model.Organizations;
-using Uzerai.Dotnet.Playground.Model.Tags;
+using Dotnet.Playground.DI.Data.ConfigurationExtension;
+using Dotnet.Playground.Model;
+using Dotnet.Playground.Model.Authentication;
+using Dotnet.Playground.Model.Authorization.Permissions;
+using Dotnet.Playground.Model.Organizations;
+using Dotnet.Playground.Model.Tags;
 
-namespace Uzerai.Dotnet.Playground.DI.Data;
+namespace Dotnet.Playground.DI.Data;
 
 public class DatabaseContext : DbContext
 {

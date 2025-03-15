@@ -2,10 +2,10 @@
 using Dotnet.Playground.DI.Repository.Interface;
 using NodaTime;
 
-using Uzerai.Dotnet.Playground.DI.Data;
-using Uzerai.Dotnet.Playground.Model.Authentication;
+using Dotnet.Playground.DI.Data;
+using Dotnet.Playground.Model.Authentication;
 
-namespace Uzerai.Dotnet.Playground.DI.Repository;
+namespace Dotnet.Playground.DI.Repository;
 
 public class UserRepository : EntityRepository<User>, IUserRepository
 {

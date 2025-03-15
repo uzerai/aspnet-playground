@@ -2,11 +2,11 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
-using Uzerai.Dotnet.Playground.DI.Authorization.ConfigurationExtension;
-using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
-using Uzerai.Dotnet.Playground.Model.Organizations;
+using Dotnet.Playground.DI.Authorization.ConfigurationExtension;
+using Dotnet.Playground.Model.Authorization.Permissions;
+using Dotnet.Playground.Model.Organizations;
 
-namespace Uzerai.Dotnet.Playground.Model.Authentication;
+namespace Dotnet.Playground.Model.Authentication;
 
 [Index(nameof(Auth0UserId), IsUnique = true)]
 [Index(nameof(Email))]
