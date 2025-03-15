@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Uzerai.Dotnet.Playground.Controllers.CreateModel;
 using Uzerai.Dotnet.Playground.DI;
-using Uzerai.Dotnet.Playground.DI.Repository;
 using Uzerai.Dotnet.Playground.DI.Repository.Interface;
 using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
 using Uzerai.Dotnet.Playground.Model.Organizations;
@@ -15,18 +14,21 @@ namespace Uzerai.Dotnet.Playground.Controllers;
 [ApiController]
 public class OrganizationsController : ControllerBase
 {
-    private readonly IOrganizationRepository _organizationRepository;
-    private readonly IOrganizationUserRepository _organizationUserRepository;
+    private readonly IEntityRepository<Organization> _organizationRepository;
+    private readonly IRepository<OrganizationUser> _organizationUserRepository;
+    private readonly ILogger<OrganizationsController> _logger;
 
-    public OrganizationsController(IOrganizationRepository organizationRepository, IOrganizationUserRepository organizationUserRepository)
+    public OrganizationsController(IEntityRepository<Organization> organizationRepository, IRepository<OrganizationUser> organizationUserRepository, ILogger<OrganizationsController> logger)
     {
         _organizationRepository = organizationRepository;
         _organizationUserRepository = organizationUserRepository;
+        _logger = logger;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAll()
-    {
+    {   
+        _logger.LogDebug("OrgController.GetAll()");
         return Ok(await _organizationRepository.GetAllAsync());
     }
 

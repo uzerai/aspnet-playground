@@ -5,6 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RootNamespace>Dotnet.Playground.IntegrationTests</RootNamespace>
+    <AssemblyName>Dotnet.Playground.IntegrationTests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

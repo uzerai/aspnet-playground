@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Uzerai.Dotnet.Playground.DI.Authorization.Permissions;
-using Uzerai.Dotnet.Playground.DI.Repository;
+using Uzerai.Dotnet.Playground.DI.Repository.Interface;
 using Uzerai.Dotnet.Playground.DTO.RequestData;
 using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
 using Uzerai.Dotnet.Playground.Model.Organizations;
@@ -14,9 +15,9 @@ namespace Uzerai.Dotnet.Playground.Controllers;
 [ApiController]
 public class OrganizationTeamsController : ControllerBase
 {
-    private readonly OrganizationTeamRepository _organizationTeamRepository;
+    private readonly IEntityRepository<OrganizationTeam> _organizationTeamRepository;
 
-    public OrganizationTeamsController(OrganizationTeamRepository organizationTeamRepository)
+    public OrganizationTeamsController(IEntityRepository<OrganizationTeam> organizationTeamRepository)
     {
         _organizationTeamRepository = organizationTeamRepository;
     }
@@ -25,7 +26,9 @@ public class OrganizationTeamsController : ControllerBase
     [OrganizationPermissionRequired(Permission.TeamsRead)]
     public async Task<IActionResult> GetAll([FromRoute][Required] Guid organizationId)
     {
-        var teams = await _organizationTeamRepository.GetAllForOrganizationAsync(organizationId);
+        var teams = await _organizationTeamRepository.BuildReadonlyQuery()
+            .Where(e => e.OrganizationId == organizationId)
+            .ToListAsync();
         return Ok(teams);
     }
 

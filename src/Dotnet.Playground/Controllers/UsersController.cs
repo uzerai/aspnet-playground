@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Uzerai.Dotnet.Playground.DI;
-using Uzerai.Dotnet.Playground.DI.Repository;
+using Uzerai.Dotnet.Playground.DI.Repository.Interface;
+using Uzerai.Dotnet.Playground.Model.Authentication;
 
 namespace Uzerai.Dotnet.Playground.Controllers;
 
@@ -10,9 +11,9 @@ namespace Uzerai.Dotnet.Playground.Controllers;
 [ApiController]
 public class UsersController : ControllerBase
 {
-    private readonly UserRepository _userRepository;
+    private readonly IEntityRepository<User> _userRepository;
 
-    public UsersController(UserRepository userRepository)
+    public UsersController(IEntityRepository<User> userRepository)
     {
         _userRepository = userRepository;
     }

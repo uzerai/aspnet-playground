@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Uzerai.Dotnet.Playground.DI;
 using Uzerai.Dotnet.Playground.DI.Authorization.Permissions;
 using Uzerai.Dotnet.Playground.DI.Repository;
+using Uzerai.Dotnet.Playground.DI.Repository.Interface;
 using Uzerai.Dotnet.Playground.DTO.RequestData;
 using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
 using Uzerai.Dotnet.Playground.Model.Tags;
@@ -13,9 +14,9 @@ namespace Uzerai.Dotnet.Playground.Controllers;
 [ApiController]
 public class TagsController : ControllerBase
 {
-  private readonly TagRepository _tagRepository;
+  private readonly IEntityRepository<Tag> _tagRepository;
 
-  public TagsController(TagRepository tagRepository)
+  public TagsController(IEntityRepository<Tag> tagRepository)
   {
     _tagRepository = tagRepository;
   }

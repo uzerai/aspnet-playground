@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Uzerai.Dotnet.Playground.DI.Authorization.Permissions;
 using Uzerai.Dotnet.Playground.DI.Repository;
+using Uzerai.Dotnet.Playground.DI.Repository.Interface;
 using Uzerai.Dotnet.Playground.DTO.RequestData;
 using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
 using Uzerai.Dotnet.Playground.Model.Organizations;
@@ -14,9 +15,9 @@ namespace Uzerai.Dotnet.Playground.Controllers;
 [ApiController]
 public class OrganizationTeamUsersController : ControllerBase
 {
-    private readonly OrganizationTeamUserRepository _organizationTeamUserRepository;
+    private readonly IRepository<OrganizationTeamUser> _organizationTeamUserRepository;
 
-    public OrganizationTeamUsersController(OrganizationTeamUserRepository organizationTeamUserRepository)
+    public OrganizationTeamUsersController(IRepository<OrganizationTeamUser> organizationTeamUserRepository)
     {
         _organizationTeamUserRepository = organizationTeamUserRepository;
     }

@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Uzerai.Dotnet.Playground</RootNamespace>
+    <ProjectName>Uzerai.Dotnet.Playground</ProjectName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,8 +29,6 @@
 
     <!-- Auth0 -->
     <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.4.1" />
-
-
   </ItemGroup>
 
     <!-- Expose internals to the test project -->

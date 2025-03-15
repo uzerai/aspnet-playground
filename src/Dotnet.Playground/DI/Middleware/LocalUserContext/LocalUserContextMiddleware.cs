@@ -6,6 +6,7 @@ using NodaTime;
 using Uzerai.Dotnet.Playground.DI;
 using Uzerai.Dotnet.Playground.DI.Data.QueryExtensions;
 using Uzerai.Dotnet.Playground.DI.Repository;
+using Uzerai.Dotnet.Playground.DI.Repository.Interface;
 using Uzerai.Dotnet.Playground.Model.Authentication;
 
 namespace Uzerai.Dotnet.Playground.API.DI.Middleware;
@@ -31,7 +32,7 @@ public class LocalUserContextMiddleware
     }
 
     public async Task InvokeAsync(
-        HttpContext context, UserRepository userRepository, IClock clock)
+        HttpContext context, IEntityRepository<User> userRepository, IClock clock)
     {
         // This happens when an anonymous users requests a resource that is not protected.
         // We can safely skip the rest of the middleware, as we shouldn't need to do anything regarding _current_ user.
