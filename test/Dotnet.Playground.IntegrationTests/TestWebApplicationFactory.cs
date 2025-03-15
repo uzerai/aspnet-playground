@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NodaTime;
 using Uzerai.Dotnet.Playground.DI.Data;
+using Uzerai.Dotnet.Playground.DI.Repository.ConfigurationExtension;
 
 namespace Dotnet.Playground.IntegrationTests;
 
@@ -20,9 +21,9 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>
             // Configure services similar to your main application
             services.AddControllers();
             services.AddRouting();
-            
-            // Add other services your application needs
             RegisterServices(services);
+
+            
 
             services.RemoveAll<DatabaseContext>();
             // Add in-memory database
@@ -47,5 +48,6 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>
 
     protected void RegisterServices(IServiceCollection services) {
         services.AddSingleton<IClock>(SystemClock.Instance);
+        services.AddRepositories();
     }
 }

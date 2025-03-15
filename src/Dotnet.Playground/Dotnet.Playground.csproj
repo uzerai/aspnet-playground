@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Uzerai.Dotnet.Playground</RootNamespace>
     <ProjectName>Uzerai.Dotnet.Playground</ProjectName>
+    <UserSecretsId>65b2c784-ed4a-446b-9adc-0a0d994f7b35</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
