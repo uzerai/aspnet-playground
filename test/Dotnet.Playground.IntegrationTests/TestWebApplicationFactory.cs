@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -15,22 +16,27 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>
     {
         // Call base first
         base.ConfigureWebHost(builder);
-
+        builder.UseEnvironment("Test");
+        
         builder.ConfigureServices(services =>
         {
             // Configure services similar to your main application
             services.AddControllers();
             services.AddRouting();
-            RegisterServices(services);
 
+            services.Configure<DbContextOptionsBuilder>(options => {
+                options.UseNpgsql("Host=localhost;Database=playground_test;Username=playground;Password=playground;Port=5432");
+            });
             
+            services.RemoveAll<AuthenticationSchemeOptions>();
+            services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = TestAuthenticationHandler.AuthenticationScheme;
+                options.DefaultChallengeScheme = TestAuthenticationHandler.AuthenticationScheme;
+            }).AddScheme<AuthenticationSchemeOptions, TestAuthenticationHandler>(
+                TestAuthenticationHandler.AuthenticationScheme,
+                options => {});
 
-            services.RemoveAll<DatabaseContext>();
-            // Add in-memory database
-            services.AddDbContext<DatabaseContext>((options, context) =>
-            {
-                context.UseNpgsql("Host=localhost;Database=playground_test;Username=playground;Password=playground;Port=5432");
-            }, ServiceLifetime.Scoped, ServiceLifetime.Scoped);
+            RegisterServices(services);
             
             // Build the service provider to initialize the database
             var sp = services.BuildServiceProvider();
@@ -47,7 +53,8 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>
     }
 
     protected void RegisterServices(IServiceCollection services) {
-        services.AddSingleton<IClock>(SystemClock.Instance);
+        //TODO: Make this available to configure/override as part of the test suite settings.
+        services.AddSingleton<IClock>(NodaTime.SystemClock.Instance);
         services.AddRepositories();
     }
 }

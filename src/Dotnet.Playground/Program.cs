@@ -39,7 +39,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.Authority = $"https://{builder.Configuration["Auth0:Domain"]}";
+        options.Authority = builder.Configuration["Auth0:Domain"];
         options.Audience = builder.Configuration["Auth0:Audience"];
 
         options.TokenValidationParameters = new TokenValidationParameters

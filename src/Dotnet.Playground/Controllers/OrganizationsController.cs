@@ -28,11 +28,10 @@ public class OrganizationsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {   
-        _logger.LogDebug("OrgController.GetAll()");
         return Ok(await _organizationRepository.GetAllAsync());
     }
 
-    [HttpGet("{organizationId}/")]
+    [HttpGet("{organizationId}")]
     public async Task<IActionResult> Get([FromRoute][Required] Guid organizationId)
     {
         return Ok(await _organizationRepository.GetByIdAsync(organizationId));

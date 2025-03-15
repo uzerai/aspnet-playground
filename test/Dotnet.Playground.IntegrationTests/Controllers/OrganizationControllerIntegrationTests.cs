@@ -23,10 +23,7 @@ public class OrganizationsControllerIntegrationTests : IClassFixture<TestWebAppl
     {
         // Act
         var response = await _client.GetAsync("/organizations");
-        var content = await response.Content.ReadAsStringAsync();
-        Console.WriteLine($"Response status: {response.StatusCode}");
-        Console.WriteLine($"Response content: {content}");
-        
+                
         // Assert
         response.EnsureSuccessStatusCode();
     }
