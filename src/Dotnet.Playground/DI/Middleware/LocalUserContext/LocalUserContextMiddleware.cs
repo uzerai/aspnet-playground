@@ -73,8 +73,9 @@ public class LocalUserContextMiddleware
                 Auth0UserId = userAuth0NameIdentifier,
                 Email = auth0UserEmail,
                 Username = auth0UserUsername ?? auth0UserEmail, // fallback to email as username if none in claims
-                LastLogin = clock.GetCurrentInstant()
+                LastLogin = clock.GetCurrentInstant(),
             });
+            
         }
         else
         {

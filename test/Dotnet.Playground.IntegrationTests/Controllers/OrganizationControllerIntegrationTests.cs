@@ -1,7 +1,9 @@
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using Microsoft.Extensions.DependencyInjection;
 using Uzerai.Dotnet.Playground.Controllers.CreateModel;
+using Uzerai.Dotnet.Playground.Model.Organizations;
 
 namespace Dotnet.Playground.IntegrationTests.Controllers;
 
@@ -51,8 +53,8 @@ public class OrganizationsControllerIntegrationTests : IClassFixture<TestWebAppl
             PropertyNameCaseInsensitive = true
         };
         
-        var organization = JsonSerializer.Deserialize<dynamic>(responseString, options);
+        var organization = JsonSerializer.Deserialize<Organization>(responseString, options);
         Assert.NotNull(organization);
-        Assert.Equal("Integration Test Org", organization.GetProperty("name").GetString());
+        Assert.Equal("Integration Test Org", organization.Name);
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Uzerai.Dotnet.Playground.Controllers.CreateModel;
 using Uzerai.Dotnet.Playground.DI;
+using Uzerai.Dotnet.Playground.DI.Authorization.Permissions;
 using Uzerai.Dotnet.Playground.DI.Repository.Interface;
 using Uzerai.Dotnet.Playground.Model.Authorization.Permissions;
 using Uzerai.Dotnet.Playground.Model.Organizations;
@@ -32,6 +33,7 @@ public class OrganizationsController : ControllerBase
     }
 
     [HttpGet("{organizationId}")]
+    [OrganizationPermissionRequired(Permission.OrganizationsRead)]
     public async Task<IActionResult> Get([FromRoute][Required] Guid organizationId)
     {
         return Ok(await _organizationRepository.GetByIdAsync(organizationId));
