@@ -28,6 +28,8 @@ public class User : BaseEntity
     // OrganizationUser relationships
     [Column("platform_permissions", TypeName = "jsonb")]
     public virtual ICollection<Permission> PlatformPermissions { get; set; } = [];
+    [Column("admin_permissions", TypeName = "jsonb")]
+    public virtual ICollection<Permission> AdminPermissions { get; set; } = [];
     public virtual ICollection<OrganizationUser> OrganizationUsers { get; set; } = [];
 
     public virtual ICollection<Organization> Organizations { get; set; } = [];

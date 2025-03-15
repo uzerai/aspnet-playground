@@ -150,6 +150,11 @@ namespace Uzerai.Dotnet.Playground.Migrations
                 {
                     b.HasBaseType("Uzerai.Dotnet.Playground.Model.BaseEntity");
 
+                    b.Property<ICollection<Permission>>("AdminPermissions")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("admin_permissions");
+
                     b.Property<string>("Auth0UserId")
                         .IsRequired()
                         .HasColumnType("text")
