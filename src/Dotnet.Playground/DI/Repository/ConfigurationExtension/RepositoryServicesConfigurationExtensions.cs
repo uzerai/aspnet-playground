@@ -1,7 +1,9 @@
 using Dotnet.Playground.DI.Repository.Interface;
+using Dotnet.Playground.Model;
 using Dotnet.Playground.Model.Authentication;
 using Dotnet.Playground.Model.Organizations;
 using Dotnet.Playground.Model.Tags;
+using Route = Dotnet.Playground.Model.Route;
 
 namespace Dotnet.Playground.DI.Repository.ConfigurationExtension;
 
@@ -19,7 +21,10 @@ public static class RepositoryServicesConfigurationExtensions
         services.AddTransient<IRepository<OrganizationUser>, OrganizationUserRepository>();
         services.AddTransient<IEntityRepository<OrganizationTeam>, OrganizationTeamRepository>();
         services.AddTransient<IEntityRepository<Tag>, TagRepository>();
-
+        services.AddTransient<IEntityRepository<Crag>, CragRepository>();
+        services.AddTransient<IEntityRepository<Pitch>, PitchRepository>();
+        services.AddTransient<IEntityRepository<Note>, NoteRepository>();
+        services.AddTransient<IEntityRepository<Route>, RouteRepository>();
         return services;
     }
 }

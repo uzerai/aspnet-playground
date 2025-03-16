@@ -6,6 +6,7 @@ using Dotnet.Playground.Model.Authentication;
 using Dotnet.Playground.Model.Authorization.Permissions;
 using Dotnet.Playground.Model.Organizations;
 using Dotnet.Playground.Model.Tags;
+using Route = Dotnet.Playground.Model.Route;
 
 namespace Dotnet.Playground.DI.Data;
 
@@ -30,6 +31,10 @@ public class DatabaseContext : DbContext
     public DbSet<OrganizationTeamUser> OrganizationTeamUsers { get; set; }
     public DbSet<Document> Documents { get; set; }
     public DbSet<Tag> Tags { get; set; }
+    public DbSet<Crag> Crags { get; set; }
+    public DbSet<Route> Routes { get; set; }
+    public DbSet<Pitch> Pitches { get; set; }
+    public DbSet<Note> Notes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -46,6 +51,10 @@ public class DatabaseContext : DbContext
         modelBuilder.ConfigureOrganizationTeamUserModel();
         modelBuilder.ConfigureDocumentModel();
         modelBuilder.ConfigureTagModel();
+        modelBuilder.ConfigureCragModel();
+        modelBuilder.ConfigureRouteModel();
+        modelBuilder.ConfigurePitchModel();
+        modelBuilder.ConfigureNoteModel();
     }
 
     /// <summary>

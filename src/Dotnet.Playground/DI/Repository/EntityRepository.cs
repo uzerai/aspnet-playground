@@ -12,6 +12,11 @@ public partial class EntityRepository<T> : BaseRepository<T>, IEntityRepository<
 {
     private readonly IClock _clock;
 
+    public EntityRepository(DatabaseContext context) : base(context)
+    {
+        _clock = SystemClock.Instance;
+    }
+
     public EntityRepository(DatabaseContext context, IClock clock)
         : base(context)
     {
