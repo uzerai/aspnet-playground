@@ -16,8 +16,6 @@ using Dotnet.Playground.DI.Authorization.ConfigurationExtension;
 // ############################################################
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Logging.AddConsole();
-
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -34,8 +32,6 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 /// Authentication extraction through JWT Bearer tokens.
 /// Intended to be used with the corresponding Auth0 tenant; but 
 /// technically be used with any Oauth2.0 compliant identity provider.
-/// 
-/// Just change the config names.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -55,7 +51,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 // Add NodaTime clock service so we can use it in the database context for timestamping BaseEntity objects.
-// This is the SystemClock for the running version of the server. 
+// This is the SystemClock for the running version of the server.
 // Replace it in the test environment to be whatever you wish.
 builder.Services.AddSingleton<IClock>(SystemClock.Instance);
 
@@ -70,10 +66,12 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
         // Here used to enable NodaTime support.
         npgsqlSourceBuilder.UseNodaTime();
         npgsqlSourceBuilder.MigrationsHistoryTable("migrations");
+        
+        // Enable dynamic JSON support, allowing JSON B columns.
+        npgsqlSourceBuilder.ConfigureDataSource(source => source.EnableDynamicJson());
     })
     .UseSnakeCaseNamingConvention();
-}
-);
+});
 
 /// Repository setup and registration done here;
 /// 
