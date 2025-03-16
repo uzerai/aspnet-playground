@@ -1,7 +1,6 @@
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using Microsoft.Extensions.DependencyInjection;
 using Dotnet.Playground.Controllers.CreateModel;
 using Dotnet.Playground.Model.Organizations;
 
@@ -17,7 +16,7 @@ public class OrganizationsControllerIntegrationTests : IClassFixture<TestWebAppl
         
         // We would normally setup authentication here
         // This is a placeholder for actual authentication setup
-        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im5hZzAiLCJzdWIiOiJuYWcwIiwianRpIjoiOGE3NGFkMjYiLCJhdWQiOlsiaHR0cDovL2xvY2FsaG9zdDo0NDA0NiIsImh0dHBzOi8vbG9jYWxob3N0OjQ0MzMyIiwiaHR0cDovL2xvY2FsaG9zdDo1MDE2IiwiaHR0cHM6Ly9sb2NhbGhvc3Q6NzAzNCJdLCJuYmYiOjE3NDIwMzcxMDIsImV4cCI6MTc0OTk4NTkwMiwiaWF0IjoxNzQyMDM3MTAyLCJpc3MiOiJkb3RuZXQtdXNlci1qd3RzIn0.0fOAZZMCqGG8mJcTg8FOseYCF47Xbrj6OrmEbrpyy1E");
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eyTestToken==");
     }
     
     [Fact]

@@ -10,6 +10,14 @@ using Dotnet.Playground.DI.Repository.ConfigurationExtension;
 
 namespace Dotnet.Playground.IntegrationTests;
 
+/// <summary>
+/// A test factory for creating a test application context.
+/// This context connects to a local database instance (see docker-compose.yml).
+/// 
+/// Note that as part of the configuration, the database is dropped and recreated _BEFORE_ starting each test.
+/// This should allow for inspection of the database state when a single test has ran.
+/// TODO: It does however mean that running the tests in parallel is not possible as the database will need to be recreated.
+/// </summary>
 public class TestWebApplicationFactory : WebApplicationFactory<Program>
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -46,7 +54,9 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>
                 var scopedServices = scope.ServiceProvider;
                 var db = scopedServices.GetRequiredService<DatabaseContext>();
                 
-                // Ensure the database is created
+                // Drop and recreate the database _before_ instantiation of the web application host.
+                // The web application is recreated for _EACH TEST CASE_. 
+                db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
             }
         });
