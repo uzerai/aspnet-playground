@@ -1,3 +1,4 @@
+using Dotnet.Playground.Model;
 using Microsoft.EntityFrameworkCore;
 using Route = Dotnet.Playground.Model.Route;
 
@@ -14,7 +15,8 @@ public static class RouteConfigurationExtension
 
         modelBuilder.Entity<Route>()
             .HasMany(e => e.Pitches)
-            .WithMany(e => e.Routes);
+            .WithMany(e => e.Routes)
+            .UsingEntity<RoutePitch>();
 
         return modelBuilder;
     }

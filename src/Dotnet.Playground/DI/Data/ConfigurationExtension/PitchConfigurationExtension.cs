@@ -14,8 +14,9 @@ public static class PitchConfigurationExtension
 
         modelBuilder.Entity<Pitch>()
             .HasMany(e => e.Routes)
-            .WithMany(e => e.Pitches);
-
+            .WithMany(e => e.Pitches)
+            .UsingEntity<RoutePitch>();
+            
         return modelBuilder;
     }
 } 

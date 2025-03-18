@@ -25,6 +25,7 @@ public static class RepositoryServicesConfigurationExtensions
         services.AddTransient<IEntityRepository<Pitch>, PitchRepository>();
         services.AddTransient<IEntityRepository<Note>, NoteRepository>();
         services.AddTransient<IEntityRepository<Route>, RouteRepository>();
+        
         return services;
     }
 }

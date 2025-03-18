@@ -34,6 +34,7 @@ public class DatabaseContext : DbContext
     public DbSet<Crag> Crags { get; set; }
     public DbSet<Route> Routes { get; set; }
     public DbSet<Pitch> Pitches { get; set; }
+    public DbSet<RoutePitch> RoutePitches { get; set; }
     public DbSet<Note> Notes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -54,6 +55,7 @@ public class DatabaseContext : DbContext
         modelBuilder.ConfigureCragModel();
         modelBuilder.ConfigureRouteModel();
         modelBuilder.ConfigurePitchModel();
+        modelBuilder.ConfigureRoutePitchModel();
         modelBuilder.ConfigureNoteModel();
     }
 
