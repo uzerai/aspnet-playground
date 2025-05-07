@@ -12,8 +12,10 @@ public class Crag : BaseEntity
     public string? HowToGetThere { get; set; }
 
     [JsonIgnore]
-    public required Guid MaintainerOrganizationId { get; set; }
-    [ForeignKey("MaintainerOrganizationId")]
+    [ForeignKey("MaintainerOrganization")]
+    public Guid MaintainerOrganizationId { get; set; }
+    [JsonIgnore]
     public virtual Organization MaintainerOrganization { get; set; } = null!;
+    [JsonIgnore]
     public virtual ICollection<Sector> Sectors { get; set; } = [];
 }

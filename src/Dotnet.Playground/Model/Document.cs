@@ -10,11 +10,11 @@ public partial class Document : Taggable
 {
     public required string Title { get; set; }
     public required string Content { get; set; }
+    [ForeignKey("Organization")]
     public required Guid OrganizationId { get; set; }
+    [ForeignKey("Author")]
     public required Guid AuthorId { get; set; }
 
-    [ForeignKey("OrganizationId")]
     public virtual Organization Organization { get; set; } = null!;
-    [ForeignKey("AuthorId")]
     public virtual User Author { get; set; } = null!;
 }
