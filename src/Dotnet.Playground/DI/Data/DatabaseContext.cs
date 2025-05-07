@@ -32,10 +32,10 @@ public class DatabaseContext : DbContext
     public DbSet<Document> Documents { get; set; }
     public DbSet<Tag> Tags { get; set; }
     public DbSet<Crag> Crags { get; set; }
+    public DbSet<Sector> Sectors { get; set; }
     public DbSet<Route> Routes { get; set; }
     public DbSet<Pitch> Pitches { get; set; }
     public DbSet<RoutePitch> RoutePitches { get; set; }
-    public DbSet<Note> Notes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -53,10 +53,10 @@ public class DatabaseContext : DbContext
         modelBuilder.ConfigureDocumentModel();
         modelBuilder.ConfigureTagModel();
         modelBuilder.ConfigureCragModel();
+        modelBuilder.ConfigureSectorModel();
         modelBuilder.ConfigureRouteModel();
         modelBuilder.ConfigurePitchModel();
         modelBuilder.ConfigureRoutePitchModel();
-        modelBuilder.ConfigureNoteModel();
     }
 
     /// <summary>

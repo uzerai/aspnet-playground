@@ -15,6 +15,5 @@ public class Crag : BaseEntity
     public required Guid MaintainerOrganizationId { get; set; }
     [ForeignKey("MaintainerOrganizationId")]
     public virtual Organization MaintainerOrganization { get; set; } = null!;
-    public virtual ICollection<Route> Routes { get; set; } = [];
-    public virtual ICollection<Note> Notes { get; set; } = [];
+    public virtual ICollection<Sector> Sectors { get; set; } = [];
 }
