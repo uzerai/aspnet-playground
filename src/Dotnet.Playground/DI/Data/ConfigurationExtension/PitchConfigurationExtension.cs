@@ -8,9 +8,9 @@ public static class PitchConfigurationExtension
     public static ModelBuilder ConfigurePitchModel(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Pitch>()
-            .HasOne(e => e.Crag)
+            .HasOne(e => e.Sector)
             .WithMany()
-            .HasForeignKey(e => e.CragId);
+            .HasForeignKey(e => e.SectorId);
 
         modelBuilder.Entity<Pitch>()
             .HasMany(e => e.Routes)

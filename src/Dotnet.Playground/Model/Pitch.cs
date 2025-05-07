@@ -8,8 +8,8 @@ public class Pitch : BaseEntity
     public required PitchType Type { get; set; } = PitchType.Sport;
     public required string Description { get; set; }
     
-    public required Guid CragId { get; set; }
-    [ForeignKey("CragId")]
-    public virtual Crag Crag { get; set; } = null!;
+    public required Guid SectorId { get; set; }
+    [ForeignKey("SectorId")]
+    public virtual Sector Sector { get; set; } = null!;
     public virtual ICollection<Route> Routes { get; set; } = [];
 }

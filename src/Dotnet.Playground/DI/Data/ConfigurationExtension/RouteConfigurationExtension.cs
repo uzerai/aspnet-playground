@@ -9,9 +9,9 @@ public static class RouteConfigurationExtension
     public static ModelBuilder ConfigureRouteModel(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Route>()
-            .HasOne(e => e.Crag)
+            .HasOne(e => e.Sector)
             .WithMany(e => e.Routes)
-            .HasForeignKey(e => e.CragId);
+            .HasForeignKey(e => e.SectorId);
 
         modelBuilder.Entity<Route>()
             .HasMany(e => e.Pitches)

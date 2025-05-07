@@ -14,11 +14,7 @@ public static class CragConfigurationExtension
             .HasForeignKey(e => e.MaintainerOrganizationId);
 
         modelBuilder.Entity<Crag>()
-            .HasMany(e => e.Routes)
-            .WithOne(e => e.Crag);
-
-        modelBuilder.Entity<Crag>()
-            .HasMany(e => e.Notes)
+            .HasMany(e => e.Sectors)
             .WithOne(e => e.Crag);
 
         return modelBuilder;
