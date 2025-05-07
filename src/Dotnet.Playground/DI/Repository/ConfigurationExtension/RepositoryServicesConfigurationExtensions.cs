@@ -22,8 +22,8 @@ public static class RepositoryServicesConfigurationExtensions
         services.AddTransient<IEntityRepository<OrganizationTeam>, OrganizationTeamRepository>();
         services.AddTransient<IEntityRepository<Tag>, TagRepository>();
         services.AddTransient<IEntityRepository<Crag>, CragRepository>();
+        services.AddTransient<IEntityRepository<Sector>, SectorRepository>();
         services.AddTransient<IEntityRepository<Pitch>, PitchRepository>();
-        services.AddTransient<IEntityRepository<Note>, NoteRepository>();
         services.AddTransient<IEntityRepository<Route>, RouteRepository>();
         
         return services;
