@@ -6,7 +6,7 @@ public class Pitch : BaseEntity
 {
     public required string Name { get; set; }
     public required PitchType Type { get; set; } = PitchType.Sport;
-    public required string Description { get; set; }
+    public string? Description { get; set; }
     
     [ForeignKey("Sector")]
     public required Guid SectorId { get; set; }

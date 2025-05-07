@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
 
@@ -11,9 +12,9 @@ public abstract partial class BaseEntity
 
     [Required]
     public Instant CreatedAt { get; set; }
-
     [Required]
     public Instant UpdatedAt { get; set; }
 
+    [JsonIgnore]
     public Instant? DeletedAt { get; set; }
 }

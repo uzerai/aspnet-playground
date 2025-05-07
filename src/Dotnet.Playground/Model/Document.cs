@@ -14,7 +14,7 @@ public partial class Document : Taggable
     public required Guid OrganizationId { get; set; }
     [ForeignKey("Author")]
     public required Guid AuthorId { get; set; }
-
+    
     public virtual Organization Organization { get; set; } = null!;
     public virtual User Author { get; set; } = null!;
 }

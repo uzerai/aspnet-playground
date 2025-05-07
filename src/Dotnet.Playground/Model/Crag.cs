@@ -7,9 +7,8 @@ namespace Dotnet.Playground.Model;
 public class Crag : BaseEntity
 {
     public required string Name { get; set; }
-    public required string Description { get; set; }
+    public string? Description { get; set; }
     public required string Location { get; set; }
-    public string? HowToGetThere { get; set; }
 
     [JsonIgnore]
     [ForeignKey("MaintainerOrganization")]

@@ -1,6 +1,4 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-using Dotnet.Playground.Model.Organizations;
 
 namespace Dotnet.Playground.Model;
 
