@@ -24,7 +24,7 @@ public class AreaController : ControllerBase
             Description = requestData.Description,
             Location = requestData.Location,
         });
-        return CreatedAtAction(nameof(GetById), new { id = createdArea.Id }, createdArea);
+        return Created(createdArea.Id.ToString(), createdArea);
     }
 
     [HttpGet("{areaId}")]

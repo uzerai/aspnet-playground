@@ -1,5 +1,8 @@
 CREATE EXTENSION IF NOT EXISTS pg_uuidv7;
 
+-- spatial data extension
+CREATE EXTENSION IF NOT EXISTS postgis;
+
 -- Local DB for integration tests.
 -- This is a separate database from the main playground database, and can frequently be dropped and recreated.
 CREATE DATABASE playground_test WITH OWNER playground;
