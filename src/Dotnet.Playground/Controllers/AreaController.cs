@@ -1,6 +1,6 @@
 using Dotnet.Playground.DI.Repository.Interface;
+using Dotnet.Playground.DTO.RequestData;
 using Dotnet.Playground.Model;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dotnet.Playground.Controllers;
@@ -17,16 +17,20 @@ public class AreaController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Area>> Create(Area area)
+    public async Task<ActionResult<Area>> Create([FromBody] CreateAreaRequestData requestData)
     {
-        var createdArea = await _areaRepository.CreateAsync(area);
+        var createdArea = await _areaRepository.CreateAsync(new() {
+            Name = requestData.Name,
+            Description = requestData.Description,
+            Location = requestData.Location,
+        });
         return CreatedAtAction(nameof(GetById), new { id = createdArea.Id }, createdArea);
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Area>> GetById(Guid id)
+    [HttpGet("{areaId}")]
+    public async Task<ActionResult<Area>> GetById([FromRoute] Guid areaId)
     {
-        var area = await _areaRepository.GetByIdAsync(id);
+        var area = await _areaRepository.GetByIdAsync(areaId);
         if (area == null)
             return NotFound();
         return area;
@@ -39,10 +43,10 @@ public class AreaController : ControllerBase
         return Ok(areas);
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, Area area)
+    [HttpPut("{areaId}")]
+    public async Task<IActionResult> Update([FromRoute] Guid areaId, [FromBody] Area area)
     {
-        if (id != area.Id)
+        if (areaId != area.Id)
             return BadRequest();
 
         await _areaRepository.UpdateAsync(area);
