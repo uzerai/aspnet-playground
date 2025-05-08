@@ -1,13 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Dotnet.Playground.Controllers.CreateModel;
 using Dotnet.Playground.DI;
 using Dotnet.Playground.DI.Authorization.Permissions;
 using Dotnet.Playground.DI.Repository.Interface;
 using Dotnet.Playground.Model.Authorization.Permissions;
 using Dotnet.Playground.Model.Organizations;
-
+using Dotnet.Playground.DTO.RequestData.Organizations;
 namespace Dotnet.Playground.Controllers;
 
 [Authorize]

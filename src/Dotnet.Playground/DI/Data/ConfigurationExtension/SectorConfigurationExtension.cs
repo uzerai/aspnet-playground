@@ -8,9 +8,9 @@ public static class SectorConfigurationExtension
     public static ModelBuilder ConfigureSectorModel(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Sector>()
-            .HasOne(e => e.Crag)
+            .HasOne(e => e.Area)
             .WithMany(e => e.Sectors)
-            .HasForeignKey(e => e.CragId);
+            .HasForeignKey(e => e.AreaId);
         
         modelBuilder.Entity<Sector>()
             .HasMany(e => e.Routes)

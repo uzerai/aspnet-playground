@@ -6,57 +6,57 @@ using Microsoft.AspNetCore.Mvc;
 namespace Dotnet.Playground.Controllers;
 
 [ApiController]
-[Route("crags")]
-public class CragController : ControllerBase
+[Route("areas")]
+public class AreaController : ControllerBase
 {
-    private readonly IEntityRepository<Crag> _cragRepository;
+    private readonly IEntityRepository<Area> _areaRepository;
 
-    public CragController(IEntityRepository<Crag> cragRepository)
+    public AreaController(IEntityRepository<Area> areaRepository)
     {
-        _cragRepository = cragRepository;
+        _areaRepository = areaRepository;
     }
 
     [HttpPost]
-    public async Task<ActionResult<Crag>> Create(Crag crag)
+    public async Task<ActionResult<Area>> Create(Area area)
     {
-        var createdCrag = await _cragRepository.CreateAsync(crag);
-        return CreatedAtAction(nameof(GetById), new { id = createdCrag.Id }, createdCrag);
+        var createdArea = await _areaRepository.CreateAsync(area);
+        return CreatedAtAction(nameof(GetById), new { id = createdArea.Id }, createdArea);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Crag>> GetById(Guid id)
+    public async Task<ActionResult<Area>> GetById(Guid id)
     {
-        var crag = await _cragRepository.GetByIdAsync(id);
-        if (crag == null)
+        var area = await _areaRepository.GetByIdAsync(id);
+        if (area == null)
             return NotFound();
-        return crag;
+        return area;
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Crag>>> GetAll()
+    public async Task<ActionResult<IEnumerable<Area>>> GetAll()
     {
-        var crags = await _cragRepository.GetAllAsync();
-        return Ok(crags);
+        var areas = await _areaRepository.GetAllAsync();
+        return Ok(areas);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, Crag crag)
+    public async Task<IActionResult> Update(Guid id, Area area)
     {
-        if (id != crag.Id)
+        if (id != area.Id)
             return BadRequest();
 
-        await _cragRepository.UpdateAsync(crag);
+        await _areaRepository.UpdateAsync(area);
         return NoContent();
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var crag = await _cragRepository.GetByIdAsync(id);
-        if (crag == null)
+        var area = await _areaRepository.GetByIdAsync(id);
+        if (area == null)
             return NotFound();
 
-        await _cragRepository.DeleteAsync(crag);
+        await _areaRepository.DeleteAsync(area);
         return NoContent();
     }
 } 

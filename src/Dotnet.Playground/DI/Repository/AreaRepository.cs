@@ -5,9 +5,9 @@ using NodaTime;
 
 namespace Dotnet.Playground.DI.Repository;
 
-public class CragRepository : EntityRepository<Crag>, ICragRepository
+public class AreaRepository : EntityRepository<Area>, IAreaRepository
 {
-    public CragRepository(DatabaseContext context, IClock clock)
+    public AreaRepository(DatabaseContext context, IClock clock)
         : base(context, clock)
     {
     }

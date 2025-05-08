@@ -1,6 +1,6 @@
 using Dotnet.Playground.Model.Authorization.Permissions;
 
-namespace Dotnet.Playground.DTO.RequestData;
+namespace Dotnet.Playground.DTO.RequestData.Organizations;
 
 public class CreateOrganizationTeamUserRequestData
 {

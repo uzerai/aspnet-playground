@@ -31,7 +31,7 @@ public class DatabaseContext : DbContext
     public DbSet<OrganizationTeamUser> OrganizationTeamUsers { get; set; }
     public DbSet<Document> Documents { get; set; }
     public DbSet<Tag> Tags { get; set; }
-    public DbSet<Crag> Crags { get; set; }
+    public DbSet<Area> Crags { get; set; }
     public DbSet<Sector> Sectors { get; set; }
     public DbSet<Route> Routes { get; set; }
     public DbSet<Pitch> Pitches { get; set; }
@@ -52,7 +52,7 @@ public class DatabaseContext : DbContext
         modelBuilder.ConfigureOrganizationTeamUserModel();
         modelBuilder.ConfigureDocumentModel();
         modelBuilder.ConfigureTagModel();
-        modelBuilder.ConfigureCragModel();
+        modelBuilder.ConfigureAreaModel();
         modelBuilder.ConfigureSectorModel();
         modelBuilder.ConfigureRouteModel();
         modelBuilder.ConfigurePitchModel();

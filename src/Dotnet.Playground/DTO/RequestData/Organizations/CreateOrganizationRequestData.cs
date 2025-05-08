@@ -1,3 +1,3 @@
-namespace Dotnet.Playground.Controllers.CreateModel;
+namespace Dotnet.Playground.DTO.RequestData.Organizations;
 
 public record CreateOrganizationRequestData(string Name);

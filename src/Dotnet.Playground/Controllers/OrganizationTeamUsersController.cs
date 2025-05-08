@@ -2,9 +2,8 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Dotnet.Playground.DI.Authorization.Permissions;
-using Dotnet.Playground.DI.Repository;
 using Dotnet.Playground.DI.Repository.Interface;
-using Dotnet.Playground.DTO.RequestData;
+using Dotnet.Playground.DTO.RequestData.Organizations;
 using Dotnet.Playground.Model.Authorization.Permissions;
 using Dotnet.Playground.Model.Organizations;
 

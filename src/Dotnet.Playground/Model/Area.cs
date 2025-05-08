@@ -4,7 +4,8 @@ using Dotnet.Playground.Model.Organizations;
 
 namespace Dotnet.Playground.Model;
 
-public class Crag : BaseEntity
+[Table("areas")]
+public class Area : BaseEntity
 {
     public required string Name { get; set; }
     public string? Description { get; set; }

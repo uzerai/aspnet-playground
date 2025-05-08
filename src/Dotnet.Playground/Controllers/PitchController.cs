@@ -17,16 +17,16 @@ public class PitchController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Pitch>> Create(Pitch pitch)
+    public async Task<ActionResult<Pitch>> Create([FromBody] Pitch pitch)
     {
         var createdPitch = await _pitchRepository.CreateAsync(pitch);
         return CreatedAtAction(nameof(GetById), new { id = createdPitch.Id }, createdPitch);
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Pitch>> GetById(Guid id)
+    [HttpGet("{pitchId}")]
+    public async Task<ActionResult<Pitch>> GetById([FromRoute] Guid pitchId)
     {
-        var pitch = await _pitchRepository.GetByIdAsync(id);
+        var pitch = await _pitchRepository.GetByIdAsync(pitchId);
         if (pitch == null)
             return NotFound();
         return pitch;
