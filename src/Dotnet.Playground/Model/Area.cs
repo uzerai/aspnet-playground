@@ -13,9 +13,9 @@ public class Area : BaseEntity
 
     [JsonIgnore]
     [ForeignKey("MaintainerOrganization")]
-    public Guid MaintainerOrganizationId { get; set; }
+    public Guid? MaintainerOrganizationId { get; set; }
     [JsonIgnore]
-    public virtual Organization MaintainerOrganization { get; set; } = null!;
+    public virtual Organization? MaintainerOrganization { get; set; }
     [JsonIgnore]
     public virtual ICollection<Sector> Sectors { get; set; } = [];
 }
