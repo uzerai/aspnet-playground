@@ -10,6 +10,9 @@ using Dotnet.Playground.DI.Repository.ConfigurationExtension;
 using System.Text.Json;
 using Dotnet.Playground.DI.Middleware.ConfigurationExtension;
 using Dotnet.Playground.DI.Authorization.ConfigurationExtension;
+using NetTopologySuite;
+using GeoJSON.Net.Converters;
+using Dotnet.Playground.Converters;
 
 // ############################################################
 // ##########  APP BUILDING  ##################################
@@ -27,6 +30,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
     options.JsonSerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
+
+    options.JsonSerializerOptions.Converters.Add(new PointGeoJsonConverter());
 });
 
 /// Authentication extraction through JWT Bearer tokens.
@@ -66,6 +71,9 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
         // Here used to enable NodaTime support.
         npgsqlSourceBuilder.UseNodaTime();
         npgsqlSourceBuilder.MigrationsHistoryTable("migrations");
+
+        // Enable NetTopologySuite
+        npgsqlSourceBuilder.UseNetTopologySuite();
         
         // Enable dynamic JSON support, allowing JSON B columns.
         npgsqlSourceBuilder.ConfigureDataSource(source => source.EnableDynamicJson());

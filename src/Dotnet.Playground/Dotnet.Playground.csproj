@@ -30,6 +30,10 @@
 
     <!-- Auth0 -->
     <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.4.1" />
+
+    <!-- NetTopologySuite, for geolocation support in EF -->
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="9.0.4" />
+    <PackageReference Include="GeoJSON.Net" Version="1.4.1" />
   </ItemGroup>
 
     <!-- Expose internals to the test project -->
