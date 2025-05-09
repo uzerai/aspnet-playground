@@ -20,14 +20,22 @@ public class AreaController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Area>> Create([FromBody] CreateAreaRequestData requestData)
     {
+        // var createdArea = await _areaRepository.CreateAsync(new() {
+        //     Name = requestData.Name,
+        //     Description = requestData.Description,
+        //     Location = new Point(requestData.Location.X, requestData.Location.Y, requestData.Location.Z),
+        //     Boundary = new MultiPolygon(new[] {
+        //         new Polygon(new LinearRing(requestData.Boundary.Append(requestData.Boundary[0]).ToArray()))
+        //     })
+        // });
+
         var createdArea = await _areaRepository.CreateAsync(new() {
             Name = requestData.Name,
             Description = requestData.Description,
-            Location = new Point(requestData.Location.X, requestData.Location.Y, requestData.Location.Z),
-            Boundary = new MultiPolygon(new[] {
-                new Polygon(new LinearRing(requestData.Boundary.Append(requestData.Boundary[0]).ToArray()))
-            })
+            Location = requestData.Location,
+            Boundary = requestData.Boundary
         });
+        
         return Created(createdArea.Id.ToString(), createdArea);
     }
 

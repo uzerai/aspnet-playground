@@ -8,12 +8,16 @@ namespace Dotnet.Playground.Model;
 [PrimaryKey(nameof(Id))]
 public abstract partial class BaseEntity
 {
+    [JsonPropertyOrder(-1)]
     public Guid Id { get; set; }
 
-    [Required]
-    public Instant CreatedAt { get; set; }
+    [JsonPropertyOrder(2)]
     [Required]
     public Instant UpdatedAt { get; set; }
+    
+    [JsonPropertyOrder(3)]
+    [Required]
+    public Instant CreatedAt { get; set; }
 
     [JsonIgnore]
     public Instant? DeletedAt { get; set; }

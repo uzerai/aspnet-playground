@@ -10,6 +10,9 @@ using Dotnet.Playground.DI.Repository.ConfigurationExtension;
 using System.Text.Json;
 using Dotnet.Playground.DI.Middleware.ConfigurationExtension;
 using Dotnet.Playground.DI.Authorization.ConfigurationExtension;
+using NetTopologySuite;
+using NetTopologySuite.IO.Converters;
+using Dotnet.Playground.DI.Swagger;
 
 // ############################################################
 // ##########  APP BUILDING  ##################################
@@ -19,16 +22,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-/// Json setup specifically for the support of NodaTime serialization.
-/// Also sets the property naming policy to snake_case, because it's the nicer json format.
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
-    options.JsonSerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
-    
-    options.JsonSerializerOptions.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
+builder.Services.AddSwaggerGen(options => {
+    options.SimplifyNetTopologySuiteTypes();
 });
 
 /// Authentication extraction through JWT Bearer tokens.
@@ -56,6 +52,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // This is the SystemClock for the running version of the server.
 // Replace it in the test environment to be whatever you wish.
 builder.Services.AddSingleton<IClock>(SystemClock.Instance);
+
+// Add NetTopologySuite.IO.Converters.GeoJsonConverterFactory to the service container.
+builder.Services.AddSingleton(NtsGeometryServices.Instance);
+
 
 // Add main application database context.
 // Will contain references to all entities in the application.
@@ -86,6 +86,16 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 /// instead of adding them here.
 builder.Services.AddRepositories();
 builder.Services.AddPermissionsAuthorizationHandling();
+
+/// Json setup specifically for the support of NodaTime serialization.
+/// Also sets the property naming policy to snake_case, because it's the nicer json format.
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
+    options.JsonSerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
+    
+    options.JsonSerializerOptions.Converters.Add(new GeoJsonConverterFactory());
+});
 
 // ############################################################
 // ##########  APP INITIALIZATION  ############################
