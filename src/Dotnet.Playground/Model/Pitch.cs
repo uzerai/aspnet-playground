@@ -9,7 +9,7 @@ namespace Dotnet.Playground.Model;
 /// </summary>
 public class Pitch : BaseEntity
 {
-    public required string Name { get; set; }
+    public string? Name { get; set; }
     public required PitchType Type { get; set; } = PitchType.Sport;
     public string? Description { get; set; }
     
