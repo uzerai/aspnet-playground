@@ -13,6 +13,4 @@ public enum PitchType
     Mixed,
     [JsonStringEnumMemberName("aid")]
     Aid,
-    [JsonStringEnumMemberName("boulder")]
-    Boulder
 }
