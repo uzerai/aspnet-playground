@@ -2,7 +2,6 @@ using Dotnet.Playground.DI.Repository.Interface;
 using Dotnet.Playground.DTO.RequestData;
 using Dotnet.Playground.Model;
 using Microsoft.AspNetCore.Mvc;
-using NetTopologySuite.Geometries;
 
 namespace Dotnet.Playground.Controllers;
 
@@ -20,15 +19,6 @@ public class AreaController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Area>> Create([FromBody] CreateAreaRequestData requestData)
     {
-        // var createdArea = await _areaRepository.CreateAsync(new() {
-        //     Name = requestData.Name,
-        //     Description = requestData.Description,
-        //     Location = new Point(requestData.Location.X, requestData.Location.Y, requestData.Location.Z),
-        //     Boundary = new MultiPolygon(new[] {
-        //         new Polygon(new LinearRing(requestData.Boundary.Append(requestData.Boundary[0]).ToArray()))
-        //     })
-        // });
-
         var createdArea = await _areaRepository.CreateAsync(new() {
             Name = requestData.Name,
             Description = requestData.Description,
@@ -45,7 +35,8 @@ public class AreaController : ControllerBase
         var area = await _areaRepository.GetByIdAsync(areaId);
         if (area == null)
             return NotFound();
-        return area;
+
+        return Ok(area);
     }
 
     [HttpGet]
@@ -56,10 +47,12 @@ public class AreaController : ControllerBase
     }
 
     [HttpPut("{areaId}")]
-    public async Task<IActionResult> Update([FromRoute] Guid areaId, [FromBody] Area area)
+    public async Task<IActionResult> Update([FromRoute] Guid areaId, [FromBody] CreateAreaRequestData requestData)
     {
-        if (areaId != area.Id)
-            return BadRequest();
+        var area = await _areaRepository.GetByIdAsync(areaId);
+
+        if (area == null)
+            return NotFound();
 
         await _areaRepository.UpdateAsync(area);
         return NoContent();

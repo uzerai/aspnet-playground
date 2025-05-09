@@ -1,8 +1,6 @@
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using NetTopologySuite.Geometries;
-using NetTopologySuite.IO;
-using NetTopologySuite.IO.Converters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Dotnet.Playground.DI.Swagger;
@@ -52,9 +50,9 @@ public static class NetTopologySuiteSwaggerExtensions
         Properties = new Dictionary<string, OpenApiSchema> {
           { "type", new() { Type = "string", Default = new OpenApiString("MultiPolygon") } },
           { "coordinates", new() { 
-              Type = "array", 
+              Type = "array",
               Items = new() {
-                Type = "array", 
+                Type = "array",
                 Items = new() { 
                   Type = "array",
                   Items = new() { 
