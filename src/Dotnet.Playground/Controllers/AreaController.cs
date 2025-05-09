@@ -2,6 +2,7 @@ using Dotnet.Playground.DI.Repository.Interface;
 using Dotnet.Playground.DTO.RequestData;
 using Dotnet.Playground.Model;
 using Microsoft.AspNetCore.Mvc;
+using NetTopologySuite.Geometries;
 
 namespace Dotnet.Playground.Controllers;
 
@@ -22,7 +23,10 @@ public class AreaController : ControllerBase
         var createdArea = await _areaRepository.CreateAsync(new() {
             Name = requestData.Name,
             Description = requestData.Description,
-            Location = requestData.Location,
+            Location = new Point(requestData.Location.X, requestData.Location.Y, requestData.Location.Z),
+            Boundary = new MultiPolygon(new[] {
+                new Polygon(new LinearRing(requestData.Boundary.Append(requestData.Boundary[0]).ToArray()))
+            })
         });
         return Created(createdArea.Id.ToString(), createdArea);
     }

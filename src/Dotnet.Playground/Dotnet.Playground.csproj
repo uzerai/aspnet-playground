@@ -33,7 +33,8 @@
 
     <!-- NetTopologySuite, for geolocation support in EF -->
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="9.0.4" />
-    <PackageReference Include="GeoJSON.Net" Version="1.4.1" />
+    <PackageReference Include="NetTopologySuite.IO.GeoJSON" Version="4.0.0" />
+    <PackageReference Include="NetTopologySuite.IO.GeoJSON4STJ" Version="4.0.0" />
   </ItemGroup>
 
     <!-- Expose internals to the test project -->

@@ -10,9 +10,6 @@ using Dotnet.Playground.DI.Repository.ConfigurationExtension;
 using System.Text.Json;
 using Dotnet.Playground.DI.Middleware.ConfigurationExtension;
 using Dotnet.Playground.DI.Authorization.ConfigurationExtension;
-using NetTopologySuite;
-using GeoJSON.Net.Converters;
-using Dotnet.Playground.Converters;
 
 // ############################################################
 // ##########  APP BUILDING  ##################################
@@ -30,8 +27,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
     options.JsonSerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
-
-    options.JsonSerializerOptions.Converters.Add(new PointGeoJsonConverter());
+    
+    options.JsonSerializerOptions.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
 });
 
 /// Authentication extraction through JWT Bearer tokens.

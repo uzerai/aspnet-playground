@@ -1,7 +1,7 @@
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using Dotnet.Playground.Controllers.CreateModel;
+using Dotnet.Playground.DTO.RequestData.Organizations;
 using Dotnet.Playground.Model.Organizations;
 
 namespace Dotnet.Playground.IntegrationTests.Controllers;

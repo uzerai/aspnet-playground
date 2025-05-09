@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Dotnet.Playground.Controllers;
-using Dotnet.Playground.Controllers.CreateModel;
 using Dotnet.Playground.DI.Repository.Interface;
 using Dotnet.Playground.Model.Authentication;
 using Dotnet.Playground.Model.Organizations;
+using Dotnet.Playground.DTO.RequestData.Organizations;
 
 namespace Dotnet.Playground.Tests.Controllers;
 
