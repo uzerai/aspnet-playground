@@ -3,6 +3,11 @@ using NodaTime;
 
 namespace Dotnet.Playground.Model;
 
+/// <summary>
+/// Represents a climbing route; from top to bottom.
+/// 
+/// A route must contain at least one pitch.
+/// </summary>
 public class Route : BaseEntity
 {
     public required string Name { get; set; }

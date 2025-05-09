@@ -6,6 +6,14 @@ using NetTopologySuite.IO.Converters;
 
 namespace Dotnet.Playground.Model;
 
+/// <summary>
+/// Represents a climing area from a colloquial perspective.
+/// 
+/// The area can be a single face of a wall, or a scattered collection of boulders/walls/routes, and
+/// therefore allows the definition of several polygonal boundaries as its boundary.
+/// 
+/// Most commonly represents a geographical area within which one or more climbing sectors are located.
+/// </summary>
 [Table("areas")]
 public class Area : BaseEntity
 {

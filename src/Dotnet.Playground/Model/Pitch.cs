@@ -2,6 +2,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dotnet.Playground.Model;
 
+/// <summary>
+/// Represents a pitch of a climbing route.
+/// 
+/// A pitch in the context of the application, can be a rope-climbed pitch, or a boulder problem.
+/// </summary>
 public class Pitch : BaseEntity
 {
     public required string Name { get; set; }

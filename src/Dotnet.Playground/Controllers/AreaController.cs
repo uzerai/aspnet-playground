@@ -17,7 +17,7 @@ public class AreaController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Area>> Create([FromBody] CreateAreaRequestData requestData)
+    public async Task<ActionResult<Area>> Create([FromBody] AreaRequestData requestData)
     {
         var createdArea = await _areaRepository.CreateAsync(new() {
             Name = requestData.Name,
@@ -47,7 +47,7 @@ public class AreaController : ControllerBase
     }
 
     [HttpPut("{areaId}")]
-    public async Task<IActionResult> Update([FromRoute] Guid areaId, [FromBody] CreateAreaRequestData requestData)
+    public async Task<IActionResult> Update([FromRoute] Guid areaId, [FromBody] AreaRequestData requestData)
     {
         var area = await _areaRepository.GetByIdAsync(areaId);
 
