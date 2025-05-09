@@ -4,6 +4,8 @@ namespace Dotnet.Playground.DTO.RequestData;
 
 public record SectorRequestData(
     string Name,
-    string Description,
-    Point Location,
-    MultiPolygon Boundary);
+    Polygon SectorArea,
+    Point EntryPoint,
+    Point? RecommendedParkingLocation,
+    LineString? Route,
+    Guid AreaId);

@@ -1,4 +1,5 @@
 using Dotnet.Playground.DI.Repository.Interface;
+using Dotnet.Playground.DTO.RequestData;
 using Dotnet.Playground.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,14 +17,22 @@ public class SectorController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Sector>> Create(Sector sector)
+    public async Task<ActionResult<Sector>> Create([FromBody] SectorRequestData sector)
     {
-        var createdSector = await _sectorRepository.CreateAsync(sector);
-        return CreatedAtAction(nameof(GetById), new { id = createdSector.Id }, createdSector);
+        var createdSector = await _sectorRepository.CreateAsync(new() {
+            Name = sector.Name, 
+            SectorArea = sector.SectorArea,
+            EntryPoint = sector.EntryPoint,
+            AreaId = sector.AreaId,
+            RecommendedParkingLocation = sector.RecommendedParkingLocation,
+            Route = sector.Route,
+        });
+
+        return Ok(createdSector);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Sector>> GetById(Guid id)
+    public async Task<ActionResult<Sector>> GetById([FromRoute] Guid id)
     {
         var sector = await _sectorRepository.GetByIdAsync(id);
         if (sector == null)
@@ -39,17 +48,21 @@ public class SectorController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, Sector sector)
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] SectorRequestData sector)
     {
-        if (id != sector.Id)
-            return BadRequest();
+        var existingSector = await _sectorRepository.GetByIdAsync(id);
+        if (existingSector == null)
+            return NotFound();
 
-        await _sectorRepository.UpdateAsync(sector);
+        if (sector.Name != null) existingSector.Name = sector.Name;
+        if (sector.SectorArea != null) existingSector.SectorArea = sector.SectorArea;
+
+        await _sectorRepository.UpdateAsync(existingSector);
         return NoContent();
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(Guid id)
+    public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
         var sector = await _sectorRepository.GetByIdAsync(id);
         if (sector == null)

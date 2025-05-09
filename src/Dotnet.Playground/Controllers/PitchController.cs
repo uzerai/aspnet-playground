@@ -1,4 +1,5 @@
 using Dotnet.Playground.DI.Repository.Interface;
+using Dotnet.Playground.DTO.RequestData;
 using Dotnet.Playground.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,19 +18,27 @@ public class PitchController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Pitch>> Create([FromBody] Pitch pitch)
+    public async Task<ActionResult<Pitch>> Create([FromBody] PitchRequestData pitch)
     {
-        var createdPitch = await _pitchRepository.CreateAsync(pitch);
-        return CreatedAtAction(nameof(GetById), new { id = createdPitch.Id }, createdPitch);
+        var createdPitch = await _pitchRepository.CreateAsync(new() {
+            Name = pitch.Name,
+            Description = pitch.Description,
+            Type = pitch.Type,
+            SectorId = pitch.SectorId
+        });
+        
+        return Ok(createdPitch);
     }
 
     [HttpGet("{pitchId}")]
     public async Task<ActionResult<Pitch>> GetById([FromRoute] Guid pitchId)
     {
         var pitch = await _pitchRepository.GetByIdAsync(pitchId);
+
         if (pitch == null)
             return NotFound();
-        return pitch;
+        
+        return Ok(pitch);
     }
 
     [HttpGet]
@@ -40,17 +49,24 @@ public class PitchController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, Pitch pitch)
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] PitchRequestData pitch)
     {
-        if (id != pitch.Id)
-            return BadRequest();
+        var existingPitch = await _pitchRepository.GetByIdAsync(id);
+        if (existingPitch == null)
+            return NotFound();
 
-        await _pitchRepository.UpdateAsync(pitch);
+        if (pitch.Name != null) existingPitch.Name = pitch.Name;
+        if (pitch.Description != null) existingPitch.Description = pitch.Description;
+
+        existingPitch.Type = pitch.Type;
+        existingPitch.SectorId = pitch.SectorId;
+
+        await _pitchRepository.UpdateAsync(existingPitch);
         return NoContent();
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(Guid id)
+    public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
         var pitch = await _pitchRepository.GetByIdAsync(id);
         if (pitch == null)

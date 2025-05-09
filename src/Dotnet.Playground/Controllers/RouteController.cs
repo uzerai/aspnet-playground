@@ -1,4 +1,5 @@
 using Dotnet.Playground.DI.Repository.Interface;
+using Dotnet.Playground.DTO.RequestData;
 using Dotnet.Playground.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,14 +19,20 @@ public class RouteController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Route>> Create(Route route)
+    public async Task<ActionResult<Route>> Create([FromBody] RouteRequestData route)
     {
-        var createdRoute = await _routeRepository.CreateAsync(route);
-        return CreatedAtAction(nameof(GetById), new { id = createdRoute.Id }, createdRoute);
+        var createdRoute = await _routeRepository.CreateAsync(new() {
+            Name = route.Name,
+            Description = route.Description,
+            Grade = route.Grade,
+            SectorId = route.SectorId,
+        });
+
+        return Ok(createdRoute);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Route>> GetById(Guid id)
+    public async Task<ActionResult<Route>> GetById([FromRoute] Guid id)
     {
         var route = await _routeRepository.GetByIdAsync(id);
         if (route == null)
@@ -41,17 +48,23 @@ public class RouteController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, Route route)
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] RouteRequestData route)
     {
-        if (id != route.Id)
-            return BadRequest();
+        var existingRoute = await _routeRepository.GetByIdAsync(id);
+        if (existingRoute == null)
+            return NotFound();
 
-        await _routeRepository.UpdateAsync(route);
+        if (route.Name != null) existingRoute.Name = route.Name;
+        if (route.Description != null) existingRoute.Description = route.Description;
+        if (route.Grade != null) existingRoute.Grade = route.Grade;
+        
+
+        await _routeRepository.UpdateAsync(existingRoute);
         return NoContent();
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(Guid id)
+    public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
         var route = await _routeRepository.GetByIdAsync(id);
         if (route == null)
