@@ -7,5 +7,5 @@ public record SectorRequestData(
     Polygon SectorArea,
     Point EntryPoint,
     Point? RecommendedParkingLocation,
-    LineString? Route,
+    LineString? ApproachPath,
     Guid AreaId);
