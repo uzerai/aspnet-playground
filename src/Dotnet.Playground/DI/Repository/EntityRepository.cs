@@ -47,14 +47,14 @@ public partial class EntityRepository<T> : BaseRepository<T>, IEntityRepository<
         return true;
     }
 
-    public async Task<T?> GetByIdAsync(Guid id)
+    public virtual async Task<T?> GetByIdAsync(Guid id)
     {
         return await _context.Set<T>()
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<T?> GetByIdTrackingAsync(Guid id)
+    public virtual async Task<T?> GetByIdTrackingAsync(Guid id)
     {
         return await _context.Set<T>()
             .AsTracking()

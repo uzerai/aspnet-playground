@@ -25,7 +25,7 @@ public class SectorController : ControllerBase
             EntryPoint = sector.EntryPoint,
             AreaId = sector.AreaId,
             RecommendedParkingLocation = sector.RecommendedParkingLocation,
-            Route = sector.Route,
+            ApproachPath = sector.ApproachPath,
         });
 
         return Created(createdSector.Id.ToString(), createdSector);

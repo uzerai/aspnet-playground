@@ -45,6 +45,26 @@ public static class NetTopologySuiteSwaggerExtensions
       },
     });
 
+    options.MapType<Polygon>(() => new() {
+      Type = "object",
+      Properties = new Dictionary<string, OpenApiSchema> {
+        { "type", new() { Type = "string", Default = new OpenApiString("Polygon") } },
+        { 
+          "coordinates", new() { 
+          Type = "array",
+          Items = new() { 
+              Type = "array",
+              Items = new() { 
+                Type = "array",
+                MaxLength = 3,
+                Items = new() { Type = "number" } 
+              }
+            }
+          }
+        }
+      }
+    });
+
     options.MapType<MultiPolygon>(() => new() {
         Type = "object",
         Properties = new Dictionary<string, OpenApiSchema> {
