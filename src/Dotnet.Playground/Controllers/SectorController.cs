@@ -28,7 +28,7 @@ public class SectorController : ControllerBase
             Route = sector.Route,
         });
 
-        return Ok(createdSector);
+        return Created(createdSector.Id.ToString(), createdSector);
     }
 
     [HttpGet("{id}")]
@@ -37,7 +37,8 @@ public class SectorController : ControllerBase
         var sector = await _sectorRepository.GetByIdAsync(id);
         if (sector == null)
             return NotFound();
-        return sector;
+
+        return Ok(sector);
     }
 
     [HttpGet]

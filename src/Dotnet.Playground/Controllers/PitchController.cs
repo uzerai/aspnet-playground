@@ -1,7 +1,6 @@
 using Dotnet.Playground.DI.Repository.Interface;
 using Dotnet.Playground.DTO.RequestData;
 using Dotnet.Playground.Model;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dotnet.Playground.Controllers;
@@ -26,8 +25,8 @@ public class PitchController : ControllerBase
             Type = pitch.Type,
             SectorId = pitch.SectorId
         });
-        
-        return Ok(createdPitch);
+
+        return Created(createdPitch.Id.ToString(), createdPitch);
     }
 
     [HttpGet("{pitchId}")]

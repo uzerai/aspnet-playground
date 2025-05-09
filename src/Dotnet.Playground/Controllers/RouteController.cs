@@ -1,7 +1,6 @@
 using Dotnet.Playground.DI.Repository.Interface;
 using Dotnet.Playground.DTO.RequestData;
 using Dotnet.Playground.Model;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Route = Dotnet.Playground.Model.Route;
 
@@ -26,9 +25,15 @@ public class RouteController : ControllerBase
             Description = route.Description,
             Grade = route.Grade,
             SectorId = route.SectorId,
+            Pitches = [ ..route.Pitches.Select(p => new Pitch {
+                Name = p.Name,
+                Description = p.Description,
+                Type = p.Type,
+                SectorId = route.SectorId,
+            })],
         });
 
-        return Ok(createdRoute);
+        return Created(createdRoute.Id.ToString(), createdRoute);
     }
 
     [HttpGet("{id}")]

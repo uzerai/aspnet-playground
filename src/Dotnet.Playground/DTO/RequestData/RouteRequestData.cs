@@ -2,7 +2,7 @@ namespace Dotnet.Playground.DTO.RequestData;
 
 public record RouteRequestData(
     Guid SectorId,
-    Guid[] PitchIds,
+    PitchRequestData[] Pitches,
     string Name,
     string? Description,
     string? Grade,
