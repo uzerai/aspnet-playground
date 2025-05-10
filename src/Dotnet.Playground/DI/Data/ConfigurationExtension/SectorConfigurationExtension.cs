@@ -16,6 +16,11 @@ public static class SectorConfigurationExtension
             .HasMany(e => e.Routes)
             .WithOne(e => e.Sector);
 
+        modelBuilder.Entity<Sector>()
+            .HasMany(e => e.Images)
+            .WithOne()
+            .HasForeignKey(e => e.SectorId);
+
         return modelBuilder;
     }
 } 

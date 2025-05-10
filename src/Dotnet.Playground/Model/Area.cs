@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using Dotnet.Playground.Model.Media.Image;
 using Dotnet.Playground.Model.Organizations;
 using NetTopologySuite.Geometries;
-using NetTopologySuite.IO.Converters;
 
 namespace Dotnet.Playground.Model;
 
@@ -29,4 +29,5 @@ public class Area : BaseEntity
     public virtual Organization? MaintainerOrganization { get; set; }
     [JsonIgnore]
     public virtual ICollection<Sector> Sectors { get; set; } = [];
+    public virtual ICollection<AreaImage> Images { get; set; } = [];
 }

@@ -16,7 +16,12 @@ public static class PitchConfigurationExtension
             .HasMany(e => e.Routes)
             .WithMany(e => e.Pitches)
             .UsingEntity<RoutePitch>();
-            
+
+        modelBuilder.Entity<Pitch>()
+            .HasOne(e => e.TopoImage)
+            .WithOne()
+            .HasForeignKey<Pitch>(e => e.TopoImageId);
+        
         return modelBuilder;
     }
 } 

@@ -6,6 +6,7 @@ using Dotnet.Playground.Model.Authentication;
 using Dotnet.Playground.Model.Authorization.Permissions;
 using Dotnet.Playground.Model.Organizations;
 using Route = Dotnet.Playground.Model.Route;
+using Dotnet.Playground.Model.Media.Image;
 
 namespace Dotnet.Playground.DI.Data;
 
@@ -33,6 +34,10 @@ public class DatabaseContext : DbContext
     public DbSet<Route> Routes { get; set; }
     public DbSet<Pitch> Pitches { get; set; }
     public DbSet<RoutePitch> RoutePitches { get; set; }
+    public DbSet<AreaImage> AreaImages { get; set; }
+    public DbSet<SectorImage> SectorImages { get; set; }
+    public DbSet<PitchImage> PitchImages { get; set; }
+    public DbSet<RouteImage> RouteImages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -51,6 +56,7 @@ public class DatabaseContext : DbContext
         modelBuilder.ConfigureRouteModel();
         modelBuilder.ConfigurePitchModel();
         modelBuilder.ConfigureRoutePitchModel();
+        modelBuilder.ConfigureImageHierarchyModel();
     }
 
     /// <summary>
