@@ -16,8 +16,8 @@ public class Sector : BaseEntity
     public required Point EntryPoint { get; set; }
     public Point? RecommendedParkingLocation { get; set; }
     public LineString? ApproachPath { get; set; }
+    [ForeignKey("Area")]
     public required Guid AreaId { get; set; }
-    [ForeignKey("AreaId")]
     public virtual Area Area { get; set; } = null!;
     public virtual ICollection<Route> Routes { get; set; } = [];
 }

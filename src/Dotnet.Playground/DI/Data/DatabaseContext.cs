@@ -5,7 +5,6 @@ using Dotnet.Playground.Model;
 using Dotnet.Playground.Model.Authentication;
 using Dotnet.Playground.Model.Authorization.Permissions;
 using Dotnet.Playground.Model.Organizations;
-using Dotnet.Playground.Model.Tags;
 using Route = Dotnet.Playground.Model.Route;
 
 namespace Dotnet.Playground.DI.Data;
@@ -29,8 +28,6 @@ public class DatabaseContext : DbContext
     public DbSet<OrganizationPermission> OrganizationPermissions { get; set; }
     public DbSet<OrganizationTeam> OrganizationTeams { get; set; }
     public DbSet<OrganizationTeamUser> OrganizationTeamUsers { get; set; }
-    public DbSet<Document> Documents { get; set; }
-    public DbSet<Tag> Tags { get; set; }
     public DbSet<Area> Crags { get; set; }
     public DbSet<Sector> Sectors { get; set; }
     public DbSet<Route> Routes { get; set; }
@@ -41,7 +38,6 @@ public class DatabaseContext : DbContext
     {
         // For inherited abstract models.
         modelBuilder.ConfigureBaseEntityAbstractModel();
-        modelBuilder.ConfigureTaggable();
 
         // Regular model configurations.
         modelBuilder.ConfigureUserModel();
@@ -50,8 +46,6 @@ public class DatabaseContext : DbContext
         modelBuilder.ConfigureOrganizationPermissionModel();
         modelBuilder.ConfigureOrganizationTeamModel();
         modelBuilder.ConfigureOrganizationTeamUserModel();
-        modelBuilder.ConfigureDocumentModel();
-        modelBuilder.ConfigureTagModel();
         modelBuilder.ConfigureAreaModel();
         modelBuilder.ConfigureSectorModel();
         modelBuilder.ConfigureRouteModel();
