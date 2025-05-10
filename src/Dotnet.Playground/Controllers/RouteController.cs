@@ -25,6 +25,8 @@ public class RouteController : ControllerBase
             Description = route.Description,
             Grade = route.Grade,
             SectorId = route.SectorId,
+            FirstAscentClimberName = route.FirstAscentClimberName,
+            BolterName = route.BolterName,
             Pitches = [ ..route.Pitches.Select(p => new Pitch {
                 Name = p.Name,
                 Description = p.Description,

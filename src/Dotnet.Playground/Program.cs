@@ -13,6 +13,7 @@ using Dotnet.Playground.DI.Authorization.ConfigurationExtension;
 using NetTopologySuite;
 using NetTopologySuite.IO.Converters;
 using Dotnet.Playground.DI.Swagger;
+using Minio;
 
 // ############################################################
 // ##########  APP BUILDING  ##################################
@@ -77,6 +78,14 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
     })
     .UseSnakeCaseNamingConvention();
 });
+
+// Min.io setup. Adds a client configuration for the Min.io file storage service.
+builder.Services.AddMinio(configureClient => configureClient
+            .WithEndpoint(builder.Configuration["Minio:Endpoint"])
+            .WithCredentials(
+                builder.Configuration["Minio:AccessKey"],
+                builder.Configuration["Minio:SecretKey"])
+            .Build());
 
 /// Repository setup and registration done here;
 /// 
