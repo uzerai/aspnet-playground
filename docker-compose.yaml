@@ -9,7 +9,7 @@ services:
       - "5432:5432"
     volumes:
       - database-data:/var/lib/postgresql/data
-      - ./container/local-db/init-scripts:/docker-entrypoint-initdb.d
+      - ./container/local-db/init-scripts/01-init-extensions.sql:/docker-entrypoint-initdb.d/01-init-extensions.sql
     # Add build context to install extensions
     build:
       context: ./container/local-db

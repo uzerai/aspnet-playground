@@ -1,7 +1,9 @@
 using System.Security.Claims;
-using Dotnet.Playground.DI.Authorization.UserContext;
+using Dotnet.Playground.DI.Data.QueryExtensions;
 using Dotnet.Playground.DI.Repository.Interface;
 using Dotnet.Playground.Model.Authentication;
+using Microsoft.EntityFrameworkCore;
+using NodaTime;
 
 namespace Dotnet.Playground.DI.Authorization.UserContext;
 
@@ -9,16 +11,16 @@ public class UserContextMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly ILogger<UserContextMiddleware> _logger;
-    private readonly IUserManagementService _userManagementService;
+    private readonly IServiceScopeFactory _serviceScopeFactory;
 
     public UserContextMiddleware(
         RequestDelegate next,
         ILogger<UserContextMiddleware> logger,
-        IUserManagementService userManagementService)
+        IServiceScopeFactory serviceScopeFactory)
     {
         _next = next;
         _logger = logger;
-        _userManagementService = userManagementService;
+        _serviceScopeFactory = serviceScopeFactory;
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -34,8 +36,36 @@ public class UserContextMiddleware
 
                 if (email != null)
                 {
-                    var user = await _userManagementService.GetOrCreateUserAsync(auth0Id, email, username);
-                    await _userManagementService.UpdateLastLoginAsync(user);
+                    // This is a bit of a hack to access scoped services in middleware.
+                    using var scope = _serviceScopeFactory.CreateScope();
+                    
+                    var userRepository = scope.ServiceProvider.GetRequiredService<IEntityRepository<User>>();
+                    var clock = scope.ServiceProvider.GetRequiredService<IClock>();
+
+                    var user = await userRepository
+                        .BuildReadonlyQuery()
+                        .WhereAuth0UserId(auth0Id)
+                        .Include(u => u.OrganizationUsers)
+                        .ThenInclude(ou => ou.Permissions)
+                        .FirstOrDefaultAsync();
+
+                    if (user == null)
+                    {
+                        _logger.LogInformation("First time login for user {UserAuth0NameIdentifier}. Creating local user.", auth0Id);
+                        user = await userRepository.CreateAsync(new User()
+                        {
+                            Auth0UserId = auth0Id,
+                            Email = email,
+                            Username = username ?? email,
+                            LastLogin = clock.GetCurrentInstant(),
+                        });
+                    }
+                    else
+                    {
+                        user.LastLogin = clock.GetCurrentInstant();
+                        user = await userRepository.UpdateAsync(user);
+                    }
+
                     context.Items["CurrentUser"] = user;
                 }
             }

@@ -15,13 +15,13 @@ public static class RepositoryServicesConfigurationExtensions
     /// <returns></returns>
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddTransient<IEntityRepository<User>, UserRepository>();
-        services.AddTransient<IEntityRepository<Organization>, OrganizationRepository>();
-        services.AddTransient<IRepository<OrganizationUser>, OrganizationUserRepository>();
-        services.AddTransient<IEntityRepository<OrganizationTeam>, OrganizationTeamRepository>();
-        services.AddTransient<IEntityRepository<Area>, AreaRepository>();
-        services.AddTransient<IEntityRepository<Sector>, SectorRepository>();
-        services.AddTransient<IEntityRepository<Pitch>, PitchRepository>();
+        services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<IOrganizationRepository, OrganizationRepository>();
+        services.AddTransient<IOrganizationUserRepository, OrganizationUserRepository>();
+        services.AddTransient<IOrganizationTeamRepository, OrganizationTeamRepository>();
+        services.AddTransient<IAreaRepository, AreaRepository>();
+        services.AddTransient<ISectorRepository, SectorRepository>();
+        services.AddTransient<IPitchRepository, PitchRepository>();
         services.AddTransient<IEntityRepository<Route>, RouteRepository>();
         
         return services;

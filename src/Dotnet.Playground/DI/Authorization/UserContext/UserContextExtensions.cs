@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Dotnet.Playground.DI.Repository.Interface;
+using Dotnet.Playground.Model.Authentication;
+using Dotnet.Playground.DI.Repository;
 
 namespace Dotnet.Playground.DI.Authorization.UserContext;
 
@@ -9,7 +12,8 @@ public static class UserContextExtensions
     {
         services.AddHttpContextAccessor();
         services.AddScoped<IUserContext, UserContext>();
-        services.AddScoped<IUserManagementService, UserManagementService>();
+        services.AddScoped<IEntityRepository<User>, UserRepository>();
+        services.AddSingleton<IServiceScopeFactory>(sp => sp.GetRequiredService<IServiceScopeFactory>());
         return services;
     }
 

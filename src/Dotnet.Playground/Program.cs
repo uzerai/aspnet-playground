@@ -96,9 +96,9 @@ builder.Services.AddMinio(configureClient => configureClient
 ///     Dotnet.Playground.DI.Repository.ConfigurationExtension.RepositoryServiceConfigurationExtensions
 /// instead of adding them here.
 builder.Services.AddRepositories();
+builder.Services.AddUserContext();
 builder.Services.AddPermissionsAuthorizationHandling();
 builder.Services.AddImageStorageService();
-builder.Services.AddUserContext();
 
 /// Json setup specifically for the support of NodaTime serialization.
 /// Also sets the property naming policy to snake_case, because it's the nicer json format.
