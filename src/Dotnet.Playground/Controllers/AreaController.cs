@@ -9,9 +9,9 @@ namespace Dotnet.Playground.Controllers;
 [Route("areas")]
 public class AreaController : ControllerBase
 {
-    private readonly IEntityRepository<Area> _areaRepository;
+    private readonly IAreaRepository _areaRepository;
 
-    public AreaController(IEntityRepository<Area> areaRepository)
+    public AreaController(IAreaRepository areaRepository)
     {
         _areaRepository = areaRepository;
     }

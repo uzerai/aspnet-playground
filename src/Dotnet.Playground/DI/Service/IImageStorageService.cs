@@ -5,5 +5,5 @@ namespace Dotnet.Playground.DI.Service;
 
 public interface IImageStorageService
 {
-    Task<Image> UploadImage(Stream image, User user, Guid relatedEntityId);
+    Task<Image> UploadImage(Stream image, User user, Guid? relatedEntityId);
 }

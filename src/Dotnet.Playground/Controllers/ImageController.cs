@@ -3,6 +3,8 @@ using Dotnet.Playground.DI.Service;
 using Dotnet.Playground.Model;
 using Microsoft.AspNetCore.Mvc;
 using Dotnet.Playground.DI.Authorization.UserContext;
+using Dotnet.Playground.Model.Authorization.Permissions;
+using Dotnet.Playground.DI.Authorization.Permissions;
 
 namespace Dotnet.Playground.Controllers;
 
@@ -21,14 +23,10 @@ public class ImageController : ControllerBase
         _userContext = userContext;
     }
     
+    [PlatformPermissionRequired(Permission.ImagesWrite)]
     [HttpPost]
     public async Task<ActionResult<Image>> UploadImage()
     {
-        if (!_userContext.IsAuthenticated)
-        {
-            return Unauthorized();
-        }
-
         using var memoryStream = new MemoryStream();
         await Request.Body.CopyToAsync(memoryStream);
         memoryStream.Position = 0;

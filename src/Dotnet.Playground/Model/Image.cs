@@ -16,6 +16,6 @@ public class Image : BaseEntity
     public Guid? UploaderId { get; set; }
     public virtual User? Uploader { get; set; }
     [JsonIgnore]
-    public Guid RelatedEntityId { get; set; }
-    public virtual BaseEntity RelatedEntity { get; set; } = null!;
+    public Guid? RelatedEntityId { get; set; }
+    public virtual BaseEntity? RelatedEntity { get; set; }
 }

@@ -1,3 +1,4 @@
+using Dotnet.Playground.DI.Repository.Interface;
 using Dotnet.Playground.Model;
 using Dotnet.Playground.Model.Authentication;
 using Minio;
@@ -10,22 +11,27 @@ public class ImageStorageService : IImageStorageService
 {
     private static readonly string BUCKET_NAME = "images";
     private readonly IMinioClient _minioClient;
+    private readonly IRepository<Image> _imageRepository;
     private readonly ILogger<ImageStorageService> _logger;
 
-    public ImageStorageService(IMinioClient minioClient, ILogger<ImageStorageService> logger)
+    public ImageStorageService(
+        IMinioClient minioClient, 
+        IRepository<Image> imageRepository, 
+        ILogger<ImageStorageService> logger)
     {
         _minioClient = minioClient;
+        _imageRepository = imageRepository;
         _logger = logger;
     }
 
-    public async Task<Image> UploadImage(Stream image, User user, Guid relatedEntityId)
+    public async Task<Image> UploadImage(Stream image, User user, Guid? relatedEntityId)
     {
         try
         {
             _logger.LogInformation("Uploading image to bucket {bucketName}", BUCKET_NAME);
 
             bool bucketExists = await _minioClient.BucketExistsAsync(
-                new BucketExistsArgs().WithBucket(BUCKET_NAME)).ConfigureAwait(false);
+                new BucketExistsArgs().WithBucket(BUCKET_NAME));
 
             _logger.LogInformation("Bucket exists: {bucketExists}", bucketExists);
 
@@ -33,27 +39,29 @@ public class ImageStorageService : IImageStorageService
             {
                 _logger.LogInformation("Bucket {bucketName} does not exist, creating it.", BUCKET_NAME);
                 await _minioClient.MakeBucketAsync(new MakeBucketArgs()
-                    .WithBucket(BUCKET_NAME)).ConfigureAwait(false);
+                    .WithBucket(BUCKET_NAME));
             }
 
             var objectName = Guid.NewGuid().ToString();
             var args = new PutObjectArgs()
                 .WithBucket(BUCKET_NAME)
                 .WithObject(objectName)
-                .WithContentType("application/octet-stream")
+                .WithContentType("image/jpeg")
                 .WithStreamData(image)
                 .WithObjectSize(image.Length);
 
-            await _minioClient.PutObjectAsync(args).ConfigureAwait(false);
+            await _minioClient.PutObjectAsync(args);
 
-            return new Image
+            Image imageEntity = await _imageRepository.CreateAsync(new()
             {
                 Key = objectName,
                 Bucket = BUCKET_NAME,
                 Url = new Uri($"https://minio.playground.com/{BUCKET_NAME}/{objectName}"),
                 UploaderId = user.Id,
                 RelatedEntityId = relatedEntityId,
-            };
+            });
+
+            return imageEntity;
         }
         catch (MinioException ex)
         {
