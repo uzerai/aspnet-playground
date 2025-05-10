@@ -7,14 +7,14 @@ namespace Dotnet.Playground.Model.Authorization.Permissions;
 /// 
 /// These permissions are the default permissions given to a user when they sign up.
 /// </summary>
-public static class DefaultPermissions
+public static class DefaultUserPermissions
 {
     public static readonly Permission[] PlatformPermissions = [
-        Permission.CragsRead,
+        Permission.OrganizationsRead,
+        Permission.AreasRead,
+        Permission.SectorsRead,
         Permission.RoutesRead,
         Permission.PitchesRead,
-        Permission.NotesRead,
-        Permission.OrganizationsRead,
     ];
 
     public static readonly Permission[] OrganizationPermissions = [
@@ -45,18 +45,10 @@ public enum Permission
     TeamsRead,
     [JsonStringEnumMemberName("teams:write")]
     TeamsWrite,
-    [JsonStringEnumMemberName("documents:read")]
-    DocumentsRead,
-    [JsonStringEnumMemberName("documents:write")]
-    DocumentsWrite,
-    [JsonStringEnumMemberName("tags:read")]
-    TagsRead,
-    [JsonStringEnumMemberName("tags:write")]
-    TagsWrite,
-    [JsonStringEnumMemberName("crags:read")]
-    CragsRead,
-    [JsonStringEnumMemberName("crags:write")]
-    CragsWrite,
+    [JsonStringEnumMemberName("areas:read")]
+    AreasRead,
+    [JsonStringEnumMemberName("areas:write")]
+    AreasWrite,
     [JsonStringEnumMemberName("routes:read")]
     RoutesRead,
     [JsonStringEnumMemberName("routes:write")]
@@ -65,8 +57,12 @@ public enum Permission
     PitchesRead,
     [JsonStringEnumMemberName("pitches:write")]
     PitchesWrite,
-    [JsonStringEnumMemberName("notes:read")]
-    NotesRead,
-    [JsonStringEnumMemberName("notes:write")]
-    NotesWrite,
+    [JsonStringEnumMemberName("sectors:read")]
+    SectorsRead,
+    [JsonStringEnumMemberName("sectors:write")]
+    SectorsWrite,
+    [JsonStringEnumMemberName("images:read")]
+    ImagesRead,
+    [JsonStringEnumMemberName("images:write")]
+    ImagesWrite
 }
