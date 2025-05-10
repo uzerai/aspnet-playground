@@ -228,38 +228,6 @@ namespace Dotnet.Playground.Migrations
                     b.ToTable("users", (string)null);
                 });
 
-            modelBuilder.Entity("Dotnet.Playground.Model.Media.Image.Image", b =>
-                {
-                    b.HasBaseType("Dotnet.Playground.Model.BaseEntity");
-
-                    b.Property<string>("Bucket")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("bucket");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text")
-                        .HasColumnName("description");
-
-                    b.Property<string>("Key")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("key");
-
-                    b.Property<Guid>("UploaderId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("uploader_id");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("url");
-
-                    b.HasIndex("UploaderId");
-
-                    b.ToTable((string)null);
-                });
-
             modelBuilder.Entity("Dotnet.Playground.Model.Organizations.Organization", b =>
                 {
                     b.HasBaseType("Dotnet.Playground.Model.BaseEntity");
@@ -307,10 +275,6 @@ namespace Dotnet.Playground.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("sector_id");
 
-                    b.Property<Guid?>("TopoImageId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("topo_image_id");
-
                     b.Property<int>("Type")
                         .HasColumnType("integer")
                         .HasColumnName("type");
@@ -354,10 +318,6 @@ namespace Dotnet.Playground.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("sector_id");
 
-                    b.Property<Guid?>("TopoImageId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("topo_image_id");
-
                     b.HasIndex("SectorId")
                         .HasDatabaseName("ix_routes_sector_id");
 
@@ -399,64 +359,6 @@ namespace Dotnet.Playground.Migrations
                         .HasDatabaseName("ix_sectors_area_id");
 
                     b.ToTable("sectors", (string)null);
-                });
-
-            modelBuilder.Entity("Dotnet.Playground.Model.Media.Image.AreaImage", b =>
-                {
-                    b.HasBaseType("Dotnet.Playground.Model.Media.Image.Image");
-
-                    b.Property<Guid>("AreaId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("area_id");
-
-                    b.HasIndex("AreaId")
-                        .HasDatabaseName("ix_area_images_area_id");
-
-                    b.ToTable("area_images", (string)null);
-                });
-
-            modelBuilder.Entity("Dotnet.Playground.Model.Media.Image.PitchImage", b =>
-                {
-                    b.HasBaseType("Dotnet.Playground.Model.Media.Image.Image");
-
-                    b.Property<Guid>("PitchId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("pitch_id");
-
-                    b.HasIndex("PitchId")
-                        .IsUnique()
-                        .HasDatabaseName("ix_pitch_images_pitch_id");
-
-                    b.ToTable("pitch_images", (string)null);
-                });
-
-            modelBuilder.Entity("Dotnet.Playground.Model.Media.Image.RouteImage", b =>
-                {
-                    b.HasBaseType("Dotnet.Playground.Model.Media.Image.Image");
-
-                    b.Property<Guid>("RouteId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("route_id");
-
-                    b.HasIndex("RouteId")
-                        .IsUnique()
-                        .HasDatabaseName("ix_route_images_route_id");
-
-                    b.ToTable("route_images", (string)null);
-                });
-
-            modelBuilder.Entity("Dotnet.Playground.Model.Media.Image.SectorImage", b =>
-                {
-                    b.HasBaseType("Dotnet.Playground.Model.Media.Image.Image");
-
-                    b.Property<Guid>("SectorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("sector_id");
-
-                    b.HasIndex("SectorId")
-                        .HasDatabaseName("ix_sector_images_sector_id");
-
-                    b.ToTable("sector_images", (string)null);
                 });
 
             modelBuilder.Entity("Dotnet.Playground.Model.Authorization.Permissions.OrganizationPermission", b =>
@@ -580,17 +482,6 @@ namespace Dotnet.Playground.Migrations
                     b.Navigation("MaintainerOrganization");
                 });
 
-            modelBuilder.Entity("Dotnet.Playground.Model.Media.Image.Image", b =>
-                {
-                    b.HasOne("Dotnet.Playground.Model.Authentication.User", "Uploader")
-                        .WithMany()
-                        .HasForeignKey("UploaderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Uploader");
-                });
-
             modelBuilder.Entity("Dotnet.Playground.Model.Organizations.OrganizationTeam", b =>
                 {
                     b.HasOne("Dotnet.Playground.Model.Organizations.Organization", "Organization")
@@ -639,54 +530,6 @@ namespace Dotnet.Playground.Migrations
                     b.Navigation("Area");
                 });
 
-            modelBuilder.Entity("Dotnet.Playground.Model.Media.Image.AreaImage", b =>
-                {
-                    b.HasOne("Dotnet.Playground.Model.Area", "Area")
-                        .WithMany("Images")
-                        .HasForeignKey("AreaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_area_images_areas_area_id");
-
-                    b.Navigation("Area");
-                });
-
-            modelBuilder.Entity("Dotnet.Playground.Model.Media.Image.PitchImage", b =>
-                {
-                    b.HasOne("Dotnet.Playground.Model.Pitch", "Pitch")
-                        .WithOne("TopoImage")
-                        .HasForeignKey("Dotnet.Playground.Model.Media.Image.PitchImage", "PitchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_pitch_images_pitches_pitch_id");
-
-                    b.Navigation("Pitch");
-                });
-
-            modelBuilder.Entity("Dotnet.Playground.Model.Media.Image.RouteImage", b =>
-                {
-                    b.HasOne("Dotnet.Playground.Model.Route", "Route")
-                        .WithOne("TopoImage")
-                        .HasForeignKey("Dotnet.Playground.Model.Media.Image.RouteImage", "RouteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_route_images_routes_route_id");
-
-                    b.Navigation("Route");
-                });
-
-            modelBuilder.Entity("Dotnet.Playground.Model.Media.Image.SectorImage", b =>
-                {
-                    b.HasOne("Dotnet.Playground.Model.Sector", "Sector")
-                        .WithMany("Images")
-                        .HasForeignKey("SectorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_sector_images_sectors_sector_id");
-
-                    b.Navigation("Sector");
-                });
-
             modelBuilder.Entity("Dotnet.Playground.Model.Organizations.OrganizationUser", b =>
                 {
                     b.Navigation("OrganizationTeamUsers");
@@ -696,8 +539,6 @@ namespace Dotnet.Playground.Migrations
 
             modelBuilder.Entity("Dotnet.Playground.Model.Area", b =>
                 {
-                    b.Navigation("Images");
-
                     b.Navigation("Sectors");
                 });
 
@@ -718,20 +559,8 @@ namespace Dotnet.Playground.Migrations
                     b.Navigation("OrganizationTeamUsers");
                 });
 
-            modelBuilder.Entity("Dotnet.Playground.Model.Pitch", b =>
-                {
-                    b.Navigation("TopoImage");
-                });
-
-            modelBuilder.Entity("Dotnet.Playground.Model.Route", b =>
-                {
-                    b.Navigation("TopoImage");
-                });
-
             modelBuilder.Entity("Dotnet.Playground.Model.Sector", b =>
                 {
-                    b.Navigation("Images");
-
                     b.Navigation("Routes");
                 });
 #pragma warning restore 612, 618

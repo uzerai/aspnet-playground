@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using Dotnet.Playground.Model.Media.Image;
 
 namespace Dotnet.Playground.Model;
 
@@ -18,11 +17,6 @@ public class Pitch : BaseEntity
     [ForeignKey("Sector")]
     public required Guid SectorId { get; set; }
     public virtual Sector Sector { get; set; } = null!;
-
-    [ForeignKey("TopoImage")]
-    public Guid? TopoImageId { get; set; }
-    public virtual PitchImage? TopoImage { get; set; }
-
     [JsonIgnore]
     public virtual ICollection<Route> Routes { get; set; } = [];
 }

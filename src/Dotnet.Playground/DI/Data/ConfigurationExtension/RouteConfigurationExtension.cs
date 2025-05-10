@@ -18,11 +18,6 @@ public static class RouteConfigurationExtension
             .WithMany(e => e.Routes)
             .UsingEntity<RoutePitch>();
 
-        modelBuilder.Entity<Route>()
-            .HasOne(e => e.TopoImage)
-            .WithOne()
-            .HasForeignKey<Route>(e => e.TopoImageId);
-
         return modelBuilder;
     }
 } 

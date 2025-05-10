@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using Dotnet.Playground.Model.Media.Image;
 using NetTopologySuite.Geometries;
 
 namespace Dotnet.Playground.Model;
@@ -17,10 +16,8 @@ public class Sector : BaseEntity
     public required Point EntryPoint { get; set; }
     public Point? RecommendedParkingLocation { get; set; }
     public LineString? ApproachPath { get; set; }
-    
     [ForeignKey("Area")]
     public required Guid AreaId { get; set; }
     public virtual Area Area { get; set; } = null!;
     public virtual ICollection<Route> Routes { get; set; } = [];
-    public virtual ICollection<SectorImage> Images { get; set; } = [];
 }

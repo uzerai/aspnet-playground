@@ -16,11 +16,6 @@ public static class AreaConfigurationExtension
             .HasMany(e => e.Sectors)
             .WithOne(e => e.Area);
 
-        modelBuilder.Entity<Area>()
-            .HasMany(e => e.Images)
-            .WithOne(e => e.Area)
-            .HasForeignKey(e => e.AreaId);
-
         return modelBuilder;
     }
 } 
