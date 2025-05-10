@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Dotnet.Playground.DI;
 using Dotnet.Playground.DI.Repository.Interface;
 using Dotnet.Playground.Model.Authentication;
+using Dotnet.Playground.DI.Authorization.UserContext;
 
 namespace Dotnet.Playground.Controllers;
 
@@ -12,15 +13,17 @@ namespace Dotnet.Playground.Controllers;
 public class UsersController : ControllerBase
 {
     private readonly IEntityRepository<User> _userRepository;
+    private readonly IUserContext _userContext;
 
-    public UsersController(IEntityRepository<User> userRepository)
+    public UsersController(IEntityRepository<User> userRepository, IUserContext userContext)
     {
         _userRepository = userRepository;
+        _userContext = userContext;
     }
 
     [HttpGet("me")]
     public IActionResult Get()
     {
-        return Ok(HttpContext.GetLocalUser());
+        return Ok(_userContext.CurrentUser);
     }
 }

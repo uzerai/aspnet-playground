@@ -7,6 +7,7 @@ using Dotnet.Playground.DI.Repository.Interface;
 using Dotnet.Playground.Model.Authorization.Permissions;
 using Dotnet.Playground.Model.Organizations;
 using Dotnet.Playground.DTO.RequestData.Organizations;
+using Dotnet.Playground.DI.Authorization.UserContext;
 namespace Dotnet.Playground.Controllers;
 
 [Authorize]
@@ -14,15 +15,21 @@ namespace Dotnet.Playground.Controllers;
 [ApiController]
 public class OrganizationsController : ControllerBase
 {
-    private readonly IEntityRepository<Organization> _organizationRepository;
+    private readonly IOrganizationRepository _organizationRepository;
     private readonly IRepository<OrganizationUser> _organizationUserRepository;
     private readonly ILogger<OrganizationsController> _logger;
+    private readonly IUserContext _userContext;
 
-    public OrganizationsController(IEntityRepository<Organization> organizationRepository, IRepository<OrganizationUser> organizationUserRepository, ILogger<OrganizationsController> logger)
+    public OrganizationsController(
+        IOrganizationRepository organizationRepository,
+        IRepository<OrganizationUser> organizationUserRepository,
+        ILogger<OrganizationsController> logger,
+        IUserContext userContext)
     {
         _organizationRepository = organizationRepository;
         _organizationUserRepository = organizationUserRepository;
         _logger = logger;
+        _userContext = userContext;
     }
 
     [HttpGet]
@@ -50,7 +57,7 @@ public class OrganizationsController : ControllerBase
         var organizationUser = new OrganizationUser
         {
             OrganizationId = createdOrganization.Id,
-            UserId = HttpContext.GetLocalUser().Id,
+            UserId = _userContext.CurrentUser!.Id,
             Permissions = Enum.GetValues<Permission>()
                 .Select(permission => new OrganizationPermission
                 {

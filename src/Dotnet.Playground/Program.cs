@@ -8,13 +8,13 @@ using Microsoft.IdentityModel.Tokens;
 using NodaTime.Serialization.SystemTextJson;
 using Dotnet.Playground.DI.Repository.ConfigurationExtension;
 using System.Text.Json;
-using Dotnet.Playground.DI.Middleware.ConfigurationExtension;
 using Dotnet.Playground.DI.Authorization.ConfigurationExtension;
 using NetTopologySuite;
 using NetTopologySuite.IO.Converters;
 using Dotnet.Playground.DI.Swagger;
 using Minio;
 using Dotnet.Playground.DI.Service;
+using Dotnet.Playground.DI.Authorization.UserContext;
 
 // ############################################################
 // ##########  APP BUILDING  ##################################
@@ -98,6 +98,7 @@ builder.Services.AddMinio(configureClient => configureClient
 builder.Services.AddRepositories();
 builder.Services.AddPermissionsAuthorizationHandling();
 builder.Services.AddImageStorageService();
+builder.Services.AddUserContext();
 
 /// Json setup specifically for the support of NodaTime serialization.
 /// Also sets the property naming policy to snake_case, because it's the nicer json format.
@@ -132,9 +133,8 @@ app.UseRouting();
 // Authentication middleware.
 app.UseAuthentication();
 
-// Registers project-specific middleware.
-// Explore the DI/Middleware folder for more information.
-app.UseProjectMiddleware();
+// Add user context middleware
+app.UseUserContext();
 
 // Authorization middleware.
 app.UseAuthorization();

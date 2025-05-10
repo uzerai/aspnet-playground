@@ -1,45 +1,36 @@
 using Microsoft.AspNetCore.Authorization;
+using Dotnet.Playground.DI.Authorization.UserContext;
 
 namespace Dotnet.Playground.DI.Authorization.Permissions;
 
 public class PlatformPermissionsAuthorizationHandler : AuthorizationHandler<PlatformPermissionRequiredAttribute>
 {
     private readonly ILogger<PlatformPermissionsAuthorizationHandler> _logger;
+    private readonly IUserContext _userContext;
 
-    public PlatformPermissionsAuthorizationHandler(ILogger<PlatformPermissionsAuthorizationHandler> logger)
+    public PlatformPermissionsAuthorizationHandler(
+        ILogger<PlatformPermissionsAuthorizationHandler> logger,
+        IUserContext userContext)
     {
         _logger = logger;
+        _userContext = userContext;
     }
 
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PlatformPermissionRequiredAttribute requirement)
     {
-        _logger.LogDebug("Handling organization permissions authorization for {Permission}", requirement.Permission);
+        _logger.LogDebug("Handling platform permissions authorization for {Permission}", requirement.Permission);
 
-        // This is a bit of a hack but, let's use the same local user context that the LocalUserContextMiddleware sets.
-        // This way we don't have to query again for the user and permissions.
-        var httpContext = context.Resource as HttpContext;
-        if (httpContext == null)
+        var user = _userContext.CurrentUser;
+        if (user == null)
         {
-            _logger.LogError("HttpContext is null; aborting authorization check.");
+            _logger.LogError("No authenticated user found; aborting authorization check.");
             context.Fail();
             return Task.CompletedTask;
         }
 
-        // This is the local user context that the LocalUserContextMiddleware sets.
-        // It should always be there since all of this code is post-authentication.
-        // 
-        // This is fluff to make the compiler happy.
-        var localUser = httpContext.GetLocalUser();
-        if (localUser == null)
-        {
-            _logger.LogError("LocalUser from HttpContext resource is null; aborting authorization check.");
-            context.Fail();
-            return Task.CompletedTask;
-        }
+        var platformPermissions = user.PlatformPermissions.ToList();
 
-        var platformPermissions = localUser.PlatformPermissions.ToList();
-
-        if (platformPermissions.Count < 1)
+        if (!platformPermissions.Any())
         {
             _logger.LogError("User has no platform permissions; aborting authorization check.");
             context.Fail();

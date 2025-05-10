@@ -7,6 +7,7 @@ using Dotnet.Playground.DI.Repository.Interface;
 using Dotnet.Playground.Model.Authentication;
 using Dotnet.Playground.Model.Organizations;
 using Dotnet.Playground.DTO.RequestData.Organizations;
+using Dotnet.Playground.DI.Authorization.UserContext;
 
 namespace Dotnet.Playground.Tests.Controllers;
 
@@ -15,6 +16,7 @@ public class OrganizationsControllerTests
     private readonly Mock<IOrganizationRepository> _mockOrganizationRepository;
     private readonly Mock<IOrganizationUserRepository> _mockOrganizationUserRepository;
     private readonly Mock<ILogger<OrganizationsController>> _mockLogger;
+    private readonly Mock<IUserContext> _mockUserContext;
     private readonly OrganizationsController _controller;
     private readonly Guid _userId = Guid.NewGuid();
 
@@ -24,19 +26,24 @@ public class OrganizationsControllerTests
         _mockOrganizationRepository = new Mock<IOrganizationRepository>();
         _mockOrganizationUserRepository = new Mock<IOrganizationUserRepository>();
         _mockLogger = new Mock<ILogger<OrganizationsController>>();
+        _mockUserContext = new Mock<IUserContext>();
         
         // Create controller with mocked dependencies
         _controller = new OrganizationsController(
             _mockOrganizationRepository.Object,
             _mockOrganizationUserRepository.Object,
-            _mockLogger.Object);
-        // Setup HttpContext with mock user
+            _mockLogger.Object,
+            _mockUserContext.Object);
+
+        // Setup mock user context
         var user = new User { Id = _userId, Auth0UserId = "auth0|1234567890", Email = "test@example.com", Username = "test-username" };
-        var httpContext = new DefaultHttpContext();
-        httpContext.Items["LocalUserIdentity"] = user;
+        _mockUserContext.Setup(x => x.CurrentUser).Returns(user);
+        _mockUserContext.Setup(x => x.IsAuthenticated).Returns(true);
+
+        // Setup HttpContext
         _controller.ControllerContext = new ControllerContext
         {
-            HttpContext = httpContext
+            HttpContext = new DefaultHttpContext()
         };
     }
 
