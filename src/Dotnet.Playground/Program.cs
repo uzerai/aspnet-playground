@@ -14,6 +14,7 @@ using NetTopologySuite;
 using NetTopologySuite.IO.Converters;
 using Dotnet.Playground.DI.Swagger;
 using Minio;
+using Dotnet.Playground.DI.Service;
 
 // ############################################################
 // ##########  APP BUILDING  ##################################
@@ -85,6 +86,7 @@ builder.Services.AddMinio(configureClient => configureClient
             .WithCredentials(
                 builder.Configuration["Minio:AccessKey"],
                 builder.Configuration["Minio:SecretKey"])
+            .WithSSL(false)  // Set to true if your MinIO server uses HTTPS
             .Build());
 
 /// Repository setup and registration done here;
@@ -95,6 +97,7 @@ builder.Services.AddMinio(configureClient => configureClient
 /// instead of adding them here.
 builder.Services.AddRepositories();
 builder.Services.AddPermissionsAuthorizationHandling();
+builder.Services.AddImageStorageService();
 
 /// Json setup specifically for the support of NodaTime serialization.
 /// Also sets the property naming policy to snake_case, because it's the nicer json format.

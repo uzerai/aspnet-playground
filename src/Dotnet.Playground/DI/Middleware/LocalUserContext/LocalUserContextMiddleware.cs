@@ -1,11 +1,8 @@
 using System.Security.Claims;
-using System.Text.Json;
-using Auth0.AspNetCore.Authentication.BackchannelLogout;
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
 using Dotnet.Playground.DI;
 using Dotnet.Playground.DI.Data.QueryExtensions;
-using Dotnet.Playground.DI.Repository;
 using Dotnet.Playground.DI.Repository.Interface;
 using Dotnet.Playground.Model.Authentication;
 
