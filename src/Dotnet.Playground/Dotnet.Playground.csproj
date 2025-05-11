@@ -38,6 +38,9 @@
 
     <!-- Min io -->
     <PackageReference Include="Minio" Version="6.0.4" />
+
+    <!-- FileSignatures, primarily for uploaded image signature detection -->
+    <PackageReference Include="FileSignatures" Version="5.1.1" />
   </ItemGroup>
 
     <!-- Expose internals to the test project -->

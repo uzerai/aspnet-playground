@@ -23,7 +23,7 @@ public static class RepositoryServicesConfigurationExtensions
         services.AddTransient<ISectorRepository, SectorRepository>();
         services.AddTransient<IPitchRepository, PitchRepository>();
         services.AddTransient<IEntityRepository<Route>, RouteRepository>();
-        services.AddTransient<IRepository<Image>, ImageRepository>();
+        services.AddTransient<IEntityRepository<Image>, ImageRepository>();
         
         return services;
     }

@@ -15,16 +15,20 @@ using Dotnet.Playground.DI.Swagger;
 using Minio;
 using Dotnet.Playground.DI.Service;
 using Dotnet.Playground.DI.Authorization.UserContext;
+using FileSignatures;
 
 // ############################################################
 // ##########  APP BUILDING  ##################################
 // ############################################################
+///
+/// This is where the NuGet packages are configured and non-internal services are registered.
+/// If you are adding a new NuGet package, please add it to this section, and register all other 
+/// injected services that are internally developed as part of the API in the section below this one.
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen(options => {
     options.SimplifyNetTopologySuiteTypes();
 });
@@ -58,6 +62,17 @@ builder.Services.AddSingleton<IClock>(SystemClock.Instance);
 // Add NetTopologySuite.IO.Converters.GeoJsonConverterFactory to the service container.
 builder.Services.AddSingleton(NtsGeometryServices.Instance);
 
+// Add MinIO Client service.
+builder.Services.AddMinio(configureClient => configureClient
+    .WithEndpoint(builder.Configuration["Minio:Endpoint"])
+    .WithCredentials(
+        builder.Configuration["Minio:AccessKey"],
+        builder.Configuration["Minio:SecretKey"])
+    .WithSSL(false)  // Set to true if your MinIO server uses HTTPS
+    .Build());
+
+// Add FileSignatures inspector service.
+builder.Services.AddSingleton<IFileFormatInspector>(new FileFormatInspector());
 
 // Add main application database context.
 // Will contain references to all entities in the application.
@@ -80,26 +95,6 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
     .UseSnakeCaseNamingConvention();
 });
 
-// Min.io setup. Adds a client configuration for the Min.io file storage service.
-builder.Services.AddMinio(configureClient => configureClient
-            .WithEndpoint(builder.Configuration["Minio:Endpoint"])
-            .WithCredentials(
-                builder.Configuration["Minio:AccessKey"],
-                builder.Configuration["Minio:SecretKey"])
-            .WithSSL(false)  // Set to true if your MinIO server uses HTTPS
-            .Build());
-
-/// Repository setup and registration done here;
-/// 
-/// If you are adding a new repository:
-/// Please add it to the extension method in
-///     Dotnet.Playground.DI.Repository.ConfigurationExtension.RepositoryServiceConfigurationExtensions
-/// instead of adding them here.
-builder.Services.AddRepositories();
-builder.Services.AddUserContext();
-builder.Services.AddPermissionsAuthorizationHandling();
-builder.Services.AddImageStorageService();
-
 /// Json setup specifically for the support of NodaTime serialization.
 /// Also sets the property naming policy to snake_case, because it's the nicer json format.
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -109,6 +104,22 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     
     options.JsonSerializerOptions.Converters.Add(new GeoJsonConverterFactory());
 });
+
+/// ############################################################
+/// ##########  CUSTOM SERVICES SETUP  #########################
+/// ############################################################
+/// 
+/// Repository setup and registration done here;
+/// 
+/// If you are adding a new repository:
+/// Please add it to the extension method in
+///     Dotnet.Playground.DI.Repository.ConfigurationExtension.RepositoryServiceConfigurationExtensions
+/// instead of adding them here.
+/// 
+builder.Services.AddRepositories();
+builder.Services.AddUserContext();
+builder.Services.AddPermissionsAuthorizationHandling();
+builder.Services.AddApplicationServices();
 
 // ############################################################
 // ##########  APP INITIALIZATION  ############################
