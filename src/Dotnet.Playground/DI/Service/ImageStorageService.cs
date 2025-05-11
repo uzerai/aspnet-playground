@@ -50,13 +50,18 @@ public class ImageStorageService : IImageStorageService
                 .WithStreamData(image)
                 .WithObjectSize(image.Length);
 
-            await _minioClient.PutObjectAsync(args);
+            var uploadedObject = await _minioClient.PutObjectAsync(args);
+
+            var url = await _minioClient.PresignedGetObjectAsync(
+                new PresignedGetObjectArgs()
+                    .WithBucket(BUCKET_NAME)
+                    .WithObject(objectName)
+                    .WithExpiry(60 * 60 * 24));
 
             Image imageEntity = await _imageRepository.CreateAsync(new()
             {
                 Key = objectName,
                 Bucket = BUCKET_NAME,
-                Url = new Uri($"https://minio.playground.com/{BUCKET_NAME}/{objectName}"),
                 UploaderId = user.Id,
                 RelatedEntityId = relatedEntityId,
             });
