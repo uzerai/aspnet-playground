@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using Route = Dotnet.Playground.Model.Location.Route;
 
 namespace Dotnet.Playground.Model.Achievement;
 

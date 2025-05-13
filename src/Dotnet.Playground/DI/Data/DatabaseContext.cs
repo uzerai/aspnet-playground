@@ -7,6 +7,7 @@ using Dotnet.Playground.Model.Authorization.Permissions;
 using Dotnet.Playground.Model.Organizations;
 using Route = Dotnet.Playground.Model.Location.Route;
 using Dotnet.Playground.Model.Location;
+using Dotnet.Playground.Model.Achievement;
 
 namespace Dotnet.Playground.DI.Data;
 
@@ -35,6 +36,8 @@ public class DatabaseContext : DbContext
     public DbSet<Pitch> Pitches { get; set; }
     public DbSet<RoutePitch> RoutePitches { get; set; }
     public DbSet<Image> Images { get; set; }
+    public DbSet<RouteAscent> RouteAscents { get; set; }
+    public DbSet<PitchAscent> PitchAscents { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -54,6 +57,7 @@ public class DatabaseContext : DbContext
         modelBuilder.ConfigurePitchModel();
         modelBuilder.ConfigureRoutePitchModel();
         modelBuilder.ConfigureImageModel();
+        modelBuilder.ConfigureBaseAscentAbstractModel();
     }
 
     /// <summary>
