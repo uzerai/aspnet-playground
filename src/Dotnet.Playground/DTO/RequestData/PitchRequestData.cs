@@ -1,4 +1,4 @@
-using Dotnet.Playground.Model;
+using Dotnet.Playground.Model.Location;
 
 namespace Dotnet.Playground.DTO.RequestData;
 

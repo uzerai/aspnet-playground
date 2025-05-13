@@ -2,9 +2,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using Dotnet.Playground.Model.Organizations;
 using NetTopologySuite.Geometries;
-using NetTopologySuite.IO.Converters;
 
-namespace Dotnet.Playground.Model;
+namespace Dotnet.Playground.Model.Location;
 
 /// <summary>
 /// Represents a climing area from a colloquial perspective.

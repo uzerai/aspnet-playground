@@ -1,8 +1,6 @@
 using Dotnet.Playground.DI.Repository.Interface;
 using Dotnet.Playground.Model;
-using Dotnet.Playground.Model.Authentication;
-using Dotnet.Playground.Model.Organizations;
-using Route = Dotnet.Playground.Model.Route;
+using Route = Dotnet.Playground.Model.Location.Route;
 
 namespace Dotnet.Playground.DI.Repository.ConfigurationExtension;
 

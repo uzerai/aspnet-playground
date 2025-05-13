@@ -1,4 +1,5 @@
-using Dotnet.Playground.Model;
+
+using Dotnet.Playground.Model.Location;
 
 namespace Dotnet.Playground.DI.Repository.Interface;
 

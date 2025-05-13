@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Dotnet.Playground.Model;
+namespace Dotnet.Playground.Model.Location;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum PitchType

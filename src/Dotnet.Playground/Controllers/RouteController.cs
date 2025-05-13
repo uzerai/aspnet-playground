@@ -1,8 +1,9 @@
 using Dotnet.Playground.DI.Repository.Interface;
 using Dotnet.Playground.DTO.RequestData;
-using Dotnet.Playground.Model;
+using Dotnet.Playground.Model.Location;
 using Microsoft.AspNetCore.Mvc;
-using Route = Dotnet.Playground.Model.Route;
+
+using Route = Dotnet.Playground.Model.Location.Route;
 
 namespace Dotnet.Playground.Controllers;
 

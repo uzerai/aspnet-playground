@@ -1,6 +1,6 @@
 using Dotnet.Playground.DI.Data;
 using Dotnet.Playground.DI.Repository.Interface;
-using Dotnet.Playground.Model;
+using Dotnet.Playground.Model.Location;
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
 

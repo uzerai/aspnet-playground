@@ -1,6 +1,7 @@
-using Dotnet.Playground.Model;
+
+using Dotnet.Playground.Model.Location;
 using Microsoft.EntityFrameworkCore;
-using Route = Dotnet.Playground.Model.Route;
+using Route = Dotnet.Playground.Model.Location.Route;
 
 namespace Dotnet.Playground.DI.Data.ConfigurationExtension;
 

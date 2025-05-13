@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using NodaTime;
 
-namespace Dotnet.Playground.Model;
+namespace Dotnet.Playground.Model.Location;
 
 /// <summary>
 /// Represents a climbing route; from top to bottom.

@@ -5,7 +5,8 @@ using Dotnet.Playground.Model;
 using Dotnet.Playground.Model.Authentication;
 using Dotnet.Playground.Model.Authorization.Permissions;
 using Dotnet.Playground.Model.Organizations;
-using Route = Dotnet.Playground.Model.Route;
+using Route = Dotnet.Playground.Model.Location.Route;
+using Dotnet.Playground.Model.Location;
 
 namespace Dotnet.Playground.DI.Data;
 

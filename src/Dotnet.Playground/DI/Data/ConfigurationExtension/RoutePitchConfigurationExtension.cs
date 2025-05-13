@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Dotnet.Playground.Model.Organizations;
-using Dotnet.Playground.Model;
+using Dotnet.Playground.Model.Location;
 
 namespace Dotnet.Playground.DI.Data.ConfigurationExtension;
 

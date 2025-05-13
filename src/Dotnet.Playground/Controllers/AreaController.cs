@@ -1,6 +1,6 @@
 using Dotnet.Playground.DI.Repository.Interface;
 using Dotnet.Playground.DTO.RequestData;
-using Dotnet.Playground.Model;
+using Dotnet.Playground.Model.Location;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dotnet.Playground.Controllers;

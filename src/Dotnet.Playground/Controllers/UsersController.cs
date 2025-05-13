@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Dotnet.Playground.DI;
 using Dotnet.Playground.DI.Repository.Interface;
 using Dotnet.Playground.Model.Authentication;
 using Dotnet.Playground.DI.Authorization.UserContext;

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace Dotnet.Playground.Model;
+namespace Dotnet.Playground.Model.Location;
 
 /// <summary>
 /// Represents a pitch of a climbing route.

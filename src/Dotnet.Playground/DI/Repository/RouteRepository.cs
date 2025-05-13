@@ -1,7 +1,7 @@
 using Dotnet.Playground.DI.Data;
 using Dotnet.Playground.DI.Repository.Interface;
 using NodaTime;
-using Route = Dotnet.Playground.Model.Route;
+using Route = Dotnet.Playground.Model.Location.Route;
 
 namespace Dotnet.Playground.DI.Repository;
 
